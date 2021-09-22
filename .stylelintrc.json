@@ -1,0 +1,19 @@
+{
+    "extends": "stylelint-config-sass-guidelines",
+    "rules": {
+        "indentation": 4,
+        "max-nesting-depth": null,
+        "selector-max-compound-selectors": null,
+        "color-named": null,
+        "order/properties-alphabetical-order": null,
+        "shorthand-property-no-redundant-values": null,
+        "selector-pseudo-element-no-unknown": [
+            true,
+            {
+                "ignorePseudoElements": "ng-deep"
+            }
+        ],
+        "selector-no-qualifying-type": null,
+        "selector-class-pattern": null
+    }
+}

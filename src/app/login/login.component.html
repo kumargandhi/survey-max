@@ -1,0 +1,46 @@
+<p-panel>
+    <ng-template pTemplate="header"> Login </ng-template>
+    <form [formGroup]="form" class="login-form p-fluid">
+        <div class="p-field">
+            <label for="username">Username</label>
+            <input
+                id="username"
+                type="username"
+                aria-describedby="username-help"
+                formControlName="username"
+                [ngClass]="{'ng-invalid ng-dirty': form.controls['username'].dirty &&
+                form.controls['username'].hasError('required')}"
+                pInputText
+            />
+            <small
+                id="username-help"
+                class="p-error"
+                *ngIf="
+                    form.controls['username'].dirty &&
+                    form.controls['username'].hasError('required')
+                "
+                >Username is not available.</small
+            >
+        </div>
+        <div class="p-field">
+            <label for="password">Password</label>
+            <input
+                id="password"
+                type="password"
+                aria-describedby="password-help"
+                formControlName="password"
+                [ngClass]="{'ng-invalid ng-dirty': form.controls['password'].dirty &&
+                form.controls['password'].hasError('required')}"
+                pInputText
+            />
+            <small id="password-help" class="p-error" *ngIf="
+                    form.controls['password'].dirty &&
+                    form.controls['password'].hasError('required')
+                "
+                >Password is not available.</small
+            >
+        </div>
+        <button pButton type="button" label="Login"></button>
+    </form>
+    <ng-template pTemplate="footer"> Use admin/admin as login </ng-template>
+</p-panel>

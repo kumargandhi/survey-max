@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+p-panel {
+    width: 500px;
+    height: 400px;
+}
+
+.login-form {
+    .p-field {
+        padding-bottom: 10px;
+
+        label {
+            padding-bottom: 10px;
+        }
+    }
+}

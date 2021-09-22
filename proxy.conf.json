@@ -1,0 +1,14 @@
+{
+    "/api": {
+        "target": "https://<HOST>",
+        "secure": false,
+        "changeOrigin": true,
+        "debug": true
+    },
+    "/any.json": {
+        "target": "https://<HOST>",
+        "secure": false,
+        "changeOrigin": true,
+        "debug": true
+    }
+}
