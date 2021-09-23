@@ -1,19 +1,21 @@
-:host {
+.login-content {
     display: flex;
     justify-content: center;
+    align-self: center;
 }
 
 p-panel {
     width: 500px;
     height: 400px;
+    margin-top: 200px;
 }
 
 .login-form {
     .p-field {
         padding-bottom: 10px;
 
-        label {
-            padding-bottom: 10px;
+        input {
+            margin-top: 10px;
         }
     }
 }
