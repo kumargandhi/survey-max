@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
 
     loading = false;
 
+    errorText = '';
+
     constructor(
         private _fb: FormBuilder,
         private _destroy$: DestroyService,
@@ -53,17 +55,24 @@ export class LoginComponent implements OnInit {
         if (!data) {
             return;
         }
+        this.loading = false;
+        this.errorText = '';
     }
 
     login() {
         const { username, password } = this.form.controls;
         this.loading = true;
-        this._loginAdapter
-            .login(username.value, password.value)
-            .subscribe((data) => {
-                console.log('User data - ' + JSON.stringify(data));
+        this.errorText = '';
+        this._loginAdapter.login(username.value, password.value).subscribe(
+            (data) => {
+                console.log('data - ' + JSON.stringify(data));
                 this.loading = false;
                 this._router.navigate(['dashboard']);
-            });
+            },
+            (error) => {
+                this.errorText = error;
+                this.loading = false;
+            }
+        );
     }
 }

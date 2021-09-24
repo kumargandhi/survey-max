@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'assets/fonts/open-sans-fonts';
+@import 'assets/scss/variables';
+@import 'assets/scss/primeng-overrides';
+
+html,
+body,
+.p-component {
+    font-size: $font-size-root !important;
+    font-family: $font-family-name !important;
+    direction: ltr;
+}
+
+html,
+body {
+    margin: 0;
+    overflow: hidden;
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+// Device Mixins
+// --------------------------------------------------------------------------
+//This mixin is used to define styles particularly for tablets. See breakpoint specification in  variables.scss
+@mixin mobile {
+    @media #{$mobile} {
+        @content;
+    }
+}
+
+//This mixin is used to define styles particularly for tablets. See breakpoint specification in  variables.scss
+@mixin tablet {
+    @media #{$tablet} {
+        @content;
+    }
+}
+
+//This mixin is used to define styles particularly for smaller desktops. See breakpoint specification in  variables.scss
+@mixin desktop-std {
+    @media #{$desktop-std} {
+        @content;
+    }
+}
+
+//This mixin is used to define styles particularly for large desktops. See breakpoint specification in  variables.scss
+@mixin desktop-high {
+    @media #{$desktop-high} {
+        @content;
+    }
+}
+
+@mixin descriptive-text {
+    @include mobile {
+        font-size: 0.93rem;
+        font-weight: $font-weight-normal;
+        line-height: 1.214rem;
+    }
+    @include tablet {
+        font-size: 0.93rem;
+        font-weight: $font-weight-normal;
+        line-height: 1.214rem;
+    }
+    @include desktop-std {
+        font-size: 0.786rem;
+        font-weight: $font-weight-normal;
+        line-height: 1.071rem;
+    }
+    @include desktop-high {
+        font-size: 0.93rem;
+        font-weight: $font-weight-normal;
+        line-height: 1.214rem;
+    }
+}
+
+.descriptive-text {
+    color: $theme-gray-dark;
+    @include descriptive-text;
+}
+
+//This is the main application container ID, includes the application header
+#page-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh;
+    overflow-y: hidden;
+    & > #page-title {
+        background-color: inherit;
+        margin: 0 !important;
+        padding-right: $space-base;
+        padding-bottom: $space-base;
+    }
+    & > #page-title.gray {
+        background-color: $theme-gray-light !important;
+    }
+}

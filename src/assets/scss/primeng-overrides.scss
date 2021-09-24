@@ -1,0 +1,13 @@
+.p-panel .p-panel-content {
+    background: var(--panel-background);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.p-panel .p-panel-header {
+    background: var(--panel-header-background);
+}
+
+.p-panel .p-panel-footer {
+    background: var(--panel-background);
+}

@@ -2,11 +2,11 @@
     display: flex;
     justify-content: center;
     align-self: center;
+    background: var(--theme-gray);
 }
 
 p-panel {
-    width: 500px;
-    height: 400px;
+    width: 400px;
     margin-top: 200px;
 }
 
@@ -17,5 +17,13 @@ p-panel {
         input {
             margin-top: 10px;
         }
+    }
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    .descriptive-text {
+        padding-left: 10px;
     }
 }

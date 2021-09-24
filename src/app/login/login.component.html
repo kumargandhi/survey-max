@@ -1,6 +1,11 @@
-<div class="login-content">
+<div class="login-content" id="page-container">
     <p-panel>
         <ng-template pTemplate="header"> Login </ng-template>
+        <p-message
+            severity="error"
+            [text]="errorText"
+            *ngIf="errorText"
+        ></p-message>
         <form [formGroup]="form" class="login-form p-fluid">
             <div class="p-field">
                 <label for="username">Username</label>
@@ -59,6 +64,16 @@
                 [loading]="loading"
             ></button>
         </form>
-        <ng-template pTemplate="footer"> Use admin/admin as login </ng-template>
+        <ng-template pTemplate="footer">
+            <div class="footer">
+                <p-tag
+                    styleClass="p-mr-2"
+                    icon="pi pi-info-circle"
+                    severity="info"
+                    value="Info"
+                ></p-tag>
+                <div class="descriptive-text">Use admin/admin as login</div>
+            </div>
+        </ng-template>
     </p-panel>
 </div>
