@@ -1,0 +1,17 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="start">
+        <img src="assets/images/primeng.svg" height="40" class="p-mr-2" />
+    </ng-template>
+    <input type="text" pInputText placeholder="Search" />
+    <button
+        pButton
+        label="Logout"
+        icon="pi pi-power-off"
+        style="margin-left: 10px"
+    ></button>
+</p-menubar>
+<div class="main-container">
+    <div class="router-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

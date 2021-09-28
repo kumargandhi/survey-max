@@ -6,12 +6,10 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     {
-        path: 'dashboard',
+        path: 'main',
         canActivate: [],
         loadChildren: () =>
-            import('./dashboard/dashboard.module').then(
-                (m) => m.DashboardModule
-            ),
+            import('./main/main.module').then((m) => m.MainModule),
     },
 ];
 

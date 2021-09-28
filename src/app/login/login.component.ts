@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
             (data) => {
                 console.log('data - ' + JSON.stringify(data));
                 this.loading = false;
-                this._router.navigate(['dashboard']);
+                this._router.navigate(['main']);
             },
             (error) => {
                 this.errorText = error;
