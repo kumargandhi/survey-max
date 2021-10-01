@@ -11,3 +11,27 @@
 .p-panel .p-panel-footer {
     background: var(--panel-background);
 }
+
+.p-menubar .p-menuitem {
+    margin: 0px 10px 0px 10px;
+}
+
+.p-menubar
+    .p-menubar-root-list
+    > .p-menuitem
+    > .p-menuitem-link.p-menuitem-link-active {
+    background: var(--theme-color-primary);
+
+    & > .p-menuitem-text {
+        color: #ffffff !important;
+    }
+}
+
+.p-menubar
+    .p-menubar-root-list
+    > .p-menuitem
+    > .p-menuitem-link:not(.p-disabled):hover {
+    & > .p-menuitem-text {
+        color: var(--theme-gray-darker) !important;
+    }
+}

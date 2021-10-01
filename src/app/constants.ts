@@ -9,6 +9,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
 import { MenubarModule } from 'primeng/menubar';
+import { CardModule } from 'primeng/card';
 
 export const PRIME_NG_MODULES = [
     InputTextModule,
@@ -18,4 +19,5 @@ export const PRIME_NG_MODULES = [
     MessageModule,
     TagModule,
     MenubarModule,
+    CardModule,
 ];
