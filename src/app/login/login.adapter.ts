@@ -1,7 +1,3 @@
-/**
- * Created by Kumar on 23/09/2021
- */
-
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';

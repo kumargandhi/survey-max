@@ -1,5 +1,3 @@
-// @import 'node_modules/primeflex/primeflex.css';
-
 @import 'assets/fonts/open-sans-fonts';
 @import 'assets/scss/variables';
 @import 'assets/scss/primeng-overrides';
@@ -79,8 +77,8 @@ body {
 
 //This is the main application container ID, includes the application header
 #page-container {
-    margin: 0 !important;
-    padding: 0 !important;
+    margin: 0;
+    padding: 10px;
     height: 100vh;
     overflow-y: hidden;
     background: var(--theme-gray);

@@ -1,7 +1,3 @@
-/**
- * Created by Kumar on 28/09/2021
- */
-
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -10,6 +6,9 @@ import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
+import { StyleClassModule } from 'primeng/styleclass';
 
 export const PRIME_NG_MODULES = [
     InputTextModule,
@@ -20,4 +19,7 @@ export const PRIME_NG_MODULES = [
     TagModule,
     MenubarModule,
     CardModule,
+    ToolbarModule,
+    TableModule,
+    StyleClassModule,
 ];

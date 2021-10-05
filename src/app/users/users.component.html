@@ -1,1 +1,89 @@
-<p>users works!</p>
+<div id="page-container" class="users">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button
+                pButton
+                pRipple
+                label="New"
+                icon="pi pi-plus"
+                class="p-button-success mr-2"
+                (click)="openNew()"
+            ></button>
+            <button
+                pButton
+                pRipple
+                label="Delete"
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deleteSelectedUsers()"
+                [disabled]="!selectedUsers || !selectedUsers.length"
+            ></button>
+        </ng-template>
+    </p-toolbar>
+    <p-table
+        #dt
+        [value]="users"
+        [rows]="10"
+        [paginator]="true"
+        responsiveLayout="scroll"
+        [(selection)]="selectedUsers"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        [loading]="loading"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="userName">
+                    Username <p-sortIcon field="userName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="roles">
+                    Roles <p-sortIcon field="roles"></p-sortIcon>
+                </th>
+                <th pSortableColumn="displayName">
+                    Display name <p-sortIcon field="displayName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="email">
+                    Email <p-sortIcon field="email"></p-sortIcon>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                </td>
+                <td>{{ user.userName }}</td>
+                <td>{{ user.roles }}</td>
+                <td>{{ user.displayName }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <button
+                        pButton
+                        pRipple
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-success mr-2"
+                        (click)="editUser(user)"
+                    ></button>
+                    <button
+                        pButton
+                        pRipple
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-warning"
+                        (click)="deleteUser(user)"
+                    ></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{ users ? users.length : 0 }} users.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
