@@ -1,5 +1,5 @@
 // User mock data
-import { IUser } from '../common/user.interface';
+import { IUser } from '../common/interfaces/user.interface';
 
 export const MOCK_USERS_DATA: IUser[] = [
     {

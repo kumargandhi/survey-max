@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DestroyService } from '../service/destroy.service';
+import { DestroyService } from '../common/services/destroy.service';
 import { takeUntil } from 'rxjs/operators';
 import { LoginAdapter } from './login.adapter';
 

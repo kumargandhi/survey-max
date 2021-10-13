@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { IUser } from '../common/user.interface';
+import { IUser } from '../common/interfaces/user.interface';
 import { MOCK_USERS_DATA } from '../data/users';
 
 @Injectable({

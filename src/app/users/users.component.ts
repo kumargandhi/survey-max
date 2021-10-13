@@ -5,8 +5,8 @@ import {
     OnInit,
 } from '@angular/core';
 import * as _ from 'lodash';
-import { IUser } from '../common/user.interface';
-import { DestroyService } from '../service/destroy.service';
+import { IUser, userIns } from "../common/interfaces/user.interface";
+import { DestroyService } from '../common/services/destroy.service';
 import { UsersAdapter } from './users.adapter';
 
 @Component({
@@ -24,6 +24,12 @@ export class UsersComponent implements OnInit {
     selectedUsers: IUser[];
 
     users: IUser[];
+
+    user: IUser;
+
+    userDialog = false;
+
+    submitted = false;
 
     constructor(
         private _cd: ChangeDetectorRef,
@@ -52,7 +58,20 @@ export class UsersComponent implements OnInit {
         );
     }
 
-    openNew() {}
+    openNew() {
+        this.user = _.cloneDeep(userIns);
+        this.submitted = false;
+        this.userDialog = true;
+    }
+
+    hideDialog() {
+        this.userDialog = false;
+        this.submitted = false;
+    }
+
+    saveUser() {
+        this.submitted = true;
+    }
 
     deleteSelectedUsers() {}
 

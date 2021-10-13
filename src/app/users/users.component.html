@@ -86,4 +86,19 @@
             </div>
         </ng-template>
     </p-table>
+
+    <p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="User Details" [modal]="true"
+              styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="p-field">
+                <label for="name">Username</label>
+                <input type="text" pInputText id="name" [(ngModel)]="user.userName" required autofocus />
+                <small class="p-error" *ngIf="submitted && !user.userName">Username is required.</small>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+        </ng-template>
+    </p-dialog>
 </div>
