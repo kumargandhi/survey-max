@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pushpaka-vimana": {
+      "hosting": {
+        "pushpaka-vimana": [
+          "pushpaka-vimana"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pushpaka-vimana"
+  }
+}
