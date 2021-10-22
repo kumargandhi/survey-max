@@ -11,5 +11,5 @@ export let userIns = {
     userName: null,
     roles: [],
     displayName: null,
-    email: null
+    email: null,
 };

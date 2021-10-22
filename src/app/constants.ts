@@ -23,5 +23,5 @@ export const PRIME_NG_MODULES = [
     ToolbarModule,
     TableModule,
     StyleClassModule,
-    DialogModule
+    DialogModule,
 ];

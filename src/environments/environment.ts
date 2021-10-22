@@ -4,13 +4,13 @@
 
 export const environment = {
     firebase: {
-        projectId: 'xxxxxx',
-        appId: 'xxxxxx',
-        storageBucket: 'xxxxxx',
-        apiKey: 'xxxxxx',
-        authDomain: 'xxxxxx',
-        messagingSenderId: 'xxxxxx',
-        measurementId: 'xxxxxx',
+        projectId: 'pushpaka-vimana',
+        appId: '1:279569582302:web:a624d381d8f37677e2da4f',
+        storageBucket: 'pushpaka-vimana.appspot.com',
+        apiKey: 'AIzaSyDzjCU8fqfCnk1X8EjhXHISSOjt70huaxU',
+        authDomain: 'pushpaka-vimana.firebaseapp.com',
+        messagingSenderId: '279569582302',
+        measurementId: 'G-N1WRQDZE2G',
     },
     production: false,
 };

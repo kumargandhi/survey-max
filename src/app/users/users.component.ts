@@ -5,7 +5,7 @@ import {
     OnInit,
 } from '@angular/core';
 import * as _ from 'lodash';
-import { IUser, userIns } from "../common/interfaces/user.interface";
+import { IUser, userIns } from '../common/interfaces/user.interface';
 import { DestroyService } from '../common/services/destroy.service';
 import { UsersAdapter } from './users.adapter';
 
