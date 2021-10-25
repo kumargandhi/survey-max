@@ -3,24 +3,21 @@ import { IUser } from '../common/interfaces/user.interface';
 
 export const MOCK_USERS_DATA: IUser[] = [
     {
-        id: 1,
-        userName: 'jack',
+        uid: '1',
+        email: 'jackbing@gmail.com',
         roles: ['Customer'],
         displayName: 'Jack Bing',
-        email: 'jackbing@gmail.com',
     },
     {
-        id: 2,
-        userName: 'chandler',
+        uid: '2',
+        email: 'chandlerbing@gmail.com',
         roles: ['Customer'],
         displayName: 'Chandler Bing',
-        email: 'chandlerbing@gmail.com',
     },
     {
-        id: 3,
-        userName: 'admin',
+        uid: '3',
+        email: 'appAdmin@gmail.com',
         roles: ['Admin'],
         displayName: 'Admin',
-        email: 'appAdmin@gmail.com',
     },
 ];

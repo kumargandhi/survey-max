@@ -38,17 +38,14 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="userName">
-                    Username <p-sortIcon field="userName"></p-sortIcon>
+                <th pSortableColumn="email">
+                    Email <p-sortIcon field="email"></p-sortIcon>
                 </th>
                 <th pSortableColumn="roles">
                     Roles <p-sortIcon field="roles"></p-sortIcon>
                 </th>
                 <th pSortableColumn="displayName">
                     Display name <p-sortIcon field="displayName"></p-sortIcon>
-                </th>
-                <th pSortableColumn="email">
-                    Email <p-sortIcon field="email"></p-sortIcon>
                 </th>
                 <th></th>
             </tr>
@@ -58,10 +55,9 @@
                 <td>
                     <p-tableCheckbox [value]="user"></p-tableCheckbox>
                 </td>
-                <td>{{ user.userName }}</td>
+                <td>{{ user.email }}</td>
                 <td>{{ user.roles }}</td>
                 <td>{{ user.displayName }}</td>
-                <td>{{ user.email }}</td>
                 <td>
                     <button
                         pButton
@@ -97,16 +93,22 @@
         <ng-template pTemplate="content">
             <div class="p-field">
                 <label for="name">Username</label>
+                <input type="text" pInputText id="name" required autofocus />
+                <small class="p-error" *ngIf="submitted && !user.email"
+                    >Username is required.</small
+                >
+            </div>
+            <div class="p-field">
+                <label for="name">Password</label>
                 <input
-                    type="text"
+                    type="password"
                     pInputText
-                    id="name"
-                    [(ngModel)]="user.userName"
+                    id="password"
                     required
                     autofocus
                 />
-                <small class="p-error" *ngIf="submitted && !user.userName"
-                    >Username is required.</small
+                <small class="p-error" *ngIf="submitted && !user.email"
+                    >Password is required.</small
                 >
             </div>
         </ng-template>
@@ -122,7 +124,7 @@
             <button
                 pButton
                 pRipple
-                label="Save"
+                label="Sign"
                 icon="pi pi-check"
                 class="p-button-text"
                 (click)="saveUser()"

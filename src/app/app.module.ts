@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
 import { PRIME_NG_MODULES } from './constants';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage } from '@angular/fire/storage';
+
+// Firebase
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AuthService } from './common/services/auth.service';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent],
@@ -24,12 +26,11 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
         ReactiveFormsModule,
         AppRoutingModule,
         ...PRIME_NG_MODULES,
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideAuth(() => getAuth()),
-        provideFirestore(() => getFirestore()),
-        provideStorage(() => getStorage()),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAnalyticsModule,
+        AngularFirestoreModule,
     ],
-    providers: [],
+    providers: [AuthService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

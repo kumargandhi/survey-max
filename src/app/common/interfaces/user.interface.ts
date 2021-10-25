@@ -1,15 +1,17 @@
 export interface IUser {
-    id: number;
-    userName: string;
-    roles: string[];
-    displayName: string;
+    uid: string;
     email: string;
+    displayName: string;
+    photoURL?: string;
+    emailVerified?: boolean;
+    roles: string[];
 }
 
 export let userIns = {
-    id: null,
-    userName: null,
-    roles: [],
-    displayName: null,
+    uid: null,
     email: null,
+    displayName: null,
+    photoURL: null,
+    emailVerified: false,
+    roles: [],
 };

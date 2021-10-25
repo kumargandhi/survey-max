@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { DestroyService } from '../common/services/destroy.service';
 import { takeUntil } from 'rxjs/operators';
 import { LoginAdapter } from './login.adapter';
+import { AuthService } from '../common/services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
         private _destroy$: DestroyService,
         private _loginAdapter: LoginAdapter,
         private _router: Router,
-        private _cd: ChangeDetectorRef
+        private _cd: ChangeDetectorRef,
+        private _authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -63,16 +65,17 @@ export class LoginComponent implements OnInit {
         const { username, password } = this.form.controls;
         this.loading = true;
         this.errorText = '';
-        this._loginAdapter.login(username.value, password.value).subscribe(
-            (data) => {
-                console.log('data - ' + JSON.stringify(data));
-                this.loading = false;
-                this._router.navigate(['main']);
-            },
-            (error) => {
-                this.errorText = error;
-                this.loading = false;
-            }
-        );
+        this._authService.signIn(username.value, password.value);
+        //        this._loginAdapter.login(username.value, password.value).subscribe(
+        //            (data) => {
+        //                console.log('data - ' + JSON.stringify(data));
+        //                this.loading = false;
+        //                this._router.navigate(['main']);
+        //            },
+        //            (error) => {
+        //                this.errorText = error;
+        //                this.loading = false;
+        //            }
+        //        );
     }
 }
