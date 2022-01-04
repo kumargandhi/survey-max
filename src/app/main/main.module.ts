@@ -7,9 +7,10 @@ import { MainRoutingModule } from './main-routing.module';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { PRIME_NG_MODULES } from '../constants';
 import { UsersComponent } from '../users/users.component';
+import { SurveyComponent } from '../survey/survey.component';
 
 @NgModule({
-    declarations: [MainComponent, DashboardComponent, UsersComponent],
+    declarations: [MainComponent, DashboardComponent, UsersComponent, SurveyComponent],
     imports: [
         CommonModule,
         FormsModule,

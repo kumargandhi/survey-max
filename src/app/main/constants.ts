@@ -7,4 +7,8 @@ export const MENU_ITEMS = [
         label: 'Users',
         routerLink: ['users'],
     },
+    {
+        label: 'Survey',
+        routerLink: ['survey'],
+    },
 ];

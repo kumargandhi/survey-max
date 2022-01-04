@@ -41,7 +41,7 @@ export class AuthService {
             .signInWithEmailAndPassword(email, password)
             .then((result) => {
                 this.ngZone.run(() => {
-                    this.router.navigate(['main']);
+                    this.router.navigate(['/main']);
                 });
                 this.setUserData(result.user);
             })
@@ -88,7 +88,9 @@ export class AuthService {
     // Returns true when user is looged in and email is verified
     get isLoggedIn(): boolean {
         const user = JSON.parse(localStorage.getItem('user'));
-        return user !== null && user.emailVerified !== false ? true : false;
+        // TODO : Below line is the original code, we need to check the emailVerified also so in PROD we need to uncomment below line.
+        // return user !== null && user.emailVerified !== false ? true : false;
+        return user !== null ? true : false;
     }
 
     setUserData(user) {

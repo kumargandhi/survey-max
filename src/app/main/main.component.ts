@@ -10,11 +10,13 @@ import { MENU_ITEMS } from './constants';
     styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-    items: MenuItem[] = [...MENU_ITEMS];
+    menu: MenuItem[] = [...MENU_ITEMS];
 
     constructor(private _router: Router) {}
 
     ngOnInit(): void {
-        this._router.navigate(['main/dashboard']);
+        if (this._router.url.indexOf('login') !== -1) {
+            this._router.navigate(['main/dashboard']);
+        }
     }
 }
