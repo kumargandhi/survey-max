@@ -11,13 +11,19 @@ import { SurveyComponent } from '../survey/survey.component';
 import { SidebarComponent } from '../common/components/sidebar/sidebar.component';
 
 @NgModule({
-    declarations: [MainComponent, DashboardComponent, UsersComponent, SurveyComponent, SidebarComponent],
+    declarations: [
+        MainComponent,
+        DashboardComponent,
+        UsersComponent,
+        SurveyComponent,
+        SidebarComponent,
+    ],
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         ...PRIME_NG_MODULES,
         MainRoutingModule,
-    ]
+    ],
 })
 export class MainModule {}

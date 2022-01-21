@@ -5,7 +5,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: var(--theme-color-primary);
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -14,16 +14,16 @@
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 14px;
-    color: #818181;
+    color: var(--theme-gray);
     display: block;
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: var(--theme-gray-base);
 }
 
 .sidenav a.active {
-    color: #f1f1f1;
+    color: var(--theme-gray);
     font-weight: bold;
 }
 
@@ -34,4 +34,12 @@
     .sidenav a {
         font-size: 14px;
     }
+}
+
+.sign-out {
+    position: absolute;
+    top: 93%;
+    width: 100%;
+    border-top: 1px solid var(--theme-gray) !important;
+    padding-top: 10px;
 }

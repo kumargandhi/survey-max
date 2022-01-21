@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MENU_ITEMS } from '../../../main/constants';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -10,7 +11,11 @@ import { MENU_ITEMS } from '../../../main/constants';
 export class SidebarComponent implements OnInit {
     menu: MenuItem[] = [...MENU_ITEMS];
 
-    constructor() {}
+    constructor(private _authService: AuthService) {}
 
     ngOnInit(): void {}
+
+    logOutClicked() {
+        this._authService.signOut();
+    }
 }

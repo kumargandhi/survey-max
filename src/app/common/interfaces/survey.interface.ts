@@ -1,6 +1,9 @@
 export interface ISurvey {
+    id: string | number;
     name: string;
-    description: string;
+    desc: string;
+    isConfigured: boolean;
+    passScore: number;
 }
 
 export interface IQuestion {
