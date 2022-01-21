@@ -1,23 +1,23 @@
 <div id="page-container">
-  <p-toolbar styleClass="mb-4">
-    <ng-template pTemplate="left">
-      <button
-          pButton
-          pRipple
-          label="New"
-          icon="pi pi-plus"
-          class="p-button-success mr-2"
-          (click)="addNewSurvey()"
-      ></button>
-      <button
-          pButton
-          pRipple
-          label="Delete"
-          icon="pi pi-trash"
-          class="p-button-danger"
-          (click)="deleteSelectedSurveys()"
-          [disabled]="!selectedSurveys || !selectedSurveys.length"
-      ></button>
-    </ng-template>
-  </p-toolbar>
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button
+                pButton
+                pRipple
+                label="New"
+                icon="pi pi-plus"
+                class="p-button-success mr-2"
+                (click)="addNewSurvey()"
+            ></button>
+            <button
+                pButton
+                pRipple
+                label="Delete"
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deleteSelectedSurveys()"
+                [disabled]="!selectedSurveys || !selectedSurveys.length"
+            ></button>
+        </ng-template>
+    </p-toolbar>
 </div>

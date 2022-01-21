@@ -11,11 +11,7 @@ export class SurveyComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    addNewSurvey() {
+    addNewSurvey() {}
 
-    }
-
-    deleteSelectedSurveys() {
-
-    }
+    deleteSelectedSurveys() {}
 }

@@ -1,13 +1,10 @@
 .main-container {
     display: flex;
     overflow: hidden;
+    margin-left: 200px; /* Same as the width of the sidenav */
 
     .router-container {
         width: 100%;
         min-width: 0;
     }
-}
-
-.logo {
-    margin: 5px 50px 5px 5px;
 }

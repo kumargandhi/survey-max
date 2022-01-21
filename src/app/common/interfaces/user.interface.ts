@@ -7,7 +7,7 @@ export interface IUser {
     roles: string[];
 }
 
-export let userIns = {
+export const userIns = {
     uid: null,
     email: null,
     displayName: null,
