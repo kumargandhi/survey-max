@@ -38,19 +38,19 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="name">
+                <th pSortableColumn="name" style="width: 25%">
                     Name <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="desc">
+                <th pSortableColumn="desc" style="width: 45%">
                     Description <p-sortIcon field="desc"></p-sortIcon>
                 </th>
-                <th pSortableColumn="isConfigured">
+                <th pSortableColumn="isConfigured" style="width: 10%">
                     Configured <p-sortIcon field="isConfigured"></p-sortIcon>
                 </th>
-                <th pSortableColumn="passScore">
+                <th pSortableColumn="passScore" style="width: 10%">
                     Pass Score <p-sortIcon field="passScore"></p-sortIcon>
                 </th>
-                <th></th>
+                <th style="width: 10%"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-survey>
@@ -60,7 +60,13 @@
                 </td>
                 <td>{{ survey.name }}</td>
                 <td>{{ survey.desc }}</td>
-                <td>{{ survey.isConfigured }}</td>
+                <td>
+                    <p-badge
+                        [value]="survey.isConfigured ? 'Yes' : 'No'"
+                        severity="success"
+                        styleClass="configured-badge"
+                    ></p-badge>
+                </td>
                 <td>{{ survey.passScore }}</td>
                 <td>
                     <button
@@ -82,7 +88,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
-                In total there are {{ surveys ? surveys.length : 0 }} surveys.
+                {{ getTableSummary() }}
             </div>
         </ng-template>
     </p-table>

@@ -32,6 +32,12 @@ export class SurveyComponent implements OnInit {
         this.fetchSurveys();
     }
 
+    getTableSummary() {
+        return `Total ${this.surveys ? this.surveys.length : 0} ${
+            this.surveys && this.surveys.length > 1 ? 'Surveys' : 'Survey'
+        }`;
+    }
+
     fetchSurveys() {
         this.loading = true;
         this.errorText = '';
