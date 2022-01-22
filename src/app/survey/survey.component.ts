@@ -7,7 +7,7 @@ import {
 import * as _ from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { SurveyService } from '../common/services/survey.service';
-import { ISurvey } from '../common/interfaces/survey.interface';
+import { ISurvey, newSurvey } from '../common/interfaces/survey.interface';
 
 @Component({
     selector: 'app-survey',
@@ -22,6 +22,9 @@ export class SurveyComponent implements OnInit {
     survey: ISurvey;
     loading = false;
     errorText = '';
+    surveyDialog = false;
+    submitted = false;
+
     constructor(
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
@@ -61,11 +64,38 @@ export class SurveyComponent implements OnInit {
         );
     }
 
-    editUser(survey: ISurvey) {}
+    editSurvey(survey: ISurvey) {}
 
-    deleteUser(survey: ISurvey) {}
+    deleteSurvey(survey: ISurvey) {}
 
-    addNewSurvey() {}
+    addNewSurvey() {
+        this.survey = _.cloneDeep(newSurvey);
+        this.submitted = false;
+        this.surveyDialog = true;
+    }
+
+    hideDialog() {
+        this.surveyDialog = false;
+        this.submitted = false;
+    }
+
+    saveSurvey() {
+        this.submitted = true;
+        this.loading = true;
+        this.errorText = '';
+        this._surveyService.saveSurvey(this.survey).then(
+            () => {
+                this.loading = false;
+                this.fetchSurveys();
+                this._cd.markForCheck();
+            },
+            (error) => {
+                this.errorText = error;
+                this.loading = false;
+                this._cd.markForCheck();
+            }
+        );
+    }
 
     deleteSelectedSurveys() {}
 }

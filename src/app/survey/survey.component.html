@@ -74,14 +74,14 @@
                         pRipple
                         icon="pi pi-pencil"
                         class="p-button-rounded p-button-success mr-2"
-                        (click)="editUser(survey)"
+                        (click)="editSurvey(survey)"
                     ></button>
                     <button
                         pButton
                         pRipple
                         icon="pi pi-trash"
                         class="p-button-rounded p-button-warning"
-                        (click)="deleteUser(survey)"
+                        (click)="deleteSurvey(survey)"
                     ></button>
                 </td>
             </tr>
@@ -92,4 +92,54 @@
             </div>
         </ng-template>
     </p-table>
+
+    <p-dialog
+        [(visible)]="surveyDialog"
+        [style]="{ width: '550px' }"
+        header="Add Survey"
+        [modal]="true"
+        styleClass="p-fluid"
+    >
+        <ng-template pTemplate="content">
+            <div class="p-field mb-3">
+                <label for="name">Name</label>
+                <input type="text" pInputText id="name" required autofocus />
+                <small class="p-error" *ngIf="submitted && !survey.name"
+                    >Name is required.</small
+                >
+            </div>
+            <div class="p-field mb-3">
+                <label for="desc">Description</label>
+                <input type="text" pInputText id="desc" required />
+                <small class="p-error" *ngIf="submitted && !survey.desc"
+                    >Description is required.</small
+                >
+            </div>
+            <div class="p-field mb-3">
+                <label for="passScore">Pass score</label>
+                <input type="text" pInputText id="passScore" required />
+                <small class="p-error" *ngIf="submitted && !survey.passScore"
+                    >Pass score is required.</small
+                >
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="hideDialog()"
+            ></button>
+            <button
+                pButton
+                pRipple
+                label="Add"
+                icon="pi pi-check"
+                class="p-button-text"
+                (click)="saveSurvey()"
+            ></button>
+        </ng-template>
+    </p-dialog>
 </div>
