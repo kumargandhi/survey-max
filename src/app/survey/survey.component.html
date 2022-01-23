@@ -96,32 +96,15 @@
     <p-dialog
         [(visible)]="surveyDialog"
         [style]="{ width: '550px' }"
-        header="Add Survey"
+        [header]="survey ? 'Update Survey' : 'Add Survey'"
         [modal]="true"
         styleClass="p-fluid"
     >
         <ng-template pTemplate="content">
-            <div class="p-field mb-3">
-                <label for="name">Name</label>
-                <input type="text" pInputText id="name" required autofocus />
-                <small class="p-error" *ngIf="submitted && !survey.name"
-                    >Name is required.</small
-                >
-            </div>
-            <div class="p-field mb-3">
-                <label for="desc">Description</label>
-                <input type="text" pInputText id="desc" required />
-                <small class="p-error" *ngIf="submitted && !survey.desc"
-                    >Description is required.</small
-                >
-            </div>
-            <div class="p-field mb-3">
-                <label for="passScore">Pass score</label>
-                <input type="text" pInputText id="passScore" required />
-                <small class="p-error" *ngIf="submitted && !survey.passScore"
-                    >Pass score is required.</small
-                >
-            </div>
+            <app-add-update-survey
+                #addUpdateSurveyComponent
+                [survey]="survey"
+            ></app-add-update-survey>
         </ng-template>
         <ng-template pTemplate="footer">
             <button
@@ -129,15 +112,16 @@
                 pRipple
                 label="Cancel"
                 icon="pi pi-times"
-                class="p-button-text"
+                class="p-button-secondary"
                 (click)="hideDialog()"
             ></button>
             <button
                 pButton
                 pRipple
-                label="Add"
+                label="{{ survey ? 'Update' : 'Add' }}"
                 icon="pi pi-check"
-                class="p-button-text"
+                class="p-button-primary"
+                [disabled]="!addUpdateSurveyComponent?.form?.valid"
                 (click)="saveSurvey()"
             ></button>
         </ng-template>

@@ -3,11 +3,14 @@ import {
     ChangeDetectorRef,
     Component,
     OnInit,
+    ViewChild,
+    TemplateRef,
 } from '@angular/core';
 import * as _ from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { SurveyService } from '../common/services/survey.service';
-import { ISurvey, newSurvey } from '../common/interfaces/survey.interface';
+import { ISurvey } from '../common/interfaces/survey.interface';
+import { AddUpdateSurveyComponent } from './add-update-survey/add-update-survey.component';
 
 @Component({
     selector: 'app-survey',
@@ -19,11 +22,12 @@ import { ISurvey, newSurvey } from '../common/interfaces/survey.interface';
 export class SurveyComponent implements OnInit {
     surveys: ISurvey[];
     selectedSurveys: ISurvey[] = [];
-    survey: ISurvey;
     loading = false;
     errorText = '';
     surveyDialog = false;
-    submitted = false;
+    @ViewChild('addUpdateSurveyComponent')
+    addUpdateSurveyComponent: AddUpdateSurveyComponent;
+    survey: ISurvey;
 
     constructor(
         private _cd: ChangeDetectorRef,
@@ -32,7 +36,7 @@ export class SurveyComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.fetchSurveys();
+        this.getSurveys();
     }
 
     getTableSummary() {
@@ -41,7 +45,7 @@ export class SurveyComponent implements OnInit {
         }`;
     }
 
-    fetchSurveys() {
+    getSurveys() {
         this.loading = true;
         this.errorText = '';
         this._surveyService.getSurveys().subscribe(
@@ -64,38 +68,74 @@ export class SurveyComponent implements OnInit {
         );
     }
 
-    editSurvey(survey: ISurvey) {}
+    editSurvey(survey: ISurvey) {
+        this.survey = _.cloneDeep(survey);
+        this.surveyDialog = true;
+    }
 
-    deleteSurvey(survey: ISurvey) {}
+    deleteSurvey(survey: ISurvey) {
+        this.loading = true;
+        this.errorText = '';
+        this._surveyService
+            .deleteSurvey(survey.id)
+            .then(() => {
+                this.loading = false;
+                this.getSurveys();
+            })
+            .catch((error) => {
+                this.loading = false;
+                this.errorText = error;
+            });
+    }
 
     addNewSurvey() {
-        this.survey = _.cloneDeep(newSurvey);
-        this.submitted = false;
+        this.survey = null;
         this.surveyDialog = true;
     }
 
     hideDialog() {
         this.surveyDialog = false;
-        this.submitted = false;
     }
 
     saveSurvey() {
-        this.submitted = true;
         this.loading = true;
         this.errorText = '';
-        this._surveyService.saveSurvey(this.survey).then(
-            () => {
-                this.loading = false;
-                this.fetchSurveys();
-                this._cd.markForCheck();
-            },
-            (error) => {
-                this.errorText = error;
-                this.loading = false;
-                this._cd.markForCheck();
-            }
-        );
+        if (this.survey) {
+            this._surveyService
+                .updateSurvey(this.addUpdateSurveyComponent.getSurvey)
+                .then(() => {
+                    this.loading = false;
+                    this.survey = null;
+                    this.hideDialog();
+                    this.getSurveys();
+                    this._cd.markForCheck();
+                })
+                .catch((error) => {
+                    this.addUpdateSurveyComponent.errorText = error;
+                    this.loading = false;
+                    this._cd.markForCheck();
+                });
+        } else {
+            this._surveyService
+                .saveSurvey(this.addUpdateSurveyComponent.getSurvey)
+                .then(() => {
+                    this.loading = false;
+                    this.hideDialog();
+                    this.getSurveys();
+                    this._cd.markForCheck();
+                })
+                .catch((error) => {
+                    this.addUpdateSurveyComponent.errorText = error;
+                    this.loading = false;
+                    this._cd.markForCheck();
+                });
+        }
     }
 
-    deleteSelectedSurveys() {}
+    deleteSelectedSurveys() {
+        this.selectedSurveys.forEach((value) => {
+            this.deleteSurvey(value);
+        });
+        this.selectedSurveys = [];
+    }
 }

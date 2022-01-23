@@ -1,0 +1,81 @@
+<div class="survey-form">
+    <p-message
+        severity="error"
+        [text]="_errorText"
+        *ngIf="_errorText"
+    ></p-message>
+    <form [formGroup]="form" class="p-fluid">
+        <div class="p-field mb-3">
+            <label for="name">Name</label>
+            <input
+                type="text"
+                pInputText
+                id="name"
+                required
+                autofocus
+                formControlName="name"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['name'].dirty &&
+                        form.controls['name'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['name'].dirty &&
+                    form.controls['name'].hasError('required')
+                "
+                >Name is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label for="desc">Description</label>
+            <input
+                type="text"
+                pInputText
+                id="desc"
+                required
+                formControlName="desc"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['desc'].dirty &&
+                        form.controls['desc'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['desc'].dirty &&
+                    form.controls['desc'].hasError('required')
+                "
+                >Description is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label for="passScore">Pass score (%)</label>
+            <input
+                type="number"
+                pInputText
+                id="passScore"
+                required
+                formControlName="passScore"
+                min="1"
+                max="100"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['passScore'].dirty &&
+                        form.controls['passScore'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['passScore'].dirty &&
+                    form.controls['passScore'].hasError('required')
+                "
+                >Pass score is required.</small
+            >
+        </div>
+    </form>
+</div>
