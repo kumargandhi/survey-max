@@ -12,3 +12,8 @@ export const MENU_ITEMS = [
         routerLink: ['survey'],
     },
 ];
+
+export const SURVEY_BREAD_CRUMBS = [
+    { label: 'Survey' },
+    { label: 'Questions', disabled: true },
+];

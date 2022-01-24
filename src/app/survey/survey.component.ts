@@ -10,6 +10,8 @@ import { DestroyService } from '../common/services/destroy.service';
 import { SurveyService } from '../common/services/survey.service';
 import { ISurvey } from '../common/interfaces/survey.interface';
 import { AddUpdateSurveyComponent } from './add-update-survey/add-update-survey.component';
+import { SURVEY_BREAD_CRUMBS } from '../main/constants';
+// import { MenuItem } from "primeng/api";
 
 @Component({
     selector: 'app-survey',
@@ -27,6 +29,9 @@ export class SurveyComponent implements OnInit {
     @ViewChild('addUpdateSurveyComponent')
     addUpdateSurveyComponent: AddUpdateSurveyComponent;
     survey: ISurvey;
+
+    readonly SURVEY_BREAD_CRUMBS = SURVEY_BREAD_CRUMBS;
+    defaultBreadCrumb = _.head(SURVEY_BREAD_CRUMBS);
 
     constructor(
         private _cd: ChangeDetectorRef,

@@ -1,5 +1,9 @@
 <div id="page-container">
-    <p-toolbar styleClass="mb-4">
+    <p-breadcrumb
+        styleClass="mb-3"
+        [model]="SURVEY_BREAD_CRUMBS"
+    ></p-breadcrumb>
+    <p-toolbar styleClass="mb-3">
         <ng-template pTemplate="left">
             <button
                 pButton
@@ -38,16 +42,16 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="name" style="width: 25%">
+                <th pSortableColumn="name" style="width: 22%">
                     Name <p-sortIcon field="name"></p-sortIcon>
                 </th>
                 <th pSortableColumn="desc" style="width: 45%">
                     Description <p-sortIcon field="desc"></p-sortIcon>
                 </th>
-                <th pSortableColumn="isConfigured" style="width: 10%">
+                <th pSortableColumn="isConfigured" style="width: 11%">
                     Configured <p-sortIcon field="isConfigured"></p-sortIcon>
                 </th>
-                <th pSortableColumn="passScore" style="width: 10%">
+                <th pSortableColumn="passScore" style="width: 12%">
                     Pass Score <p-sortIcon field="passScore"></p-sortIcon>
                 </th>
                 <th style="width: 10%"></th>

@@ -11,6 +11,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { StyleClassModule } from 'primeng/styleclass';
 import { DialogModule } from 'primeng/dialog';
 import { BadgeModule } from 'primeng/badge';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 export const PRIME_NG_MODULES = [
     InputTextModule,
@@ -26,4 +27,5 @@ export const PRIME_NG_MODULES = [
     StyleClassModule,
     DialogModule,
     BadgeModule,
+    BreadcrumbModule,
 ];
