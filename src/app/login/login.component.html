@@ -7,19 +7,21 @@
             *ngIf="errorText"
         ></p-message>
         <form [formGroup]="form" class="login-form p-fluid">
-            <div class="p-field">
+            <div class="p-field pb-3">
                 <label for="username">Username</label>
                 <input
                     id="username"
                     type="username"
                     aria-describedby="username-help"
                     formControlName="username"
+                    class="mt-3"
                     [ngClass]="{
                         'ng-invalid ng-dirty':
                             form.controls['username'].dirty &&
                             form.controls['username'].hasError('required')
                     }"
                     pInputText
+                    autofocus
                 />
                 <small
                     id="username-help"
@@ -31,13 +33,14 @@
                     >Username is not available.</small
                 >
             </div>
-            <div class="p-field">
+            <div class="p-field pb-3">
                 <label for="password">Password</label>
                 <input
                     id="password"
                     type="password"
                     aria-describedby="password-help"
                     formControlName="password"
+                    class="mt-3"
                     [ngClass]="{
                         'ng-invalid ng-dirty':
                             form.controls['password'].dirty &&
@@ -77,4 +80,7 @@
             </div>
         </ng-template>
     </p-panel>
+</div>
+<div class="login-footer">
+    © Copyright {{ today.getFullYear() }}. All rights reserved.
 </div>

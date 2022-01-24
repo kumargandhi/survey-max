@@ -2,21 +2,12 @@
     display: flex;
     justify-content: center;
     align-self: center;
+    background: var(--theme-color-primary) !important;
 }
 
 p-panel {
     width: 400px;
-    margin-top: 200px;
-}
-
-.login-form {
-    .p-field {
-        padding-bottom: 10px;
-
-        input {
-            margin-top: 10px;
-        }
-    }
+    margin-top: 16%;
 }
 
 .footer {
@@ -25,4 +16,15 @@ p-panel {
     .descriptive-text {
         padding-left: 10px;
     }
+}
+
+.login-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background-color: gray;
+    color: white;
+    text-align: center;
 }

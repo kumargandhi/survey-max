@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
 
     errorText = '';
 
+    today = new Date();
+
     constructor(
         private _fb: FormBuilder,
         private _destroy$: DestroyService,
@@ -66,16 +68,5 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.errorText = '';
         this._authService.signIn(username.value, password.value);
-        //        this._loginAdapter.login(username.value, password.value).subscribe(
-        //            (data) => {
-        //                console.log('data - ' + JSON.stringify(data));
-        //                this.loading = false;
-        //                this._router.navigate(['main']);
-        //            },
-        //            (error) => {
-        //                this.errorText = error;
-        //                this.loading = false;
-        //            }
-        //        );
     }
 }
