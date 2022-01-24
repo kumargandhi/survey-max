@@ -1,12 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
+import * as _ from 'lodash';
+import { DestroyService } from '../common/services/destroy.service';
+import { SurveyService } from '../common/services/survey.service';
+import { ISurvey } from '../common/interfaces/survey.interface';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [DestroyService],
 })
 export class DashboardComponent implements OnInit {
-    constructor() {}
+    loading = false;
+    surveys: ISurvey[];
 
-    ngOnInit(): void {}
+    constructor(
+        private _cd: ChangeDetectorRef,
+        private _destroy$: DestroyService,
+        private _surveyService: SurveyService
+    ) {}
+
+    ngOnInit(): void {
+        this.getSurveys();
+    }
+
+    getSurveys() {
+        this.loading = true;
+        this._surveyService.getSurveys().subscribe(
+            (data) => {
+                this.surveys = _.cloneDeep(
+                    data.map((e) => {
+                        const s: ISurvey = e.payload.doc.data() as ISurvey;
+                        s.id = e.payload.doc.id;
+                        return s;
+                    })
+                );
+                this.loading = false;
+                this._cd.markForCheck();
+            },
+            (error) => {
+                this.loading = false;
+                this._cd.markForCheck();
+            }
+        );
+    }
 }

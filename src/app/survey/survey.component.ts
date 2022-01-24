@@ -4,7 +4,6 @@ import {
     Component,
     OnInit,
     ViewChild,
-    TemplateRef,
 } from '@angular/core';
 import * as _ from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
@@ -105,7 +104,7 @@ export class SurveyComponent implements OnInit {
             this._surveyService
                 .updateSurvey({
                     ...this.addUpdateSurveyComponent.getSurvey,
-                    id: this.survey.id
+                    id: this.survey.id,
                 })
                 .then(() => {
                     this.loading = false;

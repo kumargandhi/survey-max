@@ -15,7 +15,10 @@ export class MainComponent implements OnInit {
     constructor(private _router: Router) {}
 
     ngOnInit(): void {
-        if (this._router.url.indexOf('login') !== -1) {
+        if (
+            this._router.url.indexOf('login') !== -1 ||
+            this._router.url === '/main'
+        ) {
             this._router.navigate(['main/dashboard']);
         }
     }

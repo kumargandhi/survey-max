@@ -2,14 +2,25 @@
     <div class="grid">
         <div class="col-4">
             <p-card
-                header="Users"
+                header="Totals"
                 [style]="{
                     width: '100%',
                     height: '300px',
                     'margin-bottom': '20px'
                 }"
             >
-                <p>Users card</p>
+                <div class="total-container mb-5">
+                    <div class="total">
+                        {{ surveys?.length }}
+                    </div>
+                    <div class="label">Surveys</div>
+                </div>
+                <div class="total-container">
+                    <div class="total">
+                        {{ surveys?.length }}
+                    </div>
+                    <div class="label">Users</div>
+                </div>
             </p-card>
         </div>
         <div class="col-4">
@@ -22,6 +33,32 @@
                 }"
             >
                 <p>Totals card</p>
+            </p-card>
+        </div>
+        <div class="col-4">
+            <p-card
+                header="Totals"
+                [style]="{
+                    width: '100%',
+                    height: '300px',
+                    'margin-bottom': '20px'
+                }"
+            >
+                <p>Totals card</p>
+            </p-card>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-12">
+            <p-card
+                header="Users"
+                [style]="{
+                    width: '100%',
+                    height: '400px',
+                    'margin-bottom': '20px'
+                }"
+            >
+                <p>Users card</p>
             </p-card>
         </div>
     </div>
