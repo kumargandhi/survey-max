@@ -75,7 +75,7 @@ export class AddUpdateSurveyComponent implements OnInit {
             name: name.value,
             desc: desc.value,
             passScore: passScore.value,
-            isConfigured: false,
+            isConfigured: this.survey ? this.survey.isConfigured : false,
         };
     }
 

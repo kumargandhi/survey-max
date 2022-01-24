@@ -21,9 +21,10 @@ export class SurveyService {
     }
 
     updateSurvey(survey: ISurvey) {
-        // delete survey.id;
+        const id = survey.id;
+        delete survey.id;
         return this.firestore
-            .doc(`${COLLECTION_SURVEY}/` + survey.id)
+            .doc(`${COLLECTION_SURVEY}/` + id)
             .update(survey);
     }
 

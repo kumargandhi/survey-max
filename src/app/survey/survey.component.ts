@@ -94,6 +94,7 @@ export class SurveyComponent implements OnInit {
     }
 
     hideDialog() {
+        this.survey = null;
         this.surveyDialog = false;
     }
 
@@ -102,7 +103,10 @@ export class SurveyComponent implements OnInit {
         this.errorText = '';
         if (this.survey) {
             this._surveyService
-                .updateSurvey(this.addUpdateSurveyComponent.getSurvey)
+                .updateSurvey({
+                    ...this.addUpdateSurveyComponent.getSurvey,
+                    id: this.survey.id
+                })
                 .then(() => {
                     this.loading = false;
                     this.survey = null;
