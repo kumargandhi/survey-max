@@ -12,6 +12,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { DialogModule } from 'primeng/dialog';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 export const CORE_PRIME_NG_MODULES = [
     InputTextModule,
@@ -37,4 +38,5 @@ export const MAIN_PRIME_NG_MODULES = [
     DialogModule,
     BadgeModule,
     BreadcrumbModule,
+    ConfirmDialogModule
 ];

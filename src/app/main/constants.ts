@@ -17,12 +17,10 @@ export const SURVEY_BREAD_CRUMBS = [
     {
         label: 'Survey',
         routerLink: ['survey-list'],
-        routerLinkActive: 'active',
     },
     {
         label: 'Questions',
         disabled: false,
-        routerLink: ['question-list'],
-        routerLinkActive: 'active',
+        routerLink: [':surveyId/question-list'],
     },
 ];

@@ -40,7 +40,7 @@
             <th pSortableColumn="name" style="width: 22%">
                 Name <p-sortIcon field="name"></p-sortIcon>
             </th>
-            <th pSortableColumn="desc" style="width: 45%">
+            <th pSortableColumn="desc" style="width: 42%">
                 Description <p-sortIcon field="desc"></p-sortIcon>
             </th>
             <th pSortableColumn="isConfigured" style="width: 11%">
@@ -49,7 +49,7 @@
             <th pSortableColumn="passScore" style="width: 12%">
                 Pass Score <p-sortIcon field="passScore"></p-sortIcon>
             </th>
-            <th style="width: 10%"></th>
+            <th style="width: 13%"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-survey>
@@ -68,6 +68,13 @@
             </td>
             <td>{{ survey.passScore }}</td>
             <td>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-list"
+                    class="p-button-rounded p-button-info mr-2"
+                    (click)="goToQuestions(survey)"
+                ></button>
                 <button
                     pButton
                     pRipple
@@ -125,3 +132,12 @@
         ></button>
     </ng-template>
 </p-dialog>
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="message">
+        <h5 [innerHTML]="confirmationMessage"></h5>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-danger" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

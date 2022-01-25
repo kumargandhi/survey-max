@@ -4,10 +4,17 @@ import {
     Component,
     OnInit,
 } from '@angular/core';
+import {
+    ActivatedRoute,
+    Router,
+    NavigationEnd,
+    RouterEvent,
+} from '@angular/router';
 import * as _ from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { SURVEY_BREAD_CRUMBS } from '../main/constants';
 import { MenuItem } from 'primeng/api';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-survey',
@@ -17,10 +24,31 @@ import { MenuItem } from 'primeng/api';
     providers: [DestroyService],
 })
 export class SurveyComponent implements OnInit {
-    readonly SURVEY_BREAD_CRUMBS = SURVEY_BREAD_CRUMBS;
-    defaultBreadCrumb = _.head(SURVEY_BREAD_CRUMBS);
+    menu = SURVEY_BREAD_CRUMBS;
 
-    constructor(private _cd: ChangeDetectorRef) {}
+    surveyId: string;
+
+    constructor(
+        private _cd: ChangeDetectorRef,
+        private _destroy$: DestroyService,
+        private _route: ActivatedRoute,
+        private _router: Router
+    ) {
+        _router.events
+            .pipe(takeUntil(this._destroy$))
+            .pipe(filter((ev) => ev instanceof NavigationEnd))
+            .subscribe((data: RouterEvent) => {
+                if (data.url && data.url.indexOf('question-list') > -1) {
+                    this.updateMenuWithSurveyId();
+                }
+            });
+    }
 
     ngOnInit(): void {}
+
+    updateMenuWithSurveyId() {
+        this.surveyId = this._route.snapshot.firstChild.params.surveyId;
+        this.menu[1].routerLink = [`${this.surveyId}/question-list`];
+        this._cd.markForCheck();
+    }
 }

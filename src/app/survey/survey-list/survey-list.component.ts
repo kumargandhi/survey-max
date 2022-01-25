@@ -5,18 +5,20 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { DestroyService } from '../../common/services/destroy.service';
 import { SurveyService } from '../../common/services/survey.service';
 import { ISurvey } from '../../common/interfaces/survey.interface';
 import { AddUpdateSurveyComponent } from '../add-update-survey/add-update-survey.component';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-survey-list',
     templateUrl: './survey-list.component.html',
     styleUrls: ['./survey-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [DestroyService],
+    providers: [DestroyService, ConfirmationService],
 })
 export class SurveyListComponent implements OnInit {
     surveys: ISurvey[];
@@ -27,11 +29,15 @@ export class SurveyListComponent implements OnInit {
     @ViewChild('addUpdateSurveyComponent')
     addUpdateSurveyComponent: AddUpdateSurveyComponent;
     survey: ISurvey;
+    confirmationMessage = '';
 
     constructor(
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
-        private _surveyService: SurveyService
+        private _surveyService: SurveyService,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        private confirmationService: ConfirmationService
     ) {}
 
     ngOnInit(): void {
@@ -67,24 +73,36 @@ export class SurveyListComponent implements OnInit {
         );
     }
 
+    goToQuestions(survey: ISurvey) {
+        this._router.navigate([survey.id + '/question-list'], {
+            relativeTo: this._route.parent,
+        });
+    }
+
     editSurvey(survey: ISurvey) {
         this.survey = _.cloneDeep(survey);
         this.surveyDialog = true;
     }
 
     deleteSurvey(survey: ISurvey) {
-        this.loading = true;
-        this.errorText = '';
-        this._surveyService
-            .deleteSurvey(survey.id)
-            .then(() => {
-                this.loading = false;
-                this.getSurveys();
-            })
-            .catch((error) => {
-                this.loading = false;
-                this.errorText = error;
-            });
+        this.confirmationMessage = `Are you sure that you want to delete <strong>${survey.name}</strong> survey?`;
+        this.confirmationService.confirm({
+            message: this.confirmationMessage,
+            accept: () => {
+                this.loading = true;
+                this.errorText = '';
+                this._surveyService
+                    .deleteSurvey(survey.id)
+                    .then(() => {
+                        this.loading = false;
+                        this.getSurveys();
+                    })
+                    .catch((error) => {
+                        this.loading = false;
+                        this.errorText = error;
+                    });
+            },
+        });
     }
 
     addNewSurvey() {
@@ -136,9 +154,19 @@ export class SurveyListComponent implements OnInit {
     }
 
     deleteSelectedSurveys() {
-        this.selectedSurveys.forEach((value) => {
-            this.deleteSurvey(value);
+        const surveyNames: string[] = _.cloneDeep(this.selectedSurveys).map(
+            (item) => item.name
+        );
+        this.confirmationMessage = `Are you sure that you want to delete <strong>${surveyNames.join(
+            ', '
+        )}</strong> ${surveyNames.length > 1 ? 'surveys' : 'survey'}?`;
+        this.confirmationService.confirm({
+            message: this.confirmationMessage,
+            accept: () => {
+                this.selectedSurveys.forEach((value) => {
+                    this.deleteSurvey(value);
+                });
+            },
         });
-        this.selectedSurveys = [];
     }
 }
