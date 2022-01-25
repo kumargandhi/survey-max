@@ -43,7 +43,7 @@ export class QuestionListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.surveyId = this._route.snapshot.firstChild.params.surveyId;
+        this.surveyId = this._route.snapshot.params.surveyId;
         this.getQuestions();
     }
 
@@ -76,12 +76,6 @@ export class QuestionListComponent implements OnInit {
                 this._cd.markForCheck();
             }
         );
-    }
-
-    goToQuestions(question: IQuestion) {
-        this._router.navigate([question.id + '/question-list'], {
-            relativeTo: this._route.parent,
-        });
     }
 
     editQuestion(question: IQuestion) {
@@ -120,43 +114,46 @@ export class QuestionListComponent implements OnInit {
         this.questionDialog = false;
     }
 
-    //    saveQuestion() {
-    //        this.loading = true;
-    //        this.errorText = '';
-    //        if (this.question) {
-    //            this._questionService
-    //                .updateQuestion({
-    //                    ...this.addUpdateQuestionComponent.getQuestion,
-    //                    id: this.question.id,
-    //                })
-    //                .then(() => {
-    //                    this.loading = false;
-    //                    this.question = null;
-    //                    this.hideDialog();
-    //                    this.getQuestions();
-    //                    this._cd.markForCheck();
-    //                })
-    //                .catch((error) => {
-    //                    this.addUpdateQuestionComponent.errorText = error;
-    //                    this.loading = false;
-    //                    this._cd.markForCheck();
-    //                });
-    //        } else {
-    //            this._questionService
-    //                .saveQuestion(this.addUpdateQuestionComponent.getQuestion)
-    //                .then(() => {
-    //                    this.loading = false;
-    //                    this.hideDialog();
-    //                    this.getQuestions();
-    //                    this._cd.markForCheck();
-    //                })
-    //                .catch((error) => {
-    //                    this.addUpdateQuestionComponent.errorText = error;
-    //                    this.loading = false;
-    //                    this._cd.markForCheck();
-    //                });
-    //        }
-    //    }
+    saveQuestion() {
+        this.loading = true;
+        this.errorText = '';
+        if (this.question) {
+            this._questionService
+                .updateQuestion({
+                    ...this.addUpdateQuestionComponent.getQuestion,
+                    id: this.question.id,
+                })
+                .then(() => {
+                    this.loading = false;
+                    this.question = null;
+                    this.hideDialog();
+                    this.getQuestions();
+                    this._cd.markForCheck();
+                })
+                .catch((error) => {
+                    this.addUpdateQuestionComponent.errorText = error;
+                    this.loading = false;
+                    this._cd.markForCheck();
+                });
+        } else {
+            const question: IQuestion =
+                this.addUpdateQuestionComponent.getQuestion;
+            question.creationDate = new Date();
+            this._questionService
+                .saveQuestion(question, this.surveyId)
+                .then(() => {
+                    this.loading = false;
+                    this.hideDialog();
+                    this.getQuestions();
+                    this._cd.markForCheck();
+                })
+                .catch((error) => {
+                    this.addUpdateQuestionComponent.errorText = error;
+                    this.loading = false;
+                    this._cd.markForCheck();
+                });
+        }
+    }
 
     deleteSelectedQuestions() {
         const questionNames: string[] = _.cloneDeep(this.selectedQuestions).map(

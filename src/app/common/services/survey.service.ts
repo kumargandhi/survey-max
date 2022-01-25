@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ISurvey } from '../interfaces/survey.interface';
 
-const COLLECTION_SURVEY = 'survey';
+export const COLLECTION_SURVEY = 'survey';
 
 @Injectable({
     providedIn: 'root',

@@ -1,1 +1,56 @@
-<p>add-update-question works!</p>
+<div class="question-form">
+    <p-message
+        severity="error"
+        [text]="_errorText"
+        *ngIf="_errorText"
+    ></p-message>
+    <form [formGroup]="form" class="p-fluid">
+        <div class="p-field mb-3">
+            <label for="type">Type</label>
+            <input
+                type="text"
+                pInputText
+                id="type"
+                required
+                autofocus
+                formControlName="type"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['type'].dirty &&
+                        form.controls['type'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['type'].dirty &&
+                    form.controls['type'].hasError('required')
+                "
+                >Type is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label for="question">Question</label>
+            <input
+                type="text"
+                pInputText
+                id="question"
+                required
+                formControlName="question"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['question'].dirty &&
+                        form.controls['question'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['question'].dirty &&
+                    form.controls['question'].hasError('required')
+                "
+                >Question is required.</small
+            >
+        </div>
+    </form>
+</div>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 // Firebase
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { IQuestion } from '../interfaces/question.interface';
+import { COLLECTION_SURVEY } from './survey.service';
 
 const COLLECTION_QUESTION = 'question';
 
@@ -13,10 +14,21 @@ export class QuestionService {
     constructor(public firestore: AngularFirestore) {}
 
     getQuestionsForSurvey(surveyId: string) {
-        return this.firestore.collection(COLLECTION_QUESTION).snapshotChanges();
+        const surveyDoc = this.firestore
+            .collection(COLLECTION_SURVEY)
+            .doc(surveyId);
+        return this.firestore
+            .collection(COLLECTION_QUESTION, (ref) =>
+                ref.where('surveyId', '==', surveyDoc.ref)
+            )
+            .snapshotChanges();
     }
 
-    saveQuestion(question: IQuestion) {
+    saveQuestion(question: IQuestion, surveyId: string) {
+        const surveyDoc = this.firestore
+            .collection(COLLECTION_SURVEY)
+            .doc(surveyId);
+        question.surveyId = surveyDoc.ref;
         return this.firestore.collection(COLLECTION_QUESTION).add(question);
     }
 
