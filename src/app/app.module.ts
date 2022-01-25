@@ -2,12 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { PRIME_NG_MODULES } from './constants';
+import { CORE_PRIME_NG_MODULES } from './constants';
 import { environment } from '../environments/environment';
 
 // Firebase
@@ -25,12 +26,15 @@ import { AuthService } from './common/services/auth.service';
         FormsModule,
         ReactiveFormsModule,
         AppRoutingModule,
-        ...PRIME_NG_MODULES,
+        ...CORE_PRIME_NG_MODULES,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
         AngularFirestoreModule,
     ],
-    providers: [AuthService],
+    providers: [
+        [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+        AuthService,
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

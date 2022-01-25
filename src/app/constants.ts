@@ -13,7 +13,16 @@ import { DialogModule } from 'primeng/dialog';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 
-export const PRIME_NG_MODULES = [
+export const CORE_PRIME_NG_MODULES = [
+    InputTextModule,
+    PanelModule,
+    ButtonModule,
+    MessagesModule,
+    MessageModule,
+    TagModule,
+];
+
+export const MAIN_PRIME_NG_MODULES = [
     InputTextModule,
     PanelModule,
     ButtonModule,

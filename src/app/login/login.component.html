@@ -47,6 +47,7 @@
                             form.controls['password'].hasError('required')
                     }"
                     pInputText
+                    (keyup.enter)="login()"
                 />
                 <small
                     id="password-help"

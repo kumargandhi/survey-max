@@ -4,12 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
+import { SidebarComponent } from '../common/components/sidebar/sidebar.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { PRIME_NG_MODULES } from '../constants';
+import { MAIN_PRIME_NG_MODULES } from '../constants';
 import { UsersComponent } from '../users/users.component';
 import { SurveyComponent } from '../survey/survey.component';
-import { SidebarComponent } from '../common/components/sidebar/sidebar.component';
+import { SurveyListComponent } from '../survey/survey-list/survey-list.component';
 import { AddUpdateSurveyComponent } from '../survey/add-update-survey/add-update-survey.component';
+import { QuestionListComponent } from '../survey/question-list/question-list.component';
 
 @NgModule({
     declarations: [
@@ -17,14 +19,16 @@ import { AddUpdateSurveyComponent } from '../survey/add-update-survey/add-update
         DashboardComponent,
         UsersComponent,
         SurveyComponent,
+        SurveyListComponent,
         SidebarComponent,
         AddUpdateSurveyComponent,
+        QuestionListComponent,
     ],
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        ...PRIME_NG_MODULES,
+        ...MAIN_PRIME_NG_MODULES,
         MainRoutingModule,
     ],
 })

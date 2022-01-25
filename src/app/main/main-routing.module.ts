@@ -4,6 +4,8 @@ import { MainComponent } from './main.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { UsersComponent } from '../users/users.component';
 import { SurveyComponent } from '../survey/survey.component';
+import { SurveyListComponent } from '../survey/survey-list/survey-list.component';
+import { QuestionListComponent } from '../survey/question-list/question-list.component';
 
 const routes: Routes = [
     {
@@ -21,6 +23,11 @@ const routes: Routes = [
             {
                 path: 'survey',
                 component: SurveyComponent,
+                children: [
+                    { path: 'survey-list', component: SurveyListComponent },
+                    { path: 'question-list', component: QuestionListComponent },
+                    { path: '', redirectTo: 'survey-list', pathMatch: 'full' },
+                ],
             },
         ],
     },

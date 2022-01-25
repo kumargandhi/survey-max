@@ -93,4 +93,9 @@ body {
     & > #page-title.gray {
         background-color: $theme-gray-light !important;
     }
+
+    & > .page-section {
+        width: 100%;
+        height: calc(100% - 64px);
+    }
 }

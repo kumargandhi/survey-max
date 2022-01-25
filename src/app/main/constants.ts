@@ -14,6 +14,15 @@ export const MENU_ITEMS = [
 ];
 
 export const SURVEY_BREAD_CRUMBS = [
-    { label: 'Survey' },
-    { label: 'Questions', disabled: true },
+    {
+        label: 'Survey',
+        routerLink: ['survey-list'],
+        routerLinkActive: 'active',
+    },
+    {
+        label: 'Questions',
+        disabled: false,
+        routerLink: ['question-list'],
+        routerLinkActive: 'active',
+    },
 ];

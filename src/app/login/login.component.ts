@@ -65,6 +65,11 @@ export class LoginComponent implements OnInit {
 
     login() {
         const { username, password } = this.form.controls;
+        if (!this.form.valid) {
+            username.markAsDirty();
+            password.markAsDirty();
+            return;
+        }
         this.loading = true;
         this.errorText = '';
         this._authService.signIn(username.value, password.value);
