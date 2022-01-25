@@ -38,7 +38,9 @@ export class SurveyComponent implements OnInit {
             .pipe(takeUntil(this._destroy$))
             .pipe(filter((ev) => ev instanceof NavigationEnd))
             .subscribe((data: RouterEvent) => {
-                if (data.url && data.url.indexOf('question-list') > -1) {
+                if (data.url && data.url.indexOf('survey-list') > -1) {
+                    this.menu[1].disabled = true;
+                } else if (data.url && data.url.indexOf('question-list') > -1) {
                     this.updateMenuWithSurveyId();
                 }
             });
@@ -49,6 +51,7 @@ export class SurveyComponent implements OnInit {
     updateMenuWithSurveyId() {
         this.surveyId = this._route.snapshot.firstChild.params.surveyId;
         this.menu[1].routerLink = [`${this.surveyId}/question-list`];
+        this.menu[1].disabled = false;
         this._cd.markForCheck();
     }
 }

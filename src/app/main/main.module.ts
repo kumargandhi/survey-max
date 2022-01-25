@@ -12,6 +12,7 @@ import { SurveyComponent } from '../survey/survey.component';
 import { SurveyListComponent } from '../survey/survey-list/survey-list.component';
 import { AddUpdateSurveyComponent } from '../survey/add-update-survey/add-update-survey.component';
 import { QuestionListComponent } from '../survey/question-list/question-list.component';
+import { AddUpdateQuestionComponent } from '../survey/add-update-question/add-update-question.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { QuestionListComponent } from '../survey/question-list/question-list.com
         SidebarComponent,
         AddUpdateSurveyComponent,
         QuestionListComponent,
+        AddUpdateQuestionComponent,
     ],
     imports: [
         CommonModule,

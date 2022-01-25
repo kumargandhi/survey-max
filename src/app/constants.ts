@@ -38,5 +38,5 @@ export const MAIN_PRIME_NG_MODULES = [
     DialogModule,
     BadgeModule,
     BreadcrumbModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
 ];

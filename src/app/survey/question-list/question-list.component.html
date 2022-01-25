@@ -1,1 +1,132 @@
-<p>question-list works!</p>
+<p-toolbar styleClass="mb-3">
+    <ng-template pTemplate="left">
+        <button
+            pButton
+            pRipple
+            label="New"
+            icon="pi pi-plus"
+            class="p-button-success mr-2"
+            (click)="addNewQuestion()"
+        ></button>
+        <button
+            pButton
+            pRipple
+            label="Delete"
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="deleteSelectedQuestions()"
+            [disabled]="!selectedQuestions || !selectedQuestions.length"
+        ></button>
+    </ng-template>
+</p-toolbar>
+<p-table
+    #dt
+    [value]="questions"
+    [rows]="10"
+    [paginator]="true"
+    responsiveLayout="scroll"
+    [(selection)]="selectedQuestions"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    [loading]="loading"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="type" style="width: 22%">
+                Type <p-sortIcon field="type"></p-sortIcon>
+            </th>
+            <th pSortableColumn="question" style="width: 42%">
+                Question <p-sortIcon field="question"></p-sortIcon>
+            </th>
+            <th style="width: 13%"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-question>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="question"></p-tableCheckbox>
+            </td>
+            <td>{{ question.type }}</td>
+            <td>{{ question.question }}</td>
+            <td>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success mr-2"
+                    (click)="editQuestion(question)"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-warning"
+                    (click)="deleteQuestion(question)"
+                ></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            {{ getTableSummary() }}
+        </div>
+    </ng-template>
+</p-table>
+
+<p-dialog
+    [(visible)]="questionDialog"
+    [style]="{ width: '550px' }"
+    [header]="question ? 'Update Question' : 'Add Question'"
+    [modal]="true"
+    styleClass="p-fluid"
+>
+    <ng-template pTemplate="content">
+        <app-add-update-question
+            #addUpdateQuestionComponent
+        ></app-add-update-question>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Cancel"
+            icon="pi pi-times"
+            class="p-button-secondary"
+            (click)="hideDialog()"
+        ></button>
+        <button
+            pButton
+            pRipple
+            label="{{ question ? 'Update' : 'Add' }}"
+            icon="pi pi-check"
+            class="p-button-primary"
+        ></button>
+    </ng-template>
+</p-dialog>
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="message">
+        <h5 [innerHTML]="confirmationMessage"></h5>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button
+            type="button"
+            pButton
+            icon="pi pi-times"
+            label="No"
+            (click)="cd.reject()"
+        ></button>
+        <button
+            type="button"
+            pButton
+            icon="pi pi-check"
+            label="Yes"
+            class="p-button-danger"
+            (click)="cd.accept()"
+        ></button>
+    </ng-template>
+</p-confirmDialog>

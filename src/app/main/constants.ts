@@ -20,7 +20,7 @@ export const SURVEY_BREAD_CRUMBS = [
     },
     {
         label: 'Questions',
-        disabled: false,
+        disabled: true,
         routerLink: [':surveyId/question-list'],
     },
 ];
