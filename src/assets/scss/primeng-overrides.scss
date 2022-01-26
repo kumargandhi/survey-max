@@ -35,3 +35,12 @@
         color: var(--theme-gray-darker) !important;
     }
 }
+
+.p-datatable-auto-layout > .p-datatable-wrapper > table,
+.p-datatable-responsive-scroll > .p-datatable-wrapper > table {
+    table-layout: fixed !important;
+}
+.p-datatable .p-datatable-tbody > tr > td {
+    overflow: hidden !important;
+    white-space: pre !important;
+}

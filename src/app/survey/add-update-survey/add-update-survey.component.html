@@ -31,18 +31,12 @@
         </div>
         <div class="p-field mb-3">
             <label for="desc">Description</label>
-            <input
-                type="text"
-                pInputText
-                id="desc"
-                required
-                formControlName="desc"
-                [ngClass]="{
+            <textarea id="desc" name="desc" pInputText rows="6" cols="70" required formControlName="desc"
+                      [ngClass]="{
                     'ng-invalid ng-dirty':
                         form.controls['desc'].dirty &&
                         form.controls['desc'].hasError('required')
-                }"
-            />
+                }"></textarea>
             <small
                 class="p-error"
                 *ngIf="
