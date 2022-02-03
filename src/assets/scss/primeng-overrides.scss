@@ -9,7 +9,7 @@
 }
 
 .p-panel .p-panel-footer {
-    background: var(--panel-background);
+    background: var(--panel-footer-background);
 }
 
 .p-menubar .p-menuitem {
@@ -43,4 +43,24 @@
 .p-datatable .p-datatable-tbody > tr > td {
     overflow: hidden !important;
     white-space: pre !important;
+}
+
+.p-dialog .p-dialog-header {
+    background: var(--panel-header-background);
+}
+
+.p-dialog .p-dialog-content {
+    padding: 2rem 1.5rem 2rem 1.5rem;
+    background: var(--panel-background);
+}
+
+.p-dialog .p-dialog-footer {
+    padding: 1.5rem;
+    background: var(--panel-footer-background);
+}
+
+.p-field {
+    label {
+        margin-bottom: 5px;
+    }
 }
