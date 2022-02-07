@@ -62,7 +62,7 @@
             <td>
                 <p-badge
                     [value]="survey.isConfigured ? 'Yes' : 'No'"
-                    severity="success"
+                    [severity]="survey.isConfigured ? 'success' : 'warning'"
                     styleClass="configured-badge"
                 ></p-badge>
             </td>

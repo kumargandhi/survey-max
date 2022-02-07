@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 // Firebase
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { IQuestion } from '../interfaces/question.interface';
-import { COLLECTION_SURVEY } from './survey.service';
+import { COLLECTION_SURVEY, SurveyService } from './survey.service';
+import { ISurvey } from '../interfaces/survey.interface';
 
 const COLLECTION_QUESTION = 'question';
 
@@ -11,7 +12,7 @@ const COLLECTION_QUESTION = 'question';
     providedIn: 'root',
 })
 export class QuestionService {
-    constructor(public firestore: AngularFirestore) {}
+    constructor(public firestore: AngularFirestore, private surveyService: SurveyService) {}
 
     getQuestionsForSurvey(surveyId: string) {
         const surveyDoc = this.firestore
@@ -28,6 +29,24 @@ export class QuestionService {
         const surveyDoc = this.firestore
             .collection(COLLECTION_SURVEY)
             .doc(surveyId);
+        let survey: ISurvey;
+        surveyDoc.ref.get().then((doc) => {
+            if (doc.exists) {
+                survey = doc.data() as ISurvey;
+                if (!survey.isConfigured) {
+                    survey.isConfigured = true;
+                    this.surveyService.updateSurvey({ ...survey, id: surveyId }).then(() => {
+                        console.log('Survey updated as configured');
+                    }).catch((error) => {
+                        console.log('Survey updated as configured failed:', error);
+                    });
+                }
+            } else {
+                console.log('No such document survey!');
+            }
+        }).catch(function(error) {
+            console.log('Error getting document survey:', error);
+        });
         question.surveyId = surveyDoc.ref;
         return this.firestore.collection(COLLECTION_QUESTION).add(question);
     }
