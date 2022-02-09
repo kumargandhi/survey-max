@@ -64,4 +64,18 @@ export class QuestionService {
             .doc(`${COLLECTION_QUESTION}/` + questionId)
             .delete();
     }
+
+    deleteQuestions(questionIds: string[]) {
+        const docs = this.firestore.collection(COLLECTION_QUESTION)
+          .ref.where('surveyId', '==', 'survey/' + questionIds[0])
+          .get()
+          .then((doc) => {
+              console.log(doc);
+          })
+          .catch(function(error) {
+              console.log('Error getting questions:', error);
+          });
+        console.log(docs);
+        // docs.forEach(doc => doc.ref.delete());
+    }
 }

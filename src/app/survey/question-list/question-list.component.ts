@@ -156,6 +156,10 @@ export class QuestionListComponent implements OnInit {
     }
 
     deleteSelectedQuestions() {
+        this._questionService.deleteQuestions(_.cloneDeep(this.selectedQuestions).map(
+          (item) => item.id
+        ));
+        return;
         const questionNames: string[] = _.cloneDeep(this.selectedQuestions).map(
             (item) => item.question
         );
