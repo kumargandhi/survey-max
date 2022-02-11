@@ -74,4 +74,8 @@ export class LoginComponent implements OnInit {
         this.errorText = '';
         this._authService.signIn(username.value, password.value);
     }
+
+    loginWithGoogle() {
+        // do google login
+    }
 }

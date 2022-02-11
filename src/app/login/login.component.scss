@@ -7,7 +7,7 @@
 
 p-panel {
     width: 400px;
-    margin-top: 14%;
+    margin-top: 12%;
 }
 
 .footer {
@@ -28,5 +28,17 @@ p-panel {
     background-color: gray;
     color: white;
     text-align: center;
-    // border-bottom: 1px solid var(--theme-gray) !important;
+}
+
+.g-field {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+
+    .p-button-help {
+        width: 70px;
+        padding-left: 0;
+        padding-right: 0;
+    }
 }

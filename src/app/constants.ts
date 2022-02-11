@@ -14,6 +14,7 @@ import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 export const CORE_PRIME_NG_MODULES = [
     InputTextModule,
@@ -40,5 +41,6 @@ export const MAIN_PRIME_NG_MODULES = [
     BadgeModule,
     BreadcrumbModule,
     ConfirmDialogModule,
-    TooltipModule
+    TooltipModule,
+    InputTextareaModule
 ];
