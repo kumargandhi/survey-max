@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { QuestionService } from '../../common/services/question.service';
 import { IQuestion } from '../../common/interfaces/question.interface';
 import { DestroyService } from '../../common/services/destroy.service';
+import { IQuestionTypes } from '../../common/interfaces/question-types.interface';
 
 @Component({
     selector: 'app-add-update-question',
@@ -26,6 +27,10 @@ export class AddUpdateQuestionComponent implements OnInit {
     _errorText = '';
 
     _question: IQuestion;
+
+    @Input() questionTypes: IQuestionTypes[];
+
+    selectedQType: IQuestionTypes;
 
     constructor(
         private _fb: FormBuilder,

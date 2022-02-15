@@ -6,37 +6,31 @@
     ></p-message>
     <form [formGroup]="form" class="p-fluid">
         <div class="p-field mb-3">
-            <label for="type">Type</label>
-            <input
-                type="text"
-                pInputText
+            <label>Type</label>
+            <p-dropdown
                 id="type"
-                required
-                autofocus
+                [options]="questionTypes"
+                [(ngModel)]="selectedQType"
+                optionLabel="label"
                 formControlName="type"
-                [ngClass]="{
-                    'ng-invalid ng-dirty':
-                        form.controls['type'].dirty &&
-                        form.controls['type'].hasError('required')
-                }"
-            />
-            <small
-                class="p-error"
-                *ngIf="
-                    form.controls['type'].dirty &&
-                    form.controls['type'].hasError('required')
-                "
-                >Type is required.</small
-            >
+            ></p-dropdown>
         </div>
         <div class="p-field mb-3">
             <label for="question">Question</label>
-            <textarea id="question" name="question" pInputTextarea rows="6" cols="70" required formControlName="question"
-                      [ngClass]="{
+            <textarea
+                id="question"
+                name="question"
+                pInputTextarea
+                rows="6"
+                cols="70"
+                required
+                formControlName="question"
+                [ngClass]="{
                     'ng-invalid ng-dirty':
                         form.controls['question'].dirty &&
                         form.controls['question'].hasError('required')
-                }"></textarea>
+                }"
+            ></textarea>
             <small
                 class="p-error"
                 *ngIf="

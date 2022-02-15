@@ -15,6 +15,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
 
 export const CORE_PRIME_NG_MODULES = [
     InputTextModule,
@@ -42,5 +43,6 @@ export const MAIN_PRIME_NG_MODULES = [
     BreadcrumbModule,
     ConfirmDialogModule,
     TooltipModule,
-    InputTextareaModule
+    InputTextareaModule,
+    DropdownModule
 ];

@@ -12,6 +12,7 @@ import { QuestionService } from '../../common/services/question.service';
 import { IQuestion } from '../../common/interfaces/question.interface';
 import { AddUpdateQuestionComponent } from '../add-update-question/add-update-question.component';
 import { ConfirmationService } from 'primeng/api';
+import { IQuestionTypes } from '../../common/interfaces/question-types.interface';
 
 @Component({
     selector: 'app-question-list',
@@ -33,6 +34,8 @@ export class QuestionListComponent implements OnInit {
     question: IQuestion;
     confirmationMessage = '';
 
+    questionTypes: IQuestionTypes[];
+
     constructor(
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
@@ -45,6 +48,7 @@ export class QuestionListComponent implements OnInit {
     ngOnInit(): void {
         this.surveyId = this._route.snapshot.params.surveyId;
         this.getQuestions();
+        this.getQuestionTypes();
     }
 
     getTableSummary() {
@@ -73,6 +77,24 @@ export class QuestionListComponent implements OnInit {
             (error) => {
                 this.errorText = error;
                 this.loading = false;
+                this._cd.markForCheck();
+            }
+        );
+    }
+
+    getQuestionTypes() {
+        this._questionService.getQuestionTypes().subscribe(
+            (data) => {
+                this.questionTypes = _.cloneDeep(
+                    data.map((e) => {
+                        const s: IQuestionTypes = e.payload.doc.data() as IQuestionTypes;
+                        return s;
+                    })
+                );
+                this._cd.markForCheck();
+            },
+            (error) => {
+                this.errorText = error;
                 this._cd.markForCheck();
             }
         );
@@ -156,10 +178,6 @@ export class QuestionListComponent implements OnInit {
     }
 
     deleteSelectedQuestions() {
-        this._questionService.deleteQuestions(_.cloneDeep(this.selectedQuestions).map(
-          (item) => item.id
-        ));
-        return;
         const questionNames: string[] = _.cloneDeep(this.selectedQuestions).map(
             (item) => item.question
         );
@@ -170,7 +188,15 @@ export class QuestionListComponent implements OnInit {
             message: this.confirmationMessage,
             accept: () => {
                 this.selectedQuestions.forEach((value) => {
-                    this.deleteQuestion(value);
+                    this._questionService
+                      .deleteQuestion(value.id)
+                      .then(() => {
+                          // TODO We need to refresh the grid and unselect header checkbox selection on grid.
+                      })
+                      .catch((error) => {
+                          this.loading = false;
+                          this.errorText = error;
+                      });
                 });
             },
         });

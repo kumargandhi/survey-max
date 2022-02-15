@@ -7,6 +7,7 @@ import { COLLECTION_SURVEY, SurveyService } from './survey.service';
 import { ISurvey } from '../interfaces/survey.interface';
 
 const COLLECTION_QUESTION = 'question';
+const COLLECTION_QUESTION_TYPES = 'question_types';
 
 @Injectable({
     providedIn: 'root',
@@ -23,6 +24,10 @@ export class QuestionService {
                 ref.where('surveyId', '==', surveyDoc.ref)
             )
             .snapshotChanges();
+    }
+
+    getQuestionTypes() {
+        return this.firestore.collection(COLLECTION_QUESTION_TYPES).snapshotChanges();
     }
 
     saveQuestion(question: IQuestion, surveyId: string) {
