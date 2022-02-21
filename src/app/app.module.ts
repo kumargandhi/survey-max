@@ -29,12 +29,13 @@ import { AuthService } from './common/services/auth.service';
         ...CORE_PRIME_NG_MODULES,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
-        AngularFirestoreModule,
+        AngularFirestoreModule
     ],
     providers: [
         [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
-        AuthService,
+        AuthService
     ],
     bootstrap: [AppComponent],
+    exports: []
 })
 export class AppModule {}

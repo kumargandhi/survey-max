@@ -13,6 +13,7 @@ import { SurveyListComponent } from '../survey/survey-list/survey-list.component
 import { AddUpdateSurveyComponent } from '../survey/add-update-survey/add-update-survey.component';
 import { QuestionListComponent } from '../survey/question-list/question-list.component';
 import { AddUpdateQuestionComponent } from '../survey/add-update-question/add-update-question.component';
+import { HeaderComponent } from '../common/components/header/header.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { AddUpdateQuestionComponent } from '../survey/add-update-question/add-up
         SurveyComponent,
         SurveyListComponent,
         SidebarComponent,
+        HeaderComponent,
         AddUpdateSurveyComponent,
         QuestionListComponent,
         AddUpdateQuestionComponent,
