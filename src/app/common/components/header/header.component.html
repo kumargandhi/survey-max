@@ -1,11 +1,36 @@
 <nav class="navbar navbar-expand navbar-light bg-white shadow-sm fixed-top">
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link" (click)="onInfoClick()"><i class="fa fa-comments"></i></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" (click)="onLogoutClick()"><i class="fa fa-calendar"></i></a>
-    </li>
-  </ul>
-
+    <ul class="navbar-nav ml-auto me-3">
+        <li class="nav-item">
+            <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-info-circle"
+                class="p-button-rounded p-button-info p-button-text"
+                (click)="onInfoClick()"
+            ></button>
+        </li>
+    </ul>
 </nav>
+
+<p-dialog
+    [(visible)]="infoDialog"
+    [style]="{ width: '550px' }"
+    [header]="'Info'"
+    [modal]="true"
+    styleClass="p-fluid"
+>
+    <ng-template pTemplate="content">
+        <app-info></app-info>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Cancel"
+            icon="pi pi-times"
+            class="p-button-secondary"
+            (click)="infoDialog = false"
+        ></button>
+    </ng-template>
+</p-dialog>
