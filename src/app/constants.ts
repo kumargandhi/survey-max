@@ -16,6 +16,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 export const CORE_PRIME_NG_MODULES = [
     InputTextModule,
@@ -44,5 +45,6 @@ export const MAIN_PRIME_NG_MODULES = [
     ConfirmDialogModule,
     TooltipModule,
     InputTextareaModule,
-    DropdownModule
+    DropdownModule,
+    RadioButtonModule
 ];

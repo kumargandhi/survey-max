@@ -5,12 +5,14 @@ import {
     OnInit,
     Input,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { head } from 'lodash';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QuestionService } from '../../common/services/question.service';
 import { IQuestion } from '../../common/interfaces/question.interface';
 import { DestroyService } from '../../common/services/destroy.service';
 import { IQuestionTypes } from '../../common/interfaces/question-types.interface';
+import { QUESTION_TYPES } from '../../main/constants';
 
 @Component({
     selector: 'app-add-update-question',
@@ -30,7 +32,9 @@ export class AddUpdateQuestionComponent implements OnInit {
 
     @Input() questionTypes: IQuestionTypes[];
 
-    selectedQType: IQuestionTypes;
+    selectedOption = 0;
+
+    isOptionSelected = false;
 
     constructor(
         private _fb: FormBuilder,
@@ -43,6 +47,10 @@ export class AddUpdateQuestionComponent implements OnInit {
         this._question = val;
     }
 
+    get question() {
+        return this._question;
+    }
+
     ngOnInit(): void {
         this.formCreate();
         this.formSubscribe();
@@ -51,7 +59,7 @@ export class AddUpdateQuestionComponent implements OnInit {
 
     formCreate() {
         this.form = this._fb.group({
-            type: [this._question?.type, Validators.required],
+            type: [!this._question?.type ? head(this.questionTypes).id : this._question?.type, Validators.required],
             question: [this._question?.question, Validators.required],
         });
     }
@@ -60,6 +68,14 @@ export class AddUpdateQuestionComponent implements OnInit {
         this.form.valueChanges
             .pipe(takeUntil(this._destroy$))
             .subscribe((data) => this.onValueChanged(data));
+        this.form.controls.type.valueChanges
+          .pipe(takeUntil(this._destroy$))
+          .subscribe(() => {
+              if (this.form.controls.type.value === QUESTION_TYPES.RADIO) {
+                  this.form.addControl('options', this._fb.array([]));
+                  this.addOption();
+              }
+          });
     }
 
     onValueChanged(data?: any) {
@@ -83,5 +99,38 @@ export class AddUpdateQuestionComponent implements OnInit {
 
     set errorText(value) {
         this._errorText = value;
+    }
+
+    get optionsFormArray(): FormArray {
+        return this.form.get('options') as FormArray;
+    }
+
+    addOption() {
+        const options = this.form.get('options') as FormArray;
+        const option = new FormGroup({
+            selected: new FormControl(),
+            answer: new FormControl('', [Validators.required]),
+        });
+        options.push(option);
+    }
+
+    deleteOption(index: number) {
+        const options = this.form.get('options') as FormArray;
+        options.removeAt(index);
+    }
+
+    optionClicked(index: number) {
+        this.selectedOption = index;
+        this.isOptionSelected = true;
+    }
+
+    getOptionsFormGroup(index: number): FormGroup {
+        const options = this.form.get('options') as FormArray;
+        return options.get('' + index) as FormGroup;
+    }
+
+    isOptionDeleteBtnDisabled() {
+        const options = this.form.get('options') as FormArray;
+        return options?.length === 1;
     }
 }

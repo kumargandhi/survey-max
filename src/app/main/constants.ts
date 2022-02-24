@@ -24,3 +24,10 @@ export const SURVEY_BREAD_CRUMBS = [
         routerLink: [':surveyId/question-list'],
     },
 ];
+
+export enum QUESTION_TYPES {
+    TEXT = 1,
+    RADIO = 2,
+    YES_AND_NO = 3,
+    MULTI_SELECT = 4
+}

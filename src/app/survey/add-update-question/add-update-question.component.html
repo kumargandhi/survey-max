@@ -10,8 +10,8 @@
             <p-dropdown
                 id="type"
                 [options]="questionTypes"
-                [(ngModel)]="selectedQType"
                 optionLabel="label"
+                optionValue="id"
                 formControlName="type"
             ></p-dropdown>
         </div>
@@ -39,6 +39,100 @@
                 "
                 >Question is required.</small
             >
+        </div>
+        <div
+            class="row mb-3 options-heading"
+            *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
+        >
+            <div class="col-md-3">
+                <h6 class="fw-bold">Options</h6>
+            </div>
+            <div class="col-md-9">
+                <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-plus"
+                    class="p-button-rounded"
+                    (click)="addOption()"
+                ></button>
+            </div>
+        </div>
+        <div
+            class="row mb-3"
+            formArrayName="options"
+            *ngFor="let option of optionsFormArray?.controls; let i = index"
+        >
+            <ng-container [formGroupName]="i">
+                <div class="col-md-12">
+                    <div class="row radio-row">
+                        <div class="col-md-1">
+                            <p-radioButton
+                                id="selected{{ i }}"
+                                name="selected"
+                                value="selected{{ i }}"
+                                formControlName="selected"
+                                (onClick)="optionClicked(i)"
+                            ></p-radioButton>
+                        </div>
+                        <div class="col-md-10">
+                            <input
+                                type="text"
+                                pInputText
+                                id="answer"
+                                required
+                                autofocus
+                                formControlName="answer"
+                                maxlength="255"
+                                placeholder="Enter option text"
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        getOptionsFormGroup(i).controls[
+                                            'answer'
+                                        ].dirty &&
+                                        getOptionsFormGroup(i).controls[
+                                            'answer'
+                                        ].hasError('required')
+                                }"
+                            />
+                            <div
+                                *ngIf="
+                                    getOptionsFormGroup(i).controls['answer']
+                                        .touched &&
+                                    !getOptionsFormGroup(i).controls['answer']
+                                        .valid
+                                "
+                                class="row text-danger mb-3"
+                            >
+                                <small
+                                    class="p-error"
+                                    *ngIf="
+                                        getOptionsFormGroup(i).controls[
+                                            'answer'
+                                        ].errors?.required
+                                    "
+                                    >Question is required.</small
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-times"
+                                class="
+                                    p-button-rounded
+                                    p-button-danger
+                                    p-button-outlined
+                                "
+                                (click)="deleteOption(i)"
+                                [disabled]="isOptionDeleteBtnDisabled()"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </form>
 </div>

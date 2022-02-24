@@ -100,6 +100,10 @@ export class QuestionListComponent implements OnInit {
         );
     }
 
+    getQuestionTypeLabel(id: number) {
+        return _.find(this.questionTypes, { id })?.label;
+    }
+
     editQuestion(question: IQuestion) {
         this.question = _.cloneDeep(question);
         this.questionDialog = true;

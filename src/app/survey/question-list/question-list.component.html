@@ -51,7 +51,7 @@
             <td>
                 <p-tableCheckbox [value]="question"></p-tableCheckbox>
             </td>
-            <td>{{ question.type }}</td>
+            <td>{{ getQuestionTypeLabel(question.type) }}</td>
             <td>{{ question.question }}</td>
             <td>
                 <button
@@ -82,7 +82,7 @@
 
 <p-dialog
     [(visible)]="questionDialog"
-    [style]="{ width: '550px' }"
+    [style]="{ width: '650px', 'min-height': '500px' }"
     [header]="question ? 'Update Question' : 'Add Question'"
     [modal]="true"
     styleClass="p-fluid"

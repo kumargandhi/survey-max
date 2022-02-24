@@ -68,7 +68,23 @@
                     form.controls['passScore'].dirty &&
                     form.controls['passScore'].hasError('required')
                 "
-                >Pass score is required.</small
+                >Pass score (%) is required.</small
+            >
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['passScore'].dirty &&
+                    form.controls['passScore'].hasError('max')
+                "
+            >Pass score (%) maximum value is 100.</small
+            >
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['passScore'].dirty &&
+                    form.controls['passScore'].hasError('min')
+                "
+            >Pass score (%) minimum value is 1.</small
             >
         </div>
     </form>
