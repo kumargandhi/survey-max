@@ -5,11 +5,17 @@ import {
     OnInit,
     Input,
 } from '@angular/core';
-import { head } from 'lodash';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { head, findIndex } from 'lodash';
+import {
+    FormBuilder,
+    FormGroup,
+    Validators,
+    FormArray,
+    FormControl,
+} from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QuestionService } from '../../common/services/question.service';
-import { IQuestion } from '../../common/interfaces/question.interface';
+import { IOption, IQuestion } from '../../common/interfaces/question.interface';
 import { DestroyService } from '../../common/services/destroy.service';
 import { IQuestionTypes } from '../../common/interfaces/question-types.interface';
 import { QUESTION_TYPES } from '../../main/constants';
@@ -59,9 +65,15 @@ export class AddUpdateQuestionComponent implements OnInit {
 
     formCreate() {
         this.form = this._fb.group({
-            type: [!this._question?.type ? head(this.questionTypes).id : this._question?.type, Validators.required],
+            type: [
+                !this._question?.type
+                    ? head(this.questionTypes).id
+                    : this._question?.type,
+                Validators.required,
+            ],
             question: [this._question?.question, Validators.required],
         });
+        this.initFormForOptions();
     }
 
     formSubscribe() {
@@ -69,13 +81,41 @@ export class AddUpdateQuestionComponent implements OnInit {
             .pipe(takeUntil(this._destroy$))
             .subscribe((data) => this.onValueChanged(data));
         this.form.controls.type.valueChanges
-          .pipe(takeUntil(this._destroy$))
-          .subscribe(() => {
-              if (this.form.controls.type.value === QUESTION_TYPES.RADIO) {
-                  this.form.addControl('options', this._fb.array([]));
-                  this.addOption();
-              }
-          });
+            .pipe(takeUntil(this._destroy$))
+            .subscribe(() => {
+                this.initFormForOptions();
+            });
+    }
+
+    initFormForOptions() {
+        if (this.form.controls.type.value === QUESTION_TYPES.RADIO) {
+            this.form.addControl('options', this._fb.array([]));
+            if (this.question) {
+                // Add options to UI form for update
+                const options = this.form.get('options') as FormArray;
+                options.clear();
+                const optionsData = this.question.options as IOption[];
+                optionsData.forEach((item) => {
+                    const option = new FormGroup({
+                        selected: new FormControl(),
+                        answer: new FormControl(item.answer, [
+                            Validators.required,
+                        ]),
+                    });
+                    options.push(option);
+                });
+                const selectedOption = findIndex(optionsData, [
+                    'selected',
+                    true,
+                ]);
+                options.controls[selectedOption]
+                    .get('selected')
+                    ?.setValue('selected' + selectedOption);
+            } else {
+                this.addOption();
+            }
+            this._cd.markForCheck();
+        }
     }
 
     onValueChanged(data?: any) {
@@ -94,7 +134,21 @@ export class AddUpdateQuestionComponent implements OnInit {
         return {
             type: type.value,
             question: question.value,
+            options: this.getOptions(),
         };
+    }
+
+    getOptions() {
+        if (this.form.controls.type.value === QUESTION_TYPES.RADIO) {
+            const options = this.form.get('options') as FormArray;
+            const optionsData = options.getRawValue();
+            optionsData.forEach((item) => {
+                item.selected = !!item.selected;
+            });
+            return optionsData;
+        } else {
+            return null;
+        }
     }
 
     set errorText(value) {
@@ -117,6 +171,7 @@ export class AddUpdateQuestionComponent implements OnInit {
     deleteOption(index: number) {
         const options = this.form.get('options') as FormArray;
         options.removeAt(index);
+        this._cd.markForCheck();
     }
 
     optionClicked(index: number) {
