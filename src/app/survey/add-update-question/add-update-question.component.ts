@@ -28,6 +28,8 @@ import { QUESTION_TYPES } from '../../main/constants';
     providers: [DestroyService],
 })
 export class AddUpdateQuestionComponent implements OnInit {
+    readonly QUESTION_TYPES = QUESTION_TYPES;
+
     form: FormGroup;
 
     loading = false;
@@ -88,7 +90,7 @@ export class AddUpdateQuestionComponent implements OnInit {
     }
 
     initFormForOptions() {
-        if (this.form.controls.type.value === QUESTION_TYPES.RADIO) {
+        if (this.form.controls.type.value === QUESTION_TYPES.RADIO || this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT) {
             this.form.addControl('options', this._fb.array([]));
             if (this.question) {
                 // Add options to UI form for update
@@ -112,8 +114,17 @@ export class AddUpdateQuestionComponent implements OnInit {
                     .get('selected')
                     ?.setValue('selected' + selectedOption);
             } else {
-                this.addOption();
+                this.addOption(true);
             }
+            this._cd.markForCheck();
+        } else {
+            // Clean the options form
+            if (!this.form.get('options')) {
+                return;
+            }
+            const options = this.form.get('options') as FormArray;
+            options.clear();
+            this.form.removeControl('options');
             this._cd.markForCheck();
         }
     }
@@ -159,12 +170,15 @@ export class AddUpdateQuestionComponent implements OnInit {
         return this.form.get('options') as FormArray;
     }
 
-    addOption() {
+    addOption(isInit = false) {
         const options = this.form.get('options') as FormArray;
         const option = new FormGroup({
             selected: new FormControl(),
             answer: new FormControl('', [Validators.required]),
         });
+        if (isInit && options.length > 0) {
+            return;
+        }
         options.push(option);
     }
 

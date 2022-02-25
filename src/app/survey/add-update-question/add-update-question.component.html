@@ -13,6 +13,7 @@
                 optionLabel="label"
                 optionValue="id"
                 formControlName="type"
+                styleClass="p-dropdown-q-type"
             ></p-dropdown>
         </div>
         <div class="p-field mb-3">
@@ -41,7 +42,7 @@
             >
         </div>
         <div
-            class="row mb-3 options-heading"
+            class="row mb-3 options-heading ms-0 me-0"
             *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
         >
             <div class="col-md-3">
@@ -59,14 +60,14 @@
             </div>
         </div>
         <div
-            class="row mb-3"
+            class="row mb-3 ms-0 me-0"
             formArrayName="options"
             *ngFor="let option of optionsFormArray?.controls; let i = index"
         >
             <ng-container [formGroupName]="i">
-                <div class="col-md-12">
-                    <div class="row radio-row">
-                        <div class="col-md-1">
+                <div class="col-md-12 ps-0 pe-0">
+                    <div class="row radio-row ms-0 me-0">
+                        <div class="col-md-1 text-center" *ngIf="form?.controls?.type?.value === QUESTION_TYPES.RADIO">
                             <p-radioButton
                                 id="selected{{ i }}"
                                 name="selected"
@@ -74,6 +75,13 @@
                                 formControlName="selected"
                                 (onClick)="optionClicked(i)"
                             ></p-radioButton>
+                        </div>
+                        <div class="col-md-1 text-center" *ngIf="form?.controls?.type?.value === QUESTION_TYPES.MULTI_SELECT">
+                            <p-checkbox
+
+                                [formControl]="optionsFormArray?.controls[i]['selected']"
+                                (onClick)="optionClicked(i)"
+                            ></p-checkbox>
                         </div>
                         <div class="col-md-10">
                             <input
