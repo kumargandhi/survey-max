@@ -1,104 +1,118 @@
-<div class="login-content" id="page-container">
-    <p-panel>
-        <ng-template pTemplate="header"> Login </ng-template>
-        <p-message
-            severity="error"
-            [text]="errorText"
-            *ngIf="errorText"
-        ></p-message>
-        <form [formGroup]="form" class="login-form p-fluid">
-            <div class="p-field pb-3">
-                <label for="username">Username</label>
-                <input
-                    id="username"
-                    type="username"
-                    aria-describedby="username-help"
-                    formControlName="username"
-                    class="mt-2"
-                    [ngClass]="{
+<div id="page-container">
+    <div class="login-content">
+        <p-panel styleClass="p-panel">
+            <ng-template pTemplate="header"> Login </ng-template>
+            <p-message
+                severity="error"
+                [text]="errorText"
+                *ngIf="errorText"
+            ></p-message>
+            <form [formGroup]="form" class="login-form p-fluid">
+                <div class="p-field pb-3">
+                    <label for="username">Username</label>
+                    <input
+                        id="username"
+                        type="username"
+                        aria-describedby="username-help"
+                        formControlName="username"
+                        class="mt-2"
+                        [ngClass]="{
                         'ng-invalid ng-dirty':
                             form.controls['username'].dirty &&
                             form.controls['username'].hasError('required')
                     }"
-                    pInputText
-                    autofocus
-                />
-                <small
-                    id="username-help"
-                    class="p-error"
-                    *ngIf="
+                        pInputText
+                        autofocus
+                    />
+                    <small
+                        id="username-help"
+                        class="p-error"
+                        *ngIf="
                         form.controls['username'].dirty &&
                         form.controls['username'].hasError('required')
                     "
                     >Username is not available.</small
-                >
-            </div>
-            <div class="p-field pb-3">
-                <label for="password">Password</label>
-                <input
-                    id="password"
-                    type="password"
-                    aria-describedby="password-help"
-                    formControlName="password"
-                    class="mt-2"
-                    [ngClass]="{
+                    >
+                </div>
+                <div class="p-field pb-3">
+                    <label for="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        aria-describedby="password-help"
+                        formControlName="password"
+                        class="mt-2"
+                        [ngClass]="{
                         'ng-invalid ng-dirty':
                             form.controls['password'].dirty &&
                             form.controls['password'].hasError('required')
                     }"
-                    pInputText
-                    (keyup.enter)="login()"
-                />
-                <small
-                    id="password-help"
-                    class="p-error"
-                    *ngIf="
+                        pInputText
+                        (keyup.enter)="login()"
+                    />
+                    <small
+                        id="password-help"
+                        class="p-error"
+                        *ngIf="
                         form.controls['password'].dirty &&
                         form.controls['password'].hasError('required')
                     "
                     >Password is not available.</small
-                >
-            </div>
-            <button
-                pButton
-                type="button"
-                label="Login"
-                (click)="login()"
-                [disabled]="!form.valid"
-                [loading]="loading"
-                class="p-button-primary"
-            ></button>
-            <div class="g-field pt-3">
+                    >
+                </div>
                 <button
                     pButton
                     type="button"
-                    class="p-button-text p-button-plain text-center"
-                    (click)="loginWithGoogle()"
-                    label="Log in with Google"
+                    label="Login"
+                    (click)="login()"
+                    [disabled]="!form.valid"
+                    [loading]="loading"
+                    class="p-button-primary"
                 ></button>
-            </div>
-            <div class="g-field pt-2">
-                <button
-                    pButton
-                    type="button"
-                    class="p-button-info p-button-text"
-                    routerLink="/forgot-password"
-                    label="Forgot Password?"
-                ></button>
-            </div>
-            <div class="g-field pt-2 text-center">
-                <span>Don't have an account?</span>
-                <button
-                    pButton
-                    type="button"
-                    class="p-button-help p-button-text"
-                    routerLink="/register-user"
-                    label="Sign Up"
-                ></button>
-            </div>
-        </form>
-    </p-panel>
+                <div class="g-field pt-3">
+                    <button
+                        pButton
+                        type="button"
+                        class="p-button-text p-button-plain text-center"
+                        (click)="loginWithGoogle()"
+                        label="Log in with Google"
+                    ></button>
+                </div>
+                <div class="g-field pt-2">
+                    <button
+                        pButton
+                        type="button"
+                        class="p-button-info p-button-text"
+                        routerLink="/forgot-password"
+                        label="Forgot Password?"
+                    ></button>
+                </div>
+                <div class="g-field pt-2 text-center">
+                    <span>Don't have an account?</span>
+                    <button
+                        pButton
+                        type="button"
+                        class="p-button-help p-button-text"
+                        routerLink="/register-user"
+                        label="Sign Up"
+                    ></button>
+                </div>
+            </form>
+        </p-panel>
+        <div class="info-container">
+            <h3>Welcome,</h3>
+            <p class="text-break fs-5">
+                Talk about the application here. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </p>
+            <p class="text-break fs-6">
+                Talk about the application here. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </p>
+            <p class="text-break fs-6">
+                Talk about the application here. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </p>
+        </div>
+    </div>
 </div>
-<div class="login-footer">
-    <!--    © Copyright {{ today.getFullYear() }}. All rights reserved.-->
+<div class="login-footer fs-6">
+        © Copyright {{ today.getFullYear() }}. All rights reserved.
 </div>

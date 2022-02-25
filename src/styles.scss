@@ -82,7 +82,7 @@ body {
     margin: 0;
     padding: 64px 15px 15px 15px;
     height: 100vh;
-    overflow-y: hidden;
+    overflow-y: scroll;
     background: var(--theme-gray);
     & > #page-title {
         background-color: inherit;
