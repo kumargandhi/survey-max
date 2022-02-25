@@ -5,7 +5,7 @@ import {
     OnInit,
     Input,
 } from '@angular/core';
-import { head, findIndex } from 'lodash';
+import { head } from 'lodash';
 import {
     FormBuilder,
     FormGroup,
@@ -90,29 +90,35 @@ export class AddUpdateQuestionComponent implements OnInit {
     }
 
     initFormForOptions() {
-        if (this.form.controls.type.value === QUESTION_TYPES.RADIO || this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT) {
+        if (
+            this.form.controls.type.value === QUESTION_TYPES.RADIO ||
+            this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT
+        ) {
             this.form.addControl('options', this._fb.array([]));
             if (this.question) {
                 // Add options to UI form for update
                 const options = this.form.get('options') as FormArray;
                 options.clear();
                 const optionsData = this.question.options as IOption[];
-                optionsData.forEach((item) => {
+                optionsData.forEach((item, index) => {
+                    const getSelectedValue = () => {
+                        if (
+                            this.form.controls.type.value ===
+                            QUESTION_TYPES.RADIO
+                        ) {
+                            return item.selected ? `selected${index}` : null;
+                        } else {
+                            return item.selected;
+                        }
+                    };
                     const option = new FormGroup({
-                        selected: new FormControl(),
+                        selected: new FormControl(getSelectedValue()),
                         answer: new FormControl(item.answer, [
                             Validators.required,
                         ]),
                     });
                     options.push(option);
                 });
-                const selectedOption = findIndex(optionsData, [
-                    'selected',
-                    true,
-                ]);
-                options.controls[selectedOption]
-                    .get('selected')
-                    ?.setValue('selected' + selectedOption);
             } else {
                 this.addOption(true);
             }
@@ -150,7 +156,10 @@ export class AddUpdateQuestionComponent implements OnInit {
     }
 
     getOptions() {
-        if (this.form.controls.type.value === QUESTION_TYPES.RADIO) {
+        if (
+            this.form.controls.type.value === QUESTION_TYPES.RADIO ||
+            this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT
+        ) {
             const options = this.form.get('options') as FormArray;
             const optionsData = options.getRawValue();
             optionsData.forEach((item) => {
