@@ -14,6 +14,7 @@
                 optionValue="id"
                 formControlName="type"
                 styleClass="p-dropdown-q-type"
+                [disabled]="question"
             ></p-dropdown>
         </div>
         <div class="p-field mb-3">
@@ -56,6 +57,11 @@
                     icon="pi pi-plus"
                     class="p-button-rounded"
                     (click)="addOption()"
+                    *ngIf="
+                        form?.controls?.type?.value === QUESTION_TYPES.RADIO ||
+                        form?.controls?.type?.value ===
+                            QUESTION_TYPES.MULTI_SELECT
+                    "
                 ></button>
             </div>
         </div>
@@ -67,23 +73,67 @@
             <ng-container [formGroupName]="i">
                 <div class="col-md-12 ps-0 pe-0">
                     <div class="row radio-row ms-0 me-0">
-                        <div class="col-md-1 text-center" *ngIf="form?.controls?.type?.value === QUESTION_TYPES.RADIO">
+                        <div
+                            class="text-center"
+                            *ngIf="
+                                form?.controls?.type?.value ===
+                                    QUESTION_TYPES.RADIO ||
+                                form?.controls?.type?.value ===
+                                    QUESTION_TYPES.YES_AND_NO
+                            "
+                            [class.col-md-1]="
+                                form?.controls?.type?.value ===
+                                QUESTION_TYPES.RADIO
+                            "
+                            [class.col-md-12]="
+                                form?.controls?.type?.value ===
+                                QUESTION_TYPES.YES_AND_NO
+                            "
+                            [class.field-radiobutton]="
+                                form?.controls?.type?.value ===
+                                QUESTION_TYPES.YES_AND_NO
+                            "
+                        >
                             <p-radioButton
                                 id="selected{{ i }}"
                                 name="selected"
                                 value="selected{{ i }}"
                                 formControlName="selected"
                                 (onClick)="optionClicked(i)"
+                                inputId="selected{{ i }}"
                             ></p-radioButton>
+                            <label
+                                for="selected{{ i }}"
+                                *ngIf="
+                                    form?.controls?.type?.value ===
+                                    QUESTION_TYPES.YES_AND_NO
+                                "
+                            >
+                                {{ i === 0 ? 'Yes' : 'No' }}
+                            </label>
                         </div>
-                        <div class="col-md-1 text-center" *ngIf="form?.controls?.type?.value === QUESTION_TYPES.MULTI_SELECT">
+                        <div
+                            class="col-md-1 text-center"
+                            *ngIf="
+                                form?.controls?.type?.value ===
+                                QUESTION_TYPES.MULTI_SELECT
+                            "
+                        >
                             <p-checkbox
                                 [binary]="true"
                                 formControlName="selected"
                                 (onClick)="optionClicked(i)"
                             ></p-checkbox>
                         </div>
-                        <div class="col-md-10">
+                        <div
+                            class="col-md-10"
+                            *ngIf="
+                                form?.controls?.type?.value ===
+                                    QUESTION_TYPES.RADIO ||
+                                form?.controls?.type?.value ===
+                                    QUESTION_TYPES.MULTI_SELECT
+                            "
+                        >
                             <input
                                 type="text"
                                 pInputText
@@ -136,6 +186,12 @@
                                 "
                                 (click)="deleteOption(i)"
                                 [disabled]="isOptionDeleteBtnDisabled()"
+                                *ngIf="
+                                    form?.controls?.type?.value ===
+                                        QUESTION_TYPES.RADIO ||
+                                    form?.controls?.type?.value ===
+                                        QUESTION_TYPES.MULTI_SELECT
+                                "
                             ></button>
                         </div>
                     </div>

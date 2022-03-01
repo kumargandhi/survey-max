@@ -90,6 +90,7 @@ export class AddUpdateQuestionComponent implements OnInit {
     }
 
     initFormForOptions() {
+        this.cleanTheOptionsForm();
         if (
             this.form.controls.type.value === QUESTION_TYPES.RADIO ||
             this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT
@@ -106,6 +107,9 @@ export class AddUpdateQuestionComponent implements OnInit {
                             this.form.controls.type.value ===
                             QUESTION_TYPES.RADIO
                         ) {
+                            if (item.selected) {
+                                this.selectedOption = index;
+                            }
                             return item.selected ? `selected${index}` : null;
                         } else {
                             return item.selected;
@@ -123,16 +127,45 @@ export class AddUpdateQuestionComponent implements OnInit {
                 this.addOption(true);
             }
             this._cd.markForCheck();
-        } else {
-            // Clean the options form
-            if (!this.form.get('options')) {
-                return;
+        } else if (this.form.controls.type.value === QUESTION_TYPES.YES_AND_NO) {
+            this.form.addControl('options', this._fb.array([]));
+            if (this.question) {
+                // Add options to UI form for update
+                const options = this.form.get('options') as FormArray;
+                options.clear();
+                const optionsData = this.question.options as IOption[];
+                optionsData.forEach((item, index) => {
+                    const getSelectedValue = () => {
+                        if (item.selected) {
+                            this.selectedOption = index;
+                        }
+                        return item.selected ? `selected${index}` : null;
+                    };
+                    const option = new FormGroup({
+                        selected: new FormControl(getSelectedValue())
+                    });
+                    options.push(option);
+                });
+            } else {
+                this.addOptionsForYesAndNo();
             }
-            const options = this.form.get('options') as FormArray;
-            options.clear();
-            this.form.removeControl('options');
             this._cd.markForCheck();
+        } else {
+            this.cleanTheOptionsForm();
         }
+    }
+
+    cleanTheOptionsForm() {
+        this.selectedOption = 0;
+        this.isOptionSelected = false;
+        // Clean the options form
+        if (!this.form.get('options')) {
+            return;
+        }
+        const options = this.form.get('options') as FormArray;
+        options.clear();
+        this.form.removeControl('options');
+        this._cd.markForCheck();
     }
 
     onValueChanged(data?: any) {
@@ -158,12 +191,17 @@ export class AddUpdateQuestionComponent implements OnInit {
     getOptions() {
         if (
             this.form.controls.type.value === QUESTION_TYPES.RADIO ||
-            this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT
+            this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT ||
+            this.form.controls.type.value === QUESTION_TYPES.YES_AND_NO
         ) {
             const options = this.form.get('options') as FormArray;
             const optionsData = options.getRawValue();
-            optionsData.forEach((item) => {
-                item.selected = !!item.selected;
+            optionsData.forEach((item, index) => {
+                if (this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT) {
+                    item.selected = !!item.selected;
+                } else {
+                    item.selected = index === this.selectedOption;
+                }
             });
             return optionsData;
         } else {
@@ -189,6 +227,18 @@ export class AddUpdateQuestionComponent implements OnInit {
             return;
         }
         options.push(option);
+    }
+
+    addOptionsForYesAndNo() {
+        const options = this.form.get('options') as FormArray;
+        const optionYes = new FormGroup({
+            selected: new FormControl()
+        });
+        options.push(optionYes);
+        const optionNo = new FormGroup({
+            selected: new FormControl()
+        });
+        options.push(optionNo);
     }
 
     deleteOption(index: number) {
