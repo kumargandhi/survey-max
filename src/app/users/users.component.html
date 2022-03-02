@@ -38,16 +38,16 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="email">
+                <th pSortableColumn="email" style="width: 30%">
                     Email <p-sortIcon field="email"></p-sortIcon>
                 </th>
-                <th pSortableColumn="roles">
+                <th pSortableColumn="roles" style="width: 15%">
                     Roles <p-sortIcon field="roles"></p-sortIcon>
                 </th>
-                <th pSortableColumn="displayName">
+                <th pSortableColumn="displayName" style="width: 30%">
                     Display name <p-sortIcon field="displayName"></p-sortIcon>
                 </th>
-                <th></th>
+                <th style="width: 13%"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
@@ -65,6 +65,7 @@
                         icon="pi pi-pencil"
                         class="p-button-rounded p-button-success mr-2"
                         (click)="editUser(user)"
+                        pTooltip="Edit User" tooltipPosition="top" placeholder="Top"
                     ></button>
                     <button
                         pButton
@@ -72,45 +73,30 @@
                         icon="pi pi-trash"
                         class="p-button-rounded p-button-warning"
                         (click)="deleteUser(user)"
+                        pTooltip="Delete User" tooltipPosition="top" placeholder="Top"
                     ></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
-                In total there are {{ users ? users.length : 0 }} users.
+                {{ getTableSummary() }}
             </div>
         </ng-template>
     </p-table>
 
     <p-dialog
         [(visible)]="userDialog"
-        [style]="{ width: '450px' }"
-        header="User Details"
+        [style]="{ width: '550px' }"
+        [header]="user ? 'Update User' : 'Add User'"
         [modal]="true"
         styleClass="p-fluid"
     >
         <ng-template pTemplate="content">
-            <div class="p-field">
-                <label for="name">Username</label>
-                <input type="text" pInputText id="name" required autofocus />
-                <small class="p-error" *ngIf="submitted && !user.email"
-                    >Username is required.</small
-                >
-            </div>
-            <div class="p-field">
-                <label for="name">Password</label>
-                <input
-                    type="password"
-                    pInputText
-                    id="password"
-                    required
-                    autofocus
-                />
-                <small class="p-error" *ngIf="submitted && !user.email"
-                    >Password is required.</small
-                >
-            </div>
+            <app-add-update-user
+                #addUpdateUserComponent
+                [user]="user"
+            ></app-add-update-user>
         </ng-template>
         <ng-template pTemplate="footer">
             <button
@@ -118,17 +104,44 @@
                 pRipple
                 label="Cancel"
                 icon="pi pi-times"
-                class="p-button-text"
+                class="p-button-secondary"
                 (click)="hideDialog()"
             ></button>
             <button
                 pButton
                 pRipple
-                label="Sign"
+                label="{{ user ? 'Update' : 'Add' }}"
                 icon="pi pi-check"
-                class="p-button-text"
+                class="p-button-primary"
+                [disabled]="!addUpdateUserComponent?.form?.valid"
                 (click)="saveUser()"
             ></button>
         </ng-template>
     </p-dialog>
+    <p-confirmDialog
+        #cd
+        header="Confirmation"
+        icon="pi pi-exclamation-triangle"
+    >
+        <ng-template pTemplate="message">
+            <h5 [innerHTML]="confirmationMessage"></h5>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button
+                type="button"
+                pButton
+                icon="pi pi-times"
+                label="No"
+                (click)="cd.reject()"
+            ></button>
+            <button
+                type="button"
+                pButton
+                icon="pi pi-check"
+                label="Yes"
+                class="p-button-danger"
+                (click)="cd.accept()"
+            ></button>
+        </ng-template>
+    </p-confirmDialog>
 </div>

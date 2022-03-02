@@ -1,15 +1,19 @@
+import { ROLES } from '../../main/constants';
+
 export interface IUser {
-    uid: string;
+    uid?: string;
     email: string;
+    password?: string;
     displayName: string;
     photoURL?: string;
     emailVerified?: boolean;
-    roles: string[];
+    roles: ROLES[];
 }
 
 export const userIns = {
     uid: null,
     email: null,
+    password: null,
     displayName: null,
     photoURL: null,
     emailVerified: false,

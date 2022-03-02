@@ -1,0 +1,92 @@
+<div class="user-form">
+    <p-message
+        severity="error"
+        [text]="_errorText"
+        *ngIf="_errorText"
+    ></p-message>
+    <form [formGroup]="form" class="p-fluid">
+        <div class="p-field mb-3">
+            <label for="email">Email</label>
+            <input
+                type="text"
+                pInputText
+                id="email"
+                required
+                autofocus
+                formControlName="email"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['email'].dirty &&
+                        form.controls['email'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['email'].dirty &&
+                    form.controls['email'].hasError('required')
+                "
+                >Email is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label for="password">Password</label>
+            <input
+                type="text"
+                pInputText
+                id="password"
+                required
+                autofocus
+                formControlName="password"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['password'].dirty &&
+                        form.controls['password'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['password'].dirty &&
+                    form.controls['password'].hasError('required')
+                "
+                >Password is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label for="displayName">Display Name</label>
+            <input
+                type="text"
+                pInputText
+                id="displayName"
+                required
+                autofocus
+                formControlName="displayName"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['displayName'].dirty &&
+                        form.controls['displayName'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['displayName'].dirty &&
+                    form.controls['displayName'].hasError('required')
+                "
+                >Display Name is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label>Roles</label>
+            <p-dropdown
+                id="roles"
+                [options]="roles"
+                optionLabel="label"
+                optionValue="id"
+                formControlName="roles"
+                styleClass="p-dropdown-min-width"
+            ></p-dropdown>
+        </div>
+    </form>
+</div>

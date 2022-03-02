@@ -15,6 +15,7 @@ import { QuestionListComponent } from '../survey/question-list/question-list.com
 import { AddUpdateQuestionComponent } from '../survey/add-update-question/add-update-question.component';
 import { HeaderComponent } from '../common/components/header/header.component';
 import { InfoComponent } from '../common/components/info/info.component';
+import { AddUpdateUserComponent } from '../users/add-update-user/add-update-user.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { InfoComponent } from '../common/components/info/info.component';
         AddUpdateSurveyComponent,
         QuestionListComponent,
         AddUpdateQuestionComponent,
+        AddUpdateUserComponent
     ],
     imports: [
         CommonModule,

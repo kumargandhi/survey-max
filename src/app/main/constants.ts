@@ -31,3 +31,9 @@ export enum QUESTION_TYPES {
     YES_AND_NO = 3,
     MULTI_SELECT = 4
 }
+
+export enum ROLES {
+    SUPER_ADMIN = 'Super Admin',
+    TEACHER = 'Teacher',
+    STUDENT = 'Student'
+}
