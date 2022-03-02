@@ -49,10 +49,16 @@ export class AddUpdateUserComponent implements OnInit {
 
     formCreate() {
         this.form = this._fb.group({
-            email: [this._user?.email, Validators.required],
-            password: [this._user?.password, Validators.required],
+            email: [
+                { value: this._user?.email, disabled: this._user?.email },
+                Validators.required,
+            ],
+            password: [
+                { value: '', disabled: this._user },
+                Validators.required,
+            ],
             displayName: [this._user?.displayName, Validators.required],
-            roles: [this._user?.roles, Validators.required],
+            roles: [this._user?.roles[0], Validators.required],
         });
     }
 
@@ -79,7 +85,7 @@ export class AddUpdateUserComponent implements OnInit {
             email: email.value,
             password: password.value,
             displayName: displayName.value,
-            roles: roles.value,
+            roles: [roles.value],
         };
     }
 

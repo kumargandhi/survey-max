@@ -2,15 +2,16 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    OnInit, ViewChild
+    OnInit,
+    ViewChild,
 } from '@angular/core';
 import * as _ from 'lodash';
-import { IUser, userIns } from '../common/interfaces/user.interface';
+import { IUser } from '../common/interfaces/user.interface';
 import { DestroyService } from '../common/services/destroy.service';
 import { UsersAdapter } from './users.adapter';
 import { AddUpdateUserComponent } from './add-update-user/add-update-user.component';
-import { ConfirmationService } from "primeng/api";
-import { ISurvey } from "../common/interfaces/survey.interface";
+import { ConfirmationService } from 'primeng/api';
+import { UserService } from '../common/services/user.service';
 
 @Component({
     selector: 'app-users',
@@ -30,8 +31,6 @@ export class UsersComponent implements OnInit {
 
     user: IUser;
 
-    submitted = false;
-
     userDialog = false;
     @ViewChild('addUpdateUserComponent')
     addUpdateUserComponent: AddUpdateUserComponent;
@@ -41,11 +40,12 @@ export class UsersComponent implements OnInit {
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
         private _usersAdapter: UsersAdapter,
+        private _userService: UserService,
         private confirmationService: ConfirmationService
     ) {}
 
     ngOnInit(): void {
-        this.fetchUsers();
+        this.getUsers();
     }
 
     getTableSummary() {
@@ -54,12 +54,18 @@ export class UsersComponent implements OnInit {
         }`;
     }
 
-    fetchUsers() {
+    getUsers() {
         this.loading = true;
         this.errorText = '';
-        this._usersAdapter.getUsers().subscribe(
+        this._userService.getUsers().subscribe(
             (data) => {
-                this.users = _.cloneDeep(data);
+                this.users = _.cloneDeep(
+                    data.map((e) => {
+                        const s: IUser = e.payload.doc.data() as IUser;
+                        s.id = e.payload.doc.id;
+                        return s;
+                    })
+                );
                 this.loading = false;
                 this._cd.markForCheck();
             },
@@ -71,46 +77,81 @@ export class UsersComponent implements OnInit {
         );
     }
 
-    openNew() {
-        this.user = _.cloneDeep(userIns);
-        this.submitted = false;
+    openUserDialog() {
+        this.user = null;
         this.userDialog = true;
     }
 
     hideDialog() {
         this.userDialog = false;
-        this.submitted = false;
     }
 
     saveUser() {
         this.loading = true;
         this.errorText = '';
         if (this.user) {
-
+            this._userService
+                .updateUser({
+                    ...this.addUpdateUserComponent.getUser,
+                    id: this.user.id,
+                })
+                .then(() => {
+                    this.loading = false;
+                    this.user = null;
+                    this.hideDialog();
+                    this.getUsers();
+                    this._cd.markForCheck();
+                })
+                .catch((error) => {
+                    this.addUpdateUserComponent.errorText = error;
+                    this.loading = false;
+                    this._cd.markForCheck();
+                });
+        } else {
+            console.log(
+                'this.addUpdateUserComponent.getUser-' +
+                    JSON.stringify(this.addUpdateUserComponent.getUser)
+            );
+            this._userService
+                .saveUser(this.addUpdateUserComponent.getUser)
+                .then(() => {
+                    this.loading = false;
+                    this.hideDialog();
+                    this.getUsers();
+                    this._cd.markForCheck();
+                })
+                .catch((error) => {
+                    this.addUpdateUserComponent.errorText = error;
+                    this.loading = false;
+                    this._cd.markForCheck();
+                });
         }
     }
 
     deleteSelectedUsers() {}
 
-    editUser(user: IUser) {}
+    editUser(user: IUser) {
+        this.user = _.cloneDeep(user);
+        this.userDialog = true;
+    }
 
     deleteUser(user: IUser) {
-        this.confirmationMessage = `Are you sure that you want to delete <strong>${user.email}</strong> survey?`;
+        this.confirmationMessage = `Are you sure that you want to delete <strong>${user.email}</strong> user?`;
         this.confirmationService.confirm({
             message: this.confirmationMessage,
             accept: () => {
                 this.loading = true;
                 this.errorText = '';
-//                this._surveyService
-//                  .deleteSurvey(survey.id)
-//                  .then(() => {
-//                      this.loading = false;
-//                      this.getSurveys();
-//                  })
-//                  .catch((error) => {
-//                      this.loading = false;
-//                      this.errorText = error;
-//                  });
+                this._userService
+                    .deleteUser(user.id)
+                    .then(() => {
+                        this.loading = false;
+                        this.getUsers();
+                    })
+                    .catch((error) => {
+                        this.loading = false;
+                        this.errorText = error;
+                    });
             },
         });
     }

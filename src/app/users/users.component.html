@@ -7,7 +7,7 @@
                 label="New"
                 icon="pi pi-plus"
                 class="p-button-success mr-2"
-                (click)="openNew()"
+                (click)="openUserDialog()"
             ></button>
             <button
                 pButton
@@ -38,7 +38,7 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="email" style="width: 30%">
+                <th pSortableColumn="email" style="width: 40%">
                     Email <p-sortIcon field="email"></p-sortIcon>
                 </th>
                 <th pSortableColumn="roles" style="width: 15%">
@@ -47,7 +47,7 @@
                 <th pSortableColumn="displayName" style="width: 30%">
                     Display name <p-sortIcon field="displayName"></p-sortIcon>
                 </th>
-                <th style="width: 13%"></th>
+                <th style="width: 10%"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
