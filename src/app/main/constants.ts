@@ -4,12 +4,12 @@ export const MENU_ITEMS = [
         routerLink: ['dashboard'],
     },
     {
-        label: 'Users',
-        routerLink: ['users'],
-    },
-    {
         label: 'Survey',
         routerLink: ['survey'],
+    },
+    {
+        label: 'Users',
+        routerLink: ['users'],
     },
 ];
 

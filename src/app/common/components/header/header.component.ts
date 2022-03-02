@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {
+    StorageKeys,
+    StorageService,
+    StorageType,
+} from '../../services/storage.service';
+import { IUser } from '../../interfaces/user.interface';
 
 @Component({
     selector: 'app-header',
@@ -6,12 +12,18 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
     infoDialog = false;
 
-    constructor() {}
+    user: IUser;
 
-    ngOnInit(): void {}
+    constructor(private _storageService: StorageService) {}
+
+    ngOnInit(): void {
+        this.user = this._storageService.get<IUser>(
+            StorageKeys.User,
+            StorageType.Local
+        );
+    }
 
     onInfoClick() {
         this.infoDialog = true;

@@ -1,16 +1,23 @@
 <nav class="navbar navbar-expand navbar-light bg-white shadow-sm fixed-top">
-    <ul class="navbar-nav ml-auto me-3">
-        <li class="nav-item">
-            <button
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-info-circle"
-                class="p-button-rounded p-button-info p-button-text"
-                (click)="onInfoClick()"
-            ></button>
-        </li>
-    </ul>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarText">
+            <span class="navbar-text ml-auto">
+                {{ !user?.displayName ? user?.email : user?.displayName }}
+            </span>
+            <ul class="navbar-nav ms-3 me-3">
+                <li class="nav-item">
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-info-circle"
+                        class="p-button-rounded p-button-info p-button-text"
+                        (click)="onInfoClick()"
+                    ></button>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
 <p-dialog

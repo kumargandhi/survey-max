@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-
-// Firebase
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import {
+    AngularFirestore,
+    AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
 import { IUser } from '../interfaces/user.interface';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
@@ -11,7 +12,10 @@ export const COLLECTION_USERS = 'users';
     providedIn: 'root',
 })
 export class UserService {
-    constructor(public firestore: AngularFirestore, public fireAuth: AngularFireAuth) {}
+    constructor(
+        public firestore: AngularFirestore,
+        public fireAuth: AngularFireAuth
+    ) {}
 
     getUsers() {
         return this.firestore.collection(COLLECTION_USERS).snapshotChanges();
@@ -19,16 +23,16 @@ export class UserService {
 
     saveUser(user: IUser) {
         return this.fireAuth
-          .createUserWithEmailAndPassword(user.email, user.password)
-          .then((result) => {
-              /* TODO : Call the SendVerificaitonMail() function when new user is created and returns promise */
-              // this.sendVerificationMail();
-              user.uid = result.user.uid;
-              this.setUserAdditionalData(user);
-          })
-          .catch((error) => {
-              window.alert(error.message);
-          });
+            .createUserWithEmailAndPassword(user.email, user.password)
+            .then((result) => {
+                /* TODO : Call the SendVerificaitonMail() function when new user is created and returns promise */
+                // this.sendVerificationMail();
+                user.uid = result.user.uid;
+                this.setUserAdditionalData(user);
+            })
+            .catch((error) => {
+                window.alert(error.message);
+            });
     }
 
     setUserAdditionalData(user) {

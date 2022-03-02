@@ -8,6 +8,7 @@ import {
     AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root',
@@ -18,10 +19,10 @@ export class AuthService {
         public afs: AngularFirestore,
         public afAuth: AngularFireAuth,
         public router: Router,
-        public ngZone: NgZone
+        public ngZone: NgZone,
+        private storageService: StorageService
     ) {
-        /* Saving user data in localstorage when
-     logged in and setting up null when logged out */
+        /* Saving user data in localstorage when logged in and setting up null when logged out */
         this.afAuth.authState.subscribe((user) => {
             if (user) {
                 this.userData = user;
@@ -42,7 +43,6 @@ export class AuthService {
                 this.ngZone.run(() => {
                     this.router.navigate(['/main']);
                 });
-                this.setUserData(result.user);
             })
             .catch((error) => {
                 window.alert(error.message);
