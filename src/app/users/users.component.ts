@@ -90,9 +90,11 @@ export class UsersComponent implements OnInit {
         this.loading = true;
         this.errorText = '';
         if (this.user) {
+            const user = this.addUpdateUserComponent.getUser;
+            delete user.password;
             this._userService
                 .updateUser({
-                    ...this.addUpdateUserComponent.getUser,
+                    ...user,
                     id: this.user.id,
                 })
                 .then(() => {
@@ -108,10 +110,6 @@ export class UsersComponent implements OnInit {
                     this._cd.markForCheck();
                 });
         } else {
-            console.log(
-                'this.addUpdateUserComponent.getUser-' +
-                    JSON.stringify(this.addUpdateUserComponent.getUser)
-            );
             this._userService
                 .saveUser(this.addUpdateUserComponent.getUser)
                 .then(() => {
@@ -136,7 +134,7 @@ export class UsersComponent implements OnInit {
     }
 
     deleteUser(user: IUser) {
-        this.confirmationMessage = `Are you sure that you want to delete <strong>${user.email}</strong> user?`;
+        this.confirmationMessage = `Are you sure that you want to delete <strong>${user.displayName}</strong> user?`;
         this.confirmationService.confirm({
             message: this.confirmationMessage,
             accept: () => {

@@ -38,14 +38,17 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="email" style="width: 40%">
+                <th pSortableColumn="email" style="width: 30%">
                     Email <p-sortIcon field="email"></p-sortIcon>
                 </th>
                 <th pSortableColumn="roles" style="width: 15%">
                     Roles <p-sortIcon field="roles"></p-sortIcon>
                 </th>
-                <th pSortableColumn="displayName" style="width: 30%">
+                <th pSortableColumn="displayName" style="width: 24%">
                     Display name <p-sortIcon field="displayName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="emailVerified" style="width: 16%">
+                    Email Verified <p-sortIcon field="emailVerified"></p-sortIcon>
                 </th>
                 <th style="width: 10%"></th>
             </tr>
@@ -58,6 +61,13 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles }}</td>
                 <td>{{ user.displayName }}</td>
+                <td>
+                    <p-badge
+                        [value]="user.emailVerified ? 'Yes' : 'No'"
+                        [severity]="user.emailVerified ? 'success' : 'warning'"
+                        styleClass="configured-badge"
+                    ></p-badge>
+                </td>
                 <td>
                     <button
                         pButton

@@ -21,6 +21,10 @@ export class UserService {
         return this.firestore.collection(COLLECTION_USERS).snapshotChanges();
     }
 
+    getUser(user) {
+        return this.firestore.collection(COLLECTION_USERS).doc(user.uid).ref.get();
+    }
+
     saveUser(user: IUser) {
         return this.fireAuth
             .createUserWithEmailAndPassword(user.email, user.password)
@@ -59,6 +63,13 @@ export class UserService {
     }
 
     deleteUser(userId) {
-        return this.firestore.doc(`${COLLECTION_USERS}/` + userId).delete();
+        // return this.fireAuth.createUserWithEmailAndPassword
+        return this.firestore.doc(`${COLLECTION_USERS}/` + userId).delete()
+          .then(() => {
+              //
+          })
+          .catch((error) => {
+              window.alert(error.message);
+          });
     }
 }

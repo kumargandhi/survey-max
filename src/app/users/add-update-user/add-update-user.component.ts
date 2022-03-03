@@ -12,6 +12,8 @@ import { IUser } from '../../common/interfaces/user.interface';
 import { DestroyService } from '../../common/services/destroy.service';
 import { ROLES } from '../../main/constants';
 
+const PASSWORD_DUMMY_TEXT = 'PASSWORD_DUMMY_TEXT';
+
 @Component({
     selector: 'app-add-update-user',
     templateUrl: './add-update-user.component.html',
@@ -54,7 +56,7 @@ export class AddUpdateUserComponent implements OnInit {
                 Validators.required,
             ],
             password: [
-                { value: '', disabled: this._user },
+                { value: this._user ? PASSWORD_DUMMY_TEXT : '', disabled: this._user },
                 Validators.required,
             ],
             displayName: [this._user?.displayName, Validators.required],

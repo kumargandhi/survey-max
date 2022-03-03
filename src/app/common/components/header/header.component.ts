@@ -5,6 +5,7 @@ import {
     StorageType,
 } from '../../services/storage.service';
 import { IUser } from '../../interfaces/user.interface';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-header',
@@ -16,13 +17,21 @@ export class HeaderComponent implements OnInit {
 
     user: IUser;
 
-    constructor(private _storageService: StorageService) {}
+    constructor(
+        private _storageService: StorageService,
+        private _userService: UserService
+    ) {}
 
     ngOnInit(): void {
-        this.user = this._storageService.get<IUser>(
+        const currentUser = this._storageService.get<IUser>(
             StorageKeys.User,
             StorageType.Local
         );
+        this._userService.getUser(currentUser).then((doc) => {
+            if (doc.exists) {
+                this.user = doc.data() as IUser;
+            }
+        });
     }
 
     onInfoClick() {

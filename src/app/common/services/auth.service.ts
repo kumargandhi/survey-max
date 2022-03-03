@@ -22,6 +22,10 @@ export class AuthService {
         public ngZone: NgZone,
         private storageService: StorageService
     ) {
+        this.setUserDataToStorage();
+    }
+
+    async setUserDataToStorage() {
         /* Saving user data in localstorage when logged in and setting up null when logged out */
         this.afAuth.authState.subscribe((user) => {
             if (user) {
