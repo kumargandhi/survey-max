@@ -17,16 +17,16 @@
                 [ngClass]="{
                     'ng-invalid ng-dirty':
                         form.controls['email'].dirty &&
-                        form.controls['email'].hasError('required')
+                        form.controls['email'].hasError('email')
                 }"
             />
             <small
                 class="p-error"
                 *ngIf="
                     form.controls['email'].dirty &&
-                    form.controls['email'].hasError('required')
+                    form.controls['email'].hasError('email')
                 "
-                >Email is required.</small
+                >{{ form.controls['email'].errors['email'] }}</small
             >
         </div>
         <div class="p-field mb-3">
@@ -41,16 +41,16 @@
                 [ngClass]="{
                     'ng-invalid ng-dirty':
                         form.controls['password'].dirty &&
-                        form.controls['password'].hasError('required')
+                        form.controls['password'].hasError('password')
                 }"
             />
             <small
                 class="p-error"
                 *ngIf="
                     form.controls['password'].dirty &&
-                    form.controls['password'].hasError('required')
+                    form.controls['password'].hasError('password')
                 "
-                >Password is required.</small
+                >{{ form.controls['password'].errors['password'] }}</small
             >
         </div>
         <div class="p-field mb-3">

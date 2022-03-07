@@ -7,10 +7,13 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
+import { head } from 'lodash';
 import { UserService } from '../../common/services/user.service';
 import { IUser } from '../../common/interfaces/user.interface';
 import { DestroyService } from '../../common/services/destroy.service';
 import { ROLES } from '../../main/constants';
+import { validateEmail } from '../../common/validators/email.validator';
+import { validatePassword } from '../../common/validators/password.validator';
 
 const PASSWORD_DUMMY_TEXT = 'PASSWORD_DUMMY_TEXT';
 
@@ -53,15 +56,18 @@ export class AddUpdateUserComponent implements OnInit {
         this.form = this._fb.group({
             email: [
                 { value: this._user?.email, disabled: this._user?.email },
-                Validators.required,
+                validateEmail(),
             ],
             password: [
                 { value: this._user ? PASSWORD_DUMMY_TEXT : '', disabled: this._user },
-                Validators.required,
+                validatePassword(),
             ],
             displayName: [this._user?.displayName, Validators.required],
             roles: [this._user?.roles[0], Validators.required],
         });
+        if (!this._user) {
+            this.form.controls.roles.setValue(head(this.roles));
+        }
     }
 
     formSubscribe() {
