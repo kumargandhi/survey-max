@@ -5,7 +5,7 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 import { IUser } from '../common/interfaces/user.interface';
 import { DestroyService } from '../common/services/destroy.service';
 import { UsersAdapter } from './users.adapter';
@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit {
         this.errorText = '';
         this._userService.getUsers().subscribe(
             (data) => {
-                this.users = _.cloneDeep(
+                this.users = cloneDeep(
                     data.map((e) => {
                         const s: IUser = e.payload.doc.data() as IUser;
                         s.id = e.payload.doc.id;
@@ -129,7 +129,7 @@ export class UsersComponent implements OnInit {
     deleteSelectedUsers() {}
 
     editUser(user: IUser) {
-        this.user = _.cloneDeep(user);
+        this.user = cloneDeep(user);
         this.userDialog = true;
     }
 

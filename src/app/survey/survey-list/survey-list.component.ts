@@ -6,7 +6,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 import { DestroyService } from '../../common/services/destroy.service';
 import { SurveyService } from '../../common/services/survey.service';
 import { ISurvey } from '../../common/interfaces/survey.interface';
@@ -55,7 +55,7 @@ export class SurveyListComponent implements OnInit {
         this.errorText = '';
         this._surveyService.getSurveys().subscribe(
             (data) => {
-                this.surveys = _.cloneDeep(
+                this.surveys = cloneDeep(
                     data.map((e) => {
                         const s: ISurvey = e.payload.doc.data() as ISurvey;
                         s.id = e.payload.doc.id;
@@ -80,7 +80,7 @@ export class SurveyListComponent implements OnInit {
     }
 
     editSurvey(survey: ISurvey) {
-        this.survey = _.cloneDeep(survey);
+        this.survey = cloneDeep(survey);
         this.surveyDialog = true;
     }
 
@@ -154,7 +154,7 @@ export class SurveyListComponent implements OnInit {
     }
 
     deleteSelectedSurveys() {
-        const surveyNames: string[] = _.cloneDeep(this.selectedSurveys).map(
+        const surveyNames: string[] = cloneDeep(this.selectedSurveys).map(
             (item) => item.name
         );
         this.confirmationMessage = `Are you sure that you want to delete <strong>${surveyNames.join(

@@ -6,7 +6,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+import { cloneDeep, find } from 'lodash';
 import { DestroyService } from '../../common/services/destroy.service';
 import { QuestionService } from '../../common/services/question.service';
 import { IQuestion } from '../../common/interfaces/question.interface';
@@ -64,7 +64,7 @@ export class QuestionListComponent implements OnInit {
         this.errorText = '';
         this._questionService.getQuestionsForSurvey(this.surveyId).subscribe(
             (data) => {
-                this.questions = _.cloneDeep(
+                this.questions = cloneDeep(
                     data.map((e) => {
                         const s: IQuestion = e.payload.doc.data() as IQuestion;
                         s.id = e.payload.doc.id;
@@ -85,7 +85,7 @@ export class QuestionListComponent implements OnInit {
     getQuestionTypes() {
         this._questionService.getQuestionTypes().subscribe(
             (data) => {
-                this.questionTypes = _.cloneDeep(
+                this.questionTypes = cloneDeep(
                     data.map((e) => {
                         const s: IQuestionTypes = e.payload.doc.data() as IQuestionTypes;
                         return s;
@@ -101,11 +101,11 @@ export class QuestionListComponent implements OnInit {
     }
 
     getQuestionTypeLabel(id: number) {
-        return _.find(this.questionTypes, { id })?.label;
+        return find(this.questionTypes, { id })?.label;
     }
 
     editQuestion(question: IQuestion) {
-        this.question = _.cloneDeep(question);
+        this.question = cloneDeep(question);
         this.questionDialog = true;
     }
 
@@ -182,7 +182,7 @@ export class QuestionListComponent implements OnInit {
     }
 
     deleteSelectedQuestions() {
-        const questionNames: string[] = _.cloneDeep(this.selectedQuestions).map(
+        const questionNames: string[] = cloneDeep(this.selectedQuestions).map(
             (item) => item.question
         );
         this.confirmationMessage = `Are you sure that you want to delete ${

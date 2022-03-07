@@ -3,9 +3,8 @@ import {
     ChangeDetectorRef,
     Component,
     OnInit,
-    ViewChild,
 } from '@angular/core';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { SurveyService } from '../common/services/survey.service';
 import { ISurvey } from '../common/interfaces/survey.interface';
@@ -35,7 +34,7 @@ export class DashboardComponent implements OnInit {
         this.loading = true;
         this._surveyService.getSurveys().subscribe(
             (data) => {
-                this.surveys = _.cloneDeep(
+                this.surveys = cloneDeep(
                     data.map((e) => {
                         const s: ISurvey = e.payload.doc.data() as ISurvey;
                         s.id = e.payload.doc.id;

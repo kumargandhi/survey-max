@@ -10,10 +10,8 @@ import {
     NavigationEnd,
     RouterEvent,
 } from '@angular/router';
-import * as _ from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { SURVEY_BREAD_CRUMBS } from '../main/constants';
-import { MenuItem } from 'primeng/api';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
