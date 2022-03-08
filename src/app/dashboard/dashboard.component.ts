@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
                 this.loading = false;
                 this._cd.markForCheck();
             },
-            (error) => {
+            () => {
                 this.loading = false;
                 this._cd.markForCheck();
             }

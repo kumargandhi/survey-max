@@ -15,7 +15,7 @@ import { StorageService } from './storage.service';
 })
 export class AuthService {
 
-    private userData: any;
+    private _userData: any;
 
     constructor(
         public afs: AngularFirestore,
@@ -27,11 +27,11 @@ export class AuthService {
         /* Saving user data in localstorage when logged in and setting up null when logged out */
         this.afAuth.authState.subscribe((user) => {
             if (user) {
-                this.userData = user;
-                localStorage.setItem('user', JSON.stringify(this.userData));
+                this._userData = user;
+                localStorage.setItem('user', JSON.stringify(this._userData));
                 JSON.parse(localStorage.getItem('user'));
             } else {
-                this.userData = null;
+                this._userData = null;
                 localStorage.setItem('user', null);
                 JSON.parse(localStorage.getItem('user'));
             }
@@ -42,10 +42,10 @@ export class AuthService {
     signIn(email, password) {
         return this.afAuth
             .signInWithEmailAndPassword(email, password)
-            .then((result) => {
+            .then(() => {
                 this.ngZone.run(() => {
                     // Just wait a few ms for authState to change if already changed then no need to wait
-                    if (this.userData) {
+                    if (this._userData) {
                         this.router.navigate(['/main']);
                     } else {
                         setTimeout(() => {
