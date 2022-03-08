@@ -7,6 +7,13 @@ import {
 import { IUser } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 
+enum UserActions {
+    Profile = 'Profile',
+    Delete_Account = 'Delete_Account',
+    Logout = 'Logout',
+    Info = 'Info'
+}
+
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -16,6 +23,8 @@ export class HeaderComponent implements OnInit {
     infoDialog = false;
 
     user: IUser;
+
+    readonly UserActions = UserActions;
 
     constructor(
         private _storageService: StorageService,
@@ -34,7 +43,17 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    onInfoClick() {
-        this.infoDialog = true;
+    onUserAction(action: UserActions) {
+        switch (action) {
+            case UserActions.Logout: {
+                break;
+            }
+            case UserActions.Info: {
+                this.infoDialog = true;
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

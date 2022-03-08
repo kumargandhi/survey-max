@@ -63,13 +63,6 @@ export class UserService {
     }
 
     deleteUser(userId) {
-        // return this.fireAuth.createUserWithEmailAndPassword
-        return this.firestore.doc(`${COLLECTION_USERS}/` + userId).delete()
-          .then(() => {
-              //
-          })
-          .catch((error) => {
-              window.alert(error.message);
-          });
+        return this.firestore.doc(`${COLLECTION_USERS}/` + userId).delete();
     }
 }

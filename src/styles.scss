@@ -3,6 +3,7 @@
 @import 'assets/fonts/open-sans-fonts';
 @import 'assets/scss/variables';
 @import 'assets/scss/primeng-overrides';
+@import 'assets/scss/bootstrap-overrides';
 
 html,
 body {
@@ -73,8 +74,8 @@ body {
 }
 
 .descriptive-text {
-    color: $theme-gray-dark;
     @include descriptive-text;
+    color: $theme-gray-dark;
 }
 
 //This is the main application container ID, includes the application header
@@ -84,12 +85,14 @@ body {
     height: 100vh;
     overflow-y: scroll;
     background: var(--theme-gray);
+
     & > #page-title {
         background-color: inherit;
         margin: 0 !important;
         padding-right: $space-base;
         padding-bottom: $space-base;
     }
+
     & > #page-title.gray {
         background-color: $theme-gray-light !important;
     }

@@ -9,15 +9,6 @@
                 class="p-button-success mr-2"
                 (click)="openUserDialog()"
             ></button>
-            <button
-                pButton
-                pRipple
-                label="Delete"
-                icon="pi pi-trash"
-                class="p-button-danger"
-                (click)="deleteSelectedUsers()"
-                [disabled]="!selectedUsers || !selectedUsers.length"
-            ></button>
         </ng-template>
     </p-toolbar>
     <p-table
@@ -35,9 +26,6 @@
     >
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
                 <th pSortableColumn="email" style="width: 30%">
                     Email <p-sortIcon field="email"></p-sortIcon>
                 </th>
@@ -55,9 +43,6 @@
         </ng-template>
         <ng-template pTemplate="body" let-user>
             <tr>
-                <td>
-                    <p-tableCheckbox [value]="user"></p-tableCheckbox>
-                </td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles }}</td>
                 <td>{{ user.displayName }}</td>
@@ -76,14 +61,6 @@
                         class="p-button-rounded p-button-success mr-2"
                         (click)="editUser(user)"
                         pTooltip="Edit User" tooltipPosition="top" placeholder="Top"
-                    ></button>
-                    <button
-                        pButton
-                        pRipple
-                        icon="pi pi-trash"
-                        class="p-button-rounded p-button-warning"
-                        (click)="deleteUser(user)"
-                        pTooltip="Delete User" tooltipPosition="top" placeholder="Top"
                     ></button>
                 </td>
             </tr>

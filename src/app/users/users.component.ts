@@ -126,8 +126,6 @@ export class UsersComponent implements OnInit {
         }
     }
 
-    deleteSelectedUsers() {}
-
     editUser(user: IUser) {
         this.user = cloneDeep(user);
         this.userDialog = true;

@@ -16,7 +16,8 @@
     // height: 450px;
 }
 
-p-panel, .p-panel {
+p-panel,
+.p-panel {
     width: 50%;
     height: 100%;
 }
@@ -33,6 +34,7 @@ p-panel, .p-panel {
 .footer {
     display: flex;
     align-items: center;
+
     .descriptive-text {
         padding-left: 10px;
     }

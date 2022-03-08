@@ -7,7 +7,7 @@ $font-weight-bold: 700;
 $font-weight-extrabold: 800;
 
 // Theme color variables
-$theme-white: #ffffff;
+$theme-white: #fff;
 $theme-primary: var(--theme-color-primary);
 $theme-primary-light: #8580d1;
 $theme-base: #323941;
@@ -42,8 +42,8 @@ $space-xl: 30px;
     --panel-footer-background: #f4f7fa;
 
     // Gray color variables
-    --theme-gray-darker: #333333; //night
-    --theme-gray-dark: #666666; //acadia
+    --theme-gray-darker: #333; //night
+    --theme-gray-dark: #666; //acadia
     --theme-gray-base: #c3c3c3; //silver
     --theme-gray: #ededed; //whitesmoke
     --theme-gray-light: #f5f5f5; //whitesand

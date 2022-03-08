@@ -13,24 +13,24 @@
 }
 
 .p-menubar .p-menuitem {
-    margin: 0px 10px 0px 10px;
+    margin: 0 10px 0 10px;
 }
 
 .p-menubar
-    .p-menubar-root-list
-    > .p-menuitem
-    > .p-menuitem-link.p-menuitem-link-active {
+.p-menubar-root-list
+> .p-menuitem
+> .p-menuitem-link.p-menuitem-link-active {
     background: var(--theme-color-primary);
 
     & > .p-menuitem-text {
-        color: #ffffff !important;
+        color: #fff !important;
     }
 }
 
 .p-menubar
-    .p-menubar-root-list
-    > .p-menuitem
-    > .p-menuitem-link:not(.p-disabled):hover {
+.p-menubar-root-list
+> .p-menuitem
+> .p-menuitem-link:not(.p-disabled):hover {
     & > .p-menuitem-text {
         color: var(--theme-gray-darker) !important;
     }
@@ -40,6 +40,7 @@
 .p-datatable-responsive-scroll > .p-datatable-wrapper > table {
     table-layout: fixed !important;
 }
+
 .p-datatable .p-datatable-tbody > tr > td {
     overflow: hidden !important;
     white-space: pre !important;

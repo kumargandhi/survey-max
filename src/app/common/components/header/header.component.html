@@ -1,10 +1,47 @@
 <nav class="navbar navbar-expand navbar-light bg-white shadow-sm fixed-top">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarText">
-            <span class="navbar-text ml-auto">
-                {{ !user?.displayName ? user?.email : user?.displayName }}
-            </span>
-            <ul class="navbar-nav ms-3 me-3">
+            <ul class="navbar-nav ml-auto me-3">
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        {{
+                            !user?.displayName ? user?.email : user?.displayName
+                        }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                (click)="onUserAction(UserActions.Profile)"
+                                >Profile</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                (click)="
+                                    onUserAction(UserActions.Delete_Account)
+                                "
+                                >Delete Account</a
+                            >
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                (click)="onUserAction(UserActions.Logout)"
+                                >Log out <i class="bi bi-box-arrow-right"></i
+                            ></a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <button
                         pButton
@@ -12,7 +49,7 @@
                         type="button"
                         icon="pi pi-info-circle"
                         class="p-button-rounded p-button-info p-button-text"
-                        (click)="onInfoClick()"
+                        (click)="onUserAction(UserActions.Info)"
                     ></button>
                 </li>
             </ul>
