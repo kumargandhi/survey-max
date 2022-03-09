@@ -6,6 +6,7 @@ import {
 } from '../../services/storage.service';
 import { IUser } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 enum UserActions {
     Profile = 'Profile',
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private _storageService: StorageService,
+        private _authService: AuthService,
         private _userService: UserService
     ) {}
 
@@ -45,7 +47,15 @@ export class HeaderComponent implements OnInit {
 
     onUserAction(action: UserActions) {
         switch (action) {
+            case UserActions.Profile: {
+                break;
+            }
+            case UserActions.Delete_Account: {
+                this._authService.deleteUserAccount();
+                break;
+            }
             case UserActions.Logout: {
+                this._authService.signOut();
                 break;
             }
             case UserActions.Info: {

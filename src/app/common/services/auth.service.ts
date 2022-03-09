@@ -8,21 +8,24 @@ import {
     AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 import { StorageService } from './storage.service';
+import { UserService } from './user.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
 
-    private _userData: any;
+    private _userData: firebase.User;
 
     constructor(
         public afs: AngularFirestore,
         public afAuth: AngularFireAuth,
         public router: Router,
         public ngZone: NgZone,
-        private storageService: StorageService
+        private _storageService: StorageService,
+        private _userService: UserService
     ) {
         /* Saving user data in localstorage when logged in and setting up null when logged out */
         this.afAuth.authState.subscribe((user) => {
@@ -125,5 +128,21 @@ export class AuthService {
             localStorage.removeItem('user');
             this.router.navigate(['login']);
         });
+    }
+
+    deleteUserAccount() {
+        return this._userService.deleteUser(this._userData.uid)
+          .then(() => {
+              this._userData.delete()
+                .then(() => {
+                    this.signOut();
+                })
+                .catch((error) => {
+                    window.alert(error);
+                });
+          })
+          .catch((error) => {
+              window.alert(error);
+          });
     }
 }
