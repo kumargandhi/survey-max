@@ -22,6 +22,7 @@
                                 (click)="onUserAction(UserActions.Profile)"
                                 ><i class="bi bi-person pe-1"></i>Profile</a>
                         </li>
+                        <li><hr class="dropdown-divider" /></li>
                         <li>
                             <a
                                 class="dropdown-item"
@@ -29,14 +30,6 @@
                                     onUserAction(UserActions.Delete_Account)
                                 "
                             ><i class="bi bi-person-x pe-1"></i>Delete Account</a>
-                        </li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li>
-                            <a
-                                class="dropdown-item"
-                                (click)="onUserAction(UserActions.Logout)"
-                                >Log out <i class="bi bi-box-arrow-right"></i
-                            ></a>
                         </li>
                     </ul>
                 </li>
@@ -48,6 +41,16 @@
                         icon="pi pi-info-circle"
                         class="p-button-rounded p-button-info p-button-text"
                         (click)="onUserAction(UserActions.Info)"
+                    ></button>
+                </li>
+                <li class="nav-item">
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-power-off"
+                        class="p-button-rounded p-button-info p-button-text"
+                        (click)="onUserAction(UserActions.Logout)"
                     ></button>
                 </li>
             </ul>

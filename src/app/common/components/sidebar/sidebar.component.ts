@@ -14,8 +14,4 @@ export class SidebarComponent implements OnInit {
     constructor(private _authService: AuthService) {}
 
     ngOnInit(): void {}
-
-    logOutClicked() {
-        this._authService.signOut();
-    }
 }
