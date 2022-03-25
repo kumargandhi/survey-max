@@ -7,6 +7,8 @@ import {
 import { IUser } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { ConfirmationService } from 'primeng/api';
+import { DestroyService } from '../../services/destroy.service';
 
 enum UserActions {
     Profile = 'Profile',
@@ -19,6 +21,7 @@ enum UserActions {
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
+    providers: [DestroyService, ConfirmationService],
 })
 export class HeaderComponent implements OnInit {
     infoDialog = false;
@@ -27,10 +30,13 @@ export class HeaderComponent implements OnInit {
 
     readonly UserActions = UserActions;
 
+    confirmationMessage = '';
+
     constructor(
         private _storageService: StorageService,
         private _authService: AuthService,
-        private _userService: UserService
+        private _userService: UserService,
+        private _confirmationService: ConfirmationService
     ) {}
 
     ngOnInit(): void {
@@ -51,7 +57,13 @@ export class HeaderComponent implements OnInit {
                 break;
             }
             case UserActions.Delete_Account: {
-                this._authService.deleteUserAccount();
+                this.confirmationMessage = `Are you sure that you want to delete your account?`;
+                this._confirmationService.confirm({
+                    message: this.confirmationMessage,
+                    accept: () => {
+                        this._authService.deleteUserAccount();
+                    },
+                });
                 break;
             }
             case UserActions.Logout: {
@@ -65,5 +77,12 @@ export class HeaderComponent implements OnInit {
             default:
                 break;
         }
+    }
+
+    getHeaderTitle() {
+        return this._storageService.get<IUser>(
+            StorageKeys.Selected_Page,
+            StorageType.Local
+        );
     }
 }

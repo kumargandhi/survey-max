@@ -1,15 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { IUser } from '../interfaces/user.interface';
-
 // Firebase
-import {
-    AngularFirestore,
-    AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
-import { StorageService } from './storage.service';
+import { StorageKeys, StorageService, StorageType } from './storage.service';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -126,6 +122,7 @@ export class AuthService {
     signOut() {
         return this.afAuth.signOut().then(() => {
             localStorage.removeItem('user');
+            this._storageService.pop(StorageKeys.Selected_Page, StorageType.Local);
             this.router.navigate(['login']);
         });
     }

@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand navbar-light bg-white shadow-sm fixed-top">
     <div class="container-fluid">
+        <a class="navbar-brand ms-3">{{ getHeaderTitle() }}</a>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto me-3">
                 <li class="nav-item dropdown">
@@ -79,3 +80,26 @@
         ></button>
     </ng-template>
 </p-dialog>
+
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="message">
+        <h5 [innerHTML]="confirmationMessage"></h5>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button
+            type="button"
+            pButton
+            icon="pi pi-times"
+            label="No"
+            (click)="cd.reject()"
+        ></button>
+        <button
+            type="button"
+            pButton
+            icon="pi pi-check"
+            label="Yes"
+            class="p-button-danger"
+            (click)="cd.accept()"
+        ></button>
+    </ng-template>
+</p-confirmDialog>

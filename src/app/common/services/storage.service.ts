@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export enum StorageKeys {
     User = 'user',
+    Selected_Page = 'selected_page',
 }
 
 export enum StorageType {

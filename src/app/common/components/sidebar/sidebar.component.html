@@ -16,7 +16,7 @@
         />
     </a>
     <ng-container *ngFor="let item of menu">
-        <a [routerLink]="item.routerLink" [routerLinkActive]="'active'">{{
+        <a [routerLink]="item.routerLink" [routerLinkActive]="'active'" (click)="pageChanged(item)">{{
             item.label
         }}</a>
     </ng-container>
