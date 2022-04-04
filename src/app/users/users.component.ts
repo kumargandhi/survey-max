@@ -12,6 +12,7 @@ import { UsersAdapter } from './users.adapter';
 import { AddUpdateUserComponent } from './add-update-user/add-update-user.component';
 import { ConfirmationService } from 'primeng/api';
 import { UserService } from '../common/services/user.service';
+import { AddSurveyUserComponent } from '../survey/add-survey-user/add-survey-user.component';
 
 @Component({
     selector: 'app-users',
@@ -35,6 +36,10 @@ export class UsersComponent implements OnInit {
     @ViewChild('addUpdateUserComponent')
     addUpdateUserComponent: AddUpdateUserComponent;
     confirmationMessage = '';
+
+    addSurveyDialog = false;
+    @ViewChild('addSurveyUserComponent')
+    addSurveyUserComponent: AddSurveyUserComponent;
 
     constructor(
         private _cd: ChangeDetectorRef,
@@ -129,6 +134,11 @@ export class UsersComponent implements OnInit {
     editUser(user: IUser) {
         this.user = cloneDeep(user);
         this.userDialog = true;
+    }
+
+    addSurvey(user: IUser) {
+        this.user = cloneDeep(user);
+        this.addSurveyDialog = true;
     }
 
     deleteUser(user: IUser) {

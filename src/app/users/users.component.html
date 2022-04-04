@@ -62,6 +62,14 @@
                         (click)="editUser(user)"
                         pTooltip="Edit User" tooltipPosition="top" placeholder="Top"
                     ></button>
+                    <button
+                        pButton
+                        pRipple
+                        icon="pi pi-plus"
+                        class="p-button-rounded p-button-info mr-2"
+                        (click)="addSurvey(user)"
+                        pTooltip="Add Survey" tooltipPosition="top" placeholder="Top"
+                    ></button>
                 </td>
             </tr>
         </ng-template>
@@ -101,6 +109,39 @@
                 icon="pi pi-check"
                 class="p-button-primary"
                 [disabled]="!addUpdateUserComponent?.form?.valid"
+                (click)="saveUser()"
+            ></button>
+        </ng-template>
+    </p-dialog>
+    <p-dialog
+        [(visible)]="addSurveyDialog"
+        [style]="{ width: '550px' }"
+        [header]="'Add Survey User'"
+        [modal]="true"
+        styleClass="p-fluid"
+    >
+        <ng-template pTemplate="content">
+            <app-add-survey-user
+                #addSurveyUserComponent
+                [user]="user"
+            ></app-add-survey-user>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-secondary"
+                (click)="hideDialog()"
+            ></button>
+            <button
+                pButton
+                pRipple
+                label="{{ user ? 'Update' : 'Add' }}"
+                icon="pi pi-check"
+                class="p-button-primary"
+                [disabled]="!addSurveyUserComponent?.form?.valid"
                 (click)="saveUser()"
             ></button>
         </ng-template>
