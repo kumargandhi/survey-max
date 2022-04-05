@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-light bg-white shadow-sm fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand ms-3">{{ getHeaderTitle() }}</a>
+    <div class="container-fluid p-0">
+        <a class="navbar-brand ms-4">{{ getHeaderTitle() }}</a>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto me-3">
                 <li class="nav-item dropdown">
@@ -103,3 +103,7 @@
         ></button>
     </ng-template>
 </p-confirmDialog>
+
+<p-sidebar [(visible)]="showProfilePanel" position="right" styleClass="p-sidebar-md" [transitionOptions]="'250ms'" [dismissible]="true">
+    <app-user-profile></app-user-profile>
+</p-sidebar>

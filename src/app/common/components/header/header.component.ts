@@ -32,6 +32,8 @@ export class HeaderComponent implements OnInit {
 
     confirmationMessage = '';
 
+    showProfilePanel = false;
+
     constructor(
         private _storageService: StorageService,
         private _authService: AuthService,
@@ -54,6 +56,7 @@ export class HeaderComponent implements OnInit {
     onUserAction(action: UserActions) {
         switch (action) {
             case UserActions.Profile: {
+                this.showProfilePanel = true;
                 break;
             }
             case UserActions.Delete_Account: {
