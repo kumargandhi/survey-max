@@ -89,6 +89,7 @@ export class UsersComponent implements OnInit {
 
     hideDialog() {
         this.userDialog = false;
+        this.addSurveyDialog = false;
     }
 
     saveUser() {
@@ -160,5 +161,25 @@ export class UsersComponent implements OnInit {
                     });
             },
         });
+    }
+
+    saveSurveyUser() {
+        this.loading = true;
+        this.errorText = '';
+        if (this.user) {
+            this._userService.saveSurveyUser(this.user, this.addSurveyUserComponent.selectedSurveys)
+              .then(() => {
+                  this.loading = false;
+                  this.user = null;
+                  this.hideDialog();
+                  this.getUsers();
+                  this._cd.markForCheck();
+              })
+              .catch((error) => {
+                  this.addSurveyUserComponent.errorText = error;
+                  this.loading = false;
+                  this._cd.markForCheck();
+              });
+        }
     }
 }

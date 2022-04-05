@@ -5,11 +5,12 @@ import {
     OnInit,
     Input,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { cloneDeep } from 'lodash';
 import { DestroyService } from '../../common/services/destroy.service';
 import { IUser } from '../../common/interfaces/user.interface';
 import { UserService } from '../../common/services/user.service';
+import { SurveyService } from '../../common/services/survey.service';
+import { ISurvey } from '../../common/interfaces/survey.interface';
 
 @Component({
     selector: 'app-add-survey-user',
@@ -19,19 +20,20 @@ import { UserService } from '../../common/services/user.service';
     providers: [DestroyService],
 })
 export class AddSurveyUserComponent implements OnInit {
-    form: FormGroup;
-
     loading = false;
 
     _errorText = '';
 
     _user: IUser;
 
+    surveys: ISurvey[];
+    selectedSurveys: ISurvey[] = [];
+
     constructor(
-      private _fb: FormBuilder,
-      private _destroy$: DestroyService,
-      private _cd: ChangeDetectorRef,
-      private _userSurvey: UserService
+        private _destroy$: DestroyService,
+        private _cd: ChangeDetectorRef,
+        private _userSurvey: UserService,
+        private _surveyService: SurveyService
     ) {}
 
     @Input() set user(val) {
@@ -39,25 +41,37 @@ export class AddSurveyUserComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.formCreate();
-        this.formSubscribe();
+        this.getSurveys();
         this._cd.markForCheck();
     }
 
-    formCreate() {
-
-    }
-
-    formSubscribe() {
-
-    }
-
-    onValueChanged(data?: any) {
-        if (!data) {
-            return;
-        }
-        this.loading = false;
+    getSurveys() {
+        this.loading = true;
         this.errorText = '';
+        this._surveyService.getSurveys().subscribe(
+            (data) => {
+                this.surveys = cloneDeep(
+                    data.map((e) => {
+                        const s: ISurvey = e.payload.doc.data() as ISurvey;
+                        s.id = e.payload.doc.id;
+                        return s;
+                    })
+                );
+                this.loading = false;
+                this._cd.markForCheck();
+            },
+            (error) => {
+                this.errorText = error;
+                this.loading = false;
+                this._cd.markForCheck();
+            }
+        );
+    }
+
+    getTableSummary() {
+        return `Total ${this.surveys ? this.surveys.length : 0} ${
+            this.surveys && this.surveys.length > 1 ? 'Surveys' : 'Survey'
+        }`;
     }
 
     set errorText(value) {

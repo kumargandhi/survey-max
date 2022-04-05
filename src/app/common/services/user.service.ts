@@ -5,8 +5,12 @@ import {
 } from '@angular/fire/compat/firestore';
 import { IUser } from '../interfaces/user.interface';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ISurveyUser } from '../interfaces/survey-user.interface';
+import { ISurvey } from '../interfaces/survey.interface';
+import { COLLECTION_SURVEY } from './survey.service';
 
 export const COLLECTION_USERS = 'users';
+export const COLLECTION_SURVEY_USER = 'survey_user';
 
 @Injectable({
     providedIn: 'root',
@@ -64,5 +68,27 @@ export class UserService {
 
     deleteUser(userId) {
         return this.firestore.doc(`${COLLECTION_USERS}/` + userId).delete();
+    }
+
+    saveSurveyUser(user: IUser, surveys: ISurvey[]) {
+        const surveyUser: ISurveyUser = {
+            userId: null,
+            surveys: []
+        };
+
+        const userDoc = this.firestore
+          .collection(COLLECTION_USERS)
+          .doc(user.id);
+
+        surveyUser.userId = userDoc.ref;
+
+        surveys.forEach((value) => {
+            const surveyDoc = this.firestore
+              .collection(COLLECTION_SURVEY)
+              .doc(value.id);
+            surveyUser.surveys.push(surveyDoc.ref);
+        });
+
+        return this.firestore.collection(COLLECTION_SURVEY_USER).add(surveyUser);
     }
 }

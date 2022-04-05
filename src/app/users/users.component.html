@@ -115,7 +115,7 @@
     </p-dialog>
     <p-dialog
         [(visible)]="addSurveyDialog"
-        [style]="{ width: '550px' }"
+        [style]="{ width: '700px' }"
         [header]="'Add Survey User'"
         [modal]="true"
         styleClass="p-fluid"
@@ -141,8 +141,8 @@
                 label="{{ user ? 'Update' : 'Add' }}"
                 icon="pi pi-check"
                 class="p-button-primary"
-                [disabled]="!addSurveyUserComponent?.form?.valid"
-                (click)="saveUser()"
+                [disabled]="!addSurveyUserComponent?.selectedSurveys?.length"
+                (click)="saveSurveyUser()"
             ></button>
         </ng-template>
     </p-dialog>

@@ -1,5 +1,5 @@
 export interface ISurvey {
-    id?: string | number;
+    id?: string;
     name: string;
     desc: string;
     isConfigured: boolean;
