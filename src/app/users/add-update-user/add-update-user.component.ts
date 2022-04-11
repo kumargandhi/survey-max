@@ -11,11 +11,9 @@ import { head } from 'lodash';
 import { UserService } from '../../common/services/user.service';
 import { IUser } from '../../common/interfaces/user.interface';
 import { DestroyService } from '../../common/services/destroy.service';
-import { ROLES } from '../../main/constants';
+import { PASSWORD_DUMMY_TEXT, ROLES } from '../../main/constants';
 import { validateEmail } from '../../common/validators/email.validator';
 import { validatePassword } from '../../common/validators/password.validator';
-
-const PASSWORD_DUMMY_TEXT = 'PASSWORD_DUMMY_TEXT';
 
 @Component({
     selector: 'app-add-update-user',

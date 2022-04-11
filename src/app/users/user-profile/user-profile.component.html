@@ -1,1 +1,69 @@
-<p>user-profile works!</p>
+<div class="user-profile">
+    <h6 class="pb-3">{{ !_user?.displayName ? _user?.email : _user?.displayName }}</h6>
+    <p-message
+        severity="error"
+        [text]="_errorText"
+        *ngIf="_errorText"
+    ></p-message>
+    <form *ngIf="form" [formGroup]="form" class="p-fluid m-3">
+        <div class="p-field mb-3">
+            <label for="email">Email</label>
+            <input
+                type="text"
+                pInputText
+                id="email"
+                required
+                autofocus
+                formControlName="email"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['email'].dirty &&
+                        form.controls['email'].hasError('email')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['email'].dirty &&
+                    form.controls['email'].hasError('email')
+                "
+                >{{ form.controls['email'].errors['email'] }}</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label for="displayName">Display Name</label>
+            <input
+                type="text"
+                pInputText
+                id="displayName"
+                required
+                autofocus
+                formControlName="displayName"
+                [ngClass]="{
+                    'ng-invalid ng-dirty':
+                        form.controls['displayName'].dirty &&
+                        form.controls['displayName'].hasError('required')
+                }"
+            />
+            <small
+                class="p-error"
+                *ngIf="
+                    form.controls['displayName'].dirty &&
+                    form.controls['displayName'].hasError('required')
+                "
+                >Display Name is required.</small
+            >
+        </div>
+        <div class="p-field mb-3">
+            <label>Roles</label>
+            <p-dropdown
+                id="roles"
+                [options]="roles"
+                optionLabel="label"
+                optionValue="id"
+                formControlName="roles"
+                styleClass="p-dropdown-min-width"
+            ></p-dropdown>
+        </div>
+    </form>
+</div>

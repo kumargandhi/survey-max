@@ -105,5 +105,5 @@
 </p-confirmDialog>
 
 <p-sidebar [(visible)]="showProfilePanel" position="right" styleClass="p-sidebar-md" [transitionOptions]="'250ms'" [dismissible]="true">
-    <app-user-profile></app-user-profile>
+    <app-user-profile [user]="user"></app-user-profile>
 </p-sidebar>

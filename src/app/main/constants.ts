@@ -37,3 +37,5 @@ export enum ROLES {
     TEACHER = 'Teacher',
     STUDENT = 'Student'
 }
+
+export const PASSWORD_DUMMY_TEXT = 'PASSWORD_DUMMY_TEXT';
