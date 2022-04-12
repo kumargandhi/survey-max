@@ -102,3 +102,7 @@ body {
         height: calc(100% - 64px);
     }
 }
+
+.text-primary-app {
+    color: $theme-primary !important;
+}

@@ -1,69 +1,167 @@
 <div class="user-profile">
-    <h6 class="pb-3">{{ !_user?.displayName ? _user?.email : _user?.displayName }}</h6>
+    <h5 class="pb-3 text-primary-app">
+        {{ !_user?.displayName ? _user?.email : _user?.displayName }}
+    </h5>
     <p-message
         severity="error"
         [text]="_errorText"
         *ngIf="_errorText"
     ></p-message>
-    <form *ngIf="form" [formGroup]="form" class="p-fluid m-3">
-        <div class="p-field mb-3">
-            <label for="email">Email</label>
-            <input
-                type="text"
-                pInputText
-                id="email"
-                required
-                autofocus
-                formControlName="email"
-                [ngClass]="{
-                    'ng-invalid ng-dirty':
-                        form.controls['email'].dirty &&
-                        form.controls['email'].hasError('email')
-                }"
-            />
-            <small
-                class="p-error"
-                *ngIf="
-                    form.controls['email'].dirty &&
-                    form.controls['email'].hasError('email')
-                "
-                >{{ form.controls['email'].errors['email'] }}</small
+    <p-tabView [activeIndex]="0">
+        <p-tabPanel header="Profile">
+            <form *ngIf="profileForm" [formGroup]="profileForm" class="p-fluid">
+                <div class="p-field mb-3">
+                    <label for="email">Email</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="email"
+                        required
+                        autofocus
+                        formControlName="email"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                profileForm.controls['email'].dirty &&
+                                profileForm.controls['email'].hasError('email')
+                        }"
+                    />
+                    <small
+                        class="p-error"
+                        *ngIf="
+                            profileForm.controls['email'].dirty &&
+                            profileForm.controls['email'].hasError('email')
+                        "
+                        >{{
+                            profileForm.controls['email'].errors['email']
+                        }}</small
+                    >
+                </div>
+                <div class="p-field mb-3">
+                    <label for="displayName">Display Name</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="displayName"
+                        required
+                        autofocus
+                        formControlName="displayName"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                profileForm.controls['displayName'].dirty &&
+                                profileForm.controls['displayName'].hasError(
+                                    'required'
+                                )
+                        }"
+                    />
+                    <small
+                        class="p-error"
+                        *ngIf="
+                            profileForm.controls['displayName'].dirty &&
+                            profileForm.controls['displayName'].hasError(
+                                'required'
+                            )
+                        "
+                        >Display Name is required.</small
+                    >
+                </div>
+                <div class="p-field mb-3">
+                    <label>Roles</label>
+                    <p-dropdown
+                        id="roles"
+                        [options]="roles"
+                        optionLabel="label"
+                        optionValue="id"
+                        formControlName="roles"
+                        styleClass="p-dropdown-min-width"
+                    ></p-dropdown>
+                </div>
+            </form>
+            <button
+                type="button"
+                pButton
+                icon="pi pi-check"
+                label="Update Profile"
+                class="float-end"
+            ></button>
+        </p-tabPanel>
+        <p-tabPanel header="Password">
+            <form
+                *ngIf="passwordForm"
+                [formGroup]="passwordForm"
+                class="p-fluid"
             >
-        </div>
-        <div class="p-field mb-3">
-            <label for="displayName">Display Name</label>
-            <input
-                type="text"
-                pInputText
-                id="displayName"
-                required
-                autofocus
-                formControlName="displayName"
-                [ngClass]="{
-                    'ng-invalid ng-dirty':
-                        form.controls['displayName'].dirty &&
-                        form.controls['displayName'].hasError('required')
-                }"
-            />
-            <small
-                class="p-error"
-                *ngIf="
-                    form.controls['displayName'].dirty &&
-                    form.controls['displayName'].hasError('required')
-                "
-                >Display Name is required.</small
-            >
-        </div>
-        <div class="p-field mb-3">
-            <label>Roles</label>
-            <p-dropdown
-                id="roles"
-                [options]="roles"
-                optionLabel="label"
-                optionValue="id"
-                formControlName="roles"
-                styleClass="p-dropdown-min-width"
-            ></p-dropdown>
-        </div>
-    </form>
+                <div class="p-field mb-3">
+                    <label for="oldPassword">Enter Old Password</label>
+                    <input
+                        type="password"
+                        pInputText
+                        id="oldPassword"
+                        required
+                        autofocus
+                        formControlName="oldPassword"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                passwordForm.controls['oldPassword'].dirty &&
+                                passwordForm.controls['oldPassword'].hasError(
+                                    'oldPassword'
+                                )
+                        }"
+                    />
+                    <small
+                        class="p-error"
+                        *ngIf="
+                            passwordForm.controls['oldPassword'].dirty &&
+                            passwordForm.controls['oldPassword'].hasError(
+                                'oldPassword'
+                            )
+                        "
+                        >{{
+                            passwordForm.controls['oldPassword'].errors[
+                                'oldPassword'
+                            ]
+                        }}</small
+                    >
+                </div>
+                <div class="p-field mb-3">
+                    <label for="newPassword">Enter New Password</label>
+                    <input
+                        type="password"
+                        pInputText
+                        id="newPassword"
+                        required
+                        autofocus
+                        formControlName="newPassword"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                passwordForm.controls['newPassword'].dirty &&
+                                passwordForm.controls['newPassword'].hasError(
+                                    'newPassword'
+                                )
+                        }"
+                    />
+                    <small
+                        class="p-error"
+                        *ngIf="
+                            passwordForm.controls['newPassword'].dirty &&
+                            passwordForm.controls['newPassword'].hasError(
+                                'newPassword'
+                            )
+                        "
+                        >{{
+                            passwordForm.controls['newPassword'].errors[
+                                'newPassword'
+                            ]
+                        }}</small
+                    >
+                </div>
+            </form>
+            <button
+                type="button"
+                pButton
+                icon="pi pi-check"
+                label="Update Password"
+                class="float-end"
+            ></button>
+        </p-tabPanel>
+    </p-tabView>
 </div>
