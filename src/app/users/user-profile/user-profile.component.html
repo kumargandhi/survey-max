@@ -1,7 +1,10 @@
 <div class="user-profile">
-    <h5 class="pb-3 text-primary-app">
-        {{ !_user?.displayName ? _user?.email : _user?.displayName }}
-    </h5>
+    <div class="text-center">
+        <img src="./assets/images/user.png" />
+        <h5 class="pb-3 text-primary-app">
+            {{ !_user?.displayName ? _user?.email : _user?.displayName }}
+        </h5>
+    </div>
     <p-message
         severity="error"
         [text]="_errorText"
