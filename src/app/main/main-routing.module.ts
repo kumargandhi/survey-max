@@ -6,6 +6,7 @@ import { UsersComponent } from '../users/users.component';
 import { SurveyComponent } from '../survey/survey.component';
 import { SurveyListComponent } from '../survey/survey-list/survey-list.component';
 import { QuestionListComponent } from '../survey/question-list/question-list.component';
+import { MySurveysComponent } from '../my-surveys/my-surveys.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,10 @@ const routes: Routes = [
                     },
                     { path: '', redirectTo: 'survey-list', pathMatch: 'full' },
                 ],
+            },
+            {
+                path: 'my-surveys',
+                component: MySurveysComponent,
             },
         ],
     },

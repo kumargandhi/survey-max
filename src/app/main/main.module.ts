@@ -18,6 +18,7 @@ import { InfoComponent } from '../common/components/info/info.component';
 import { AddUpdateUserComponent } from '../users/add-update-user/add-update-user.component';
 import { AddSurveyUserComponent } from '../survey/add-survey-user/add-survey-user.component';
 import { UserProfileComponent } from '../users/user-profile/user-profile.component';
+import { MySurveysComponent } from '../my-surveys/my-surveys.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { UserProfileComponent } from '../users/user-profile/user-profile.compone
         AddUpdateQuestionComponent,
         AddUpdateUserComponent,
         AddSurveyUserComponent,
-        UserProfileComponent
+        UserProfileComponent,
+        MySurveysComponent
     ],
     imports: [
         CommonModule,

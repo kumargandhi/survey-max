@@ -11,6 +11,10 @@ export const MENU_ITEMS = [
         label: 'Users',
         routerLink: ['users'],
     },
+    {
+        label: 'My Surveys',
+        routerLink: ['my-surveys'],
+    },
 ];
 
 export const SURVEY_BREAD_CRUMBS = [
