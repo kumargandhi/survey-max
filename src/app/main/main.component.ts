@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MenuItem } from 'primeng/api';
-import { MENU_ITEMS } from './constants';
+import { SUPER_ADMIN_MENU_ITEMS } from './constants';
 
 @Component({
     selector: 'app-main',
@@ -10,7 +10,7 @@ import { MENU_ITEMS } from './constants';
     styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-    menu: MenuItem[] = [...MENU_ITEMS];
+    menu: MenuItem[] = [...SUPER_ADMIN_MENU_ITEMS];
 
     constructor(private _router: Router) {}
 

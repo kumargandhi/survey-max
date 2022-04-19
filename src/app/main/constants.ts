@@ -1,4 +1,11 @@
-export const MENU_ITEMS = [
+export const DEFAULT_MENU_ITEMS = [
+    {
+        label: 'Dashboard',
+        routerLink: ['dashboard'],
+    },
+];
+
+export const SUPER_ADMIN_MENU_ITEMS = [
     {
         label: 'Dashboard',
         routerLink: ['dashboard'],
@@ -10,6 +17,13 @@ export const MENU_ITEMS = [
     {
         label: 'Users',
         routerLink: ['users'],
+    },
+];
+
+export const STUDENT_MENU_ITEMS = [
+    {
+        label: 'Dashboard',
+        routerLink: ['dashboard'],
     },
     {
         label: 'My Surveys',

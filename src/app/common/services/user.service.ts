@@ -3,11 +3,13 @@ import {
     AngularFirestore,
     AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
+import { Subject } from 'rxjs';
 import { IUser } from '../interfaces/user.interface';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ISurveyUser } from '../interfaces/survey-user.interface';
 import { ISurvey } from '../interfaces/survey.interface';
 import { COLLECTION_SURVEY } from './survey.service';
+import { ROLES } from '../../main/constants';
 
 export const COLLECTION_USERS = 'users';
 export const COLLECTION_SURVEY_USER = 'survey_user';
@@ -16,10 +18,30 @@ export const COLLECTION_SURVEY_USER = 'survey_user';
     providedIn: 'root',
 })
 export class UserService {
+
+    currentUser$ = new Subject<IUser>();
+
+    private _currentUser: IUser;
+
     constructor(
         public firestore: AngularFirestore,
         public fireAuth: AngularFireAuth
     ) {}
+
+    set currentUser(val: IUser) {
+        this._currentUser = val;
+        if (val) {
+            this.currentUser$.next(val);
+        }
+    }
+
+    getCurrentUser(): IUser {
+        return this._currentUser;
+    }
+
+    isCurrentUserStudent(): boolean {
+        return this._currentUser.roles.indexOf(ROLES.STUDENT) > -1;
+    }
 
     getUsers() {
         return this.firestore.collection(COLLECTION_USERS).snapshotChanges();

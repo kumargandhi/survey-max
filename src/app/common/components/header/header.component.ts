@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
         );
         this._userService.getUser(currentUser).then((doc) => {
             if (doc.exists) {
-                this.user = doc.data() as IUser;
+                this.user = this._userService.currentUser = doc.data() as IUser;
             }
         });
     }
