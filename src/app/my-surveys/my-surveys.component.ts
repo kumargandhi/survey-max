@@ -1,15 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+} from '@angular/core';
+import { cloneDeep, head } from 'lodash';
+import { DestroyService } from '../common/services/destroy.service';
+import { UserService } from '../common/services/user.service';
+import { ISurveyUser } from '../common/interfaces/survey-user.interface';
+import { takeUntil } from 'rxjs/operators';
+import { MySurveyService } from '../common/services/my-survey.service';
 
 @Component({
     selector: 'app-my-surveys',
     templateUrl: './my-surveys.component.html',
-    styleUrls: ['./my-surveys.component.scss']
+    styleUrls: ['./my-surveys.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [DestroyService],
 })
 export class MySurveysComponent implements OnInit {
 
-    constructor() { }
+    loading = false;
+
+    errorText = '';
+
+    surveyUser: ISurveyUser;
+
+    constructor(private _cd: ChangeDetectorRef,
+                private _destroy$: DestroyService,
+                private _userService: UserService,
+                private _mySurveyService: MySurveyService) {
+        this._userService.currentUser$
+          .pipe(takeUntil(this._destroy$))
+          .subscribe(() => {
+              this.getSurveysForUser();
+          });
+    }
 
     ngOnInit(): void {
+        if (this._userService.getCurrentUser()) {
+            this.getSurveysForUser();
+        }
+    }
+
+    getSurveysForUser() {
+        this.loading = true;
+        this.errorText = '';
+        this._mySurveyService.getSurveysForUser(this._userService.getCurrentUser().uid).subscribe(
+            (data) => {
+                this.surveyUser = head(cloneDeep(
+                    data.map((e) => {
+                        const s: ISurveyUser = e.payload.doc.data() as ISurveyUser;
+                        return s;
+                    }))
+                );
+                this.loading = false;
+                this._cd.markForCheck();
+            },
+            (error) => {
+                this.errorText = error;
+                this.loading = false;
+                this._cd.markForCheck();
+            }
+        );
     }
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 // Firebase
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ISurvey } from '../interfaces/survey.interface';
+import { DocumentReference } from '@angular/fire/compat/firestore/interfaces';
 
 export const COLLECTION_SURVEY = 'survey';
 
@@ -14,6 +15,18 @@ export class SurveyService {
 
     getSurveys() {
         return this.firestore.collection(COLLECTION_SURVEY).snapshotChanges();
+    }
+
+    getSurveyFromDoc(surveyDoc: DocumentReference): Promise<ISurvey | void> {
+        return surveyDoc.get().then((doc) => {
+            if (doc.exists) {
+                return doc.data() as ISurvey;
+            } else {
+                console.log('No such document survey!');
+            }
+        }).catch(function(error) {
+            console.log('Error getting document survey:', error);
+        });
     }
 
     saveSurvey(survey: ISurvey) {
