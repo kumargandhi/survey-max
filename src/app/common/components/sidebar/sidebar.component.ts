@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { head } from 'lodash';
 import { DEFAULT_MENU_ITEMS, STUDENT_MENU_ITEMS, SUPER_ADMIN_MENU_ITEMS } from '../../../main/constants';
@@ -43,13 +43,7 @@ export class SidebarComponent implements OnInit {
           });
     }
 
-    ngOnInit(): void {
-        this._storageService.set(
-            StorageKeys.Selected_Page,
-            this.selectedMenu.label,
-            StorageType.Local
-        );
-    }
+    ngOnInit(): void {}
 
     pageChanged(item: MenuItem) {
         this._storageService.set(
