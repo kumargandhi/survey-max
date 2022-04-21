@@ -19,7 +19,9 @@ export class SurveyService {
 
     getSurveyFromDoc(surveyDoc: DocumentReference): Promise<ISurvey | void> {
         return surveyDoc.get().then((doc) => {
+            console.log('surveyDoc.get()!');
             if (doc.exists) {
+                console.log('doc.exists');
                 return doc.data() as ISurvey;
             } else {
                 console.log('No such document survey!');
@@ -27,6 +29,10 @@ export class SurveyService {
         }).catch(function(error) {
             console.log('Error getting document survey:', error);
         });
+    }
+
+    getSurveyFromId(surveyId) {
+        return this.firestore.collection(COLLECTION_SURVEY).doc(surveyId).ref.get();
     }
 
     saveSurvey(survey: ISurvey) {

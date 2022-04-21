@@ -28,8 +28,11 @@ export class MySurveyCardComponent implements OnInit {
 
     @Input() set survey(val: DocumentReference) {
         if (val) {
-            this._surveyService.getSurveyFromDoc(val).then((data) => {
-                this._survey = data as ISurvey;
+            this._surveyService.getSurveyFromId(val.id).then((doc) => {
+                if (doc.exists) {
+                    this._survey = doc.data() as ISurvey;
+                }
+                this._cd.markForCheck();
             });
             this._cd.markForCheck();
         }
