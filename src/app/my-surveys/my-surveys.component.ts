@@ -10,6 +10,7 @@ import { UserService } from '../common/services/user.service';
 import { ISurveyUser } from '../common/interfaces/survey-user.interface';
 import { takeUntil } from 'rxjs/operators';
 import { MySurveyService } from '../common/services/my-survey.service';
+import { ISurvey } from '../common/interfaces/survey.interface';
 
 @Component({
     selector: 'app-my-surveys',
@@ -25,6 +26,8 @@ export class MySurveysComponent implements OnInit {
     errorText = '';
 
     surveyUser: ISurveyUser;
+
+    takeSurvey: ISurvey;
 
     constructor(private _cd: ChangeDetectorRef,
                 private _destroy$: DestroyService,
@@ -63,6 +66,17 @@ export class MySurveysComponent implements OnInit {
                 this._cd.markForCheck();
             }
         );
+    }
+
+    takeSurveyClicked($event: ISurvey) {
+        if (!$event) {
+            return;
+        }
+        this.takeSurvey = $event as ISurvey;
+    }
+
+    takeSurveyCancelled($event) {
+        this.takeSurvey = null;
     }
 
 }

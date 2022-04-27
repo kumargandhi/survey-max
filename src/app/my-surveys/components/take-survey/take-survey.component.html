@@ -1,9 +1,9 @@
 <p-card
-    header="Survey"
+    header="Take Survey"
     subheader="{{ _survey?.name }}"
     [style]="{
-        width: '380px',
-        height: '340px'
+        width: '100%',
+        height: '100%'
     }"
     styleClass="p-card-shadow"
 >
@@ -13,10 +13,10 @@
         <button
             pButton
             pRipple
-            label="Take Survey"
+            label="Cancel"
             icon="pi pi-check"
             class="p-button-primary"
-            (click)="takeSurvey()"
+            (click)="cancel()"
         ></button>
     </ng-template>
 </p-card>

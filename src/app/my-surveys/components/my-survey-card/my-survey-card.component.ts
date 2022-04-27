@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, EventEmitter,
     Input,
-    OnInit,
+    OnInit, Output
 } from '@angular/core';
 import { DocumentReference } from '@angular/fire/compat/firestore/interfaces';
 import { ISurvey } from '../../../common/interfaces/survey.interface';
@@ -19,6 +19,8 @@ import { DestroyService } from '../../../common/services/destroy.service';
 })
 export class MySurveyCardComponent implements OnInit {
     _survey: ISurvey;
+
+    @Output() takeSurveyClicked = new EventEmitter<ISurvey>();
 
     constructor(
         private _cd: ChangeDetectorRef,
@@ -39,4 +41,8 @@ export class MySurveyCardComponent implements OnInit {
     }
 
     ngOnInit(): void {}
+
+    takeSurvey() {
+        this.takeSurveyClicked.emit(this._survey);
+    }
 }

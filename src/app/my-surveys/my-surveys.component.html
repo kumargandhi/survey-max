@@ -1,7 +1,15 @@
 <div id="page-container" class="my-surveys">
-    <div class="grid mb-3">
+    <div class="grid mb-3" *ngIf="!takeSurvey">
         <div class="col-4" *ngFor="let item of surveyUser?.surveys">
-            <app-my-survey-card [survey]="item"></app-my-survey-card>
+            <app-my-survey-card
+                [survey]="item"
+                (takeSurveyClicked)="takeSurveyClicked($event)"
+            ></app-my-survey-card>
+        </div>
+    </div>
+    <div class="grid mb-3" *ngIf="takeSurvey">
+        <div class="col-12">
+            <app-take-survey [survey]="takeSurvey" (cancelClicked)="takeSurveyCancelled($event)"></app-take-survey>
         </div>
     </div>
 </div>
