@@ -6,7 +6,7 @@ import { ISurvey } from '../../../common/interfaces/survey.interface';
 import { SurveyService } from '../../../common/services/survey.service';
 import { IOption, IQuestion } from '../../../common/interfaces/question.interface';
 import { QuestionService } from '../../../common/services/question.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QUESTION_TYPES } from '../../../main/constants';
 
@@ -82,10 +82,7 @@ export class TakeSurveyComponent implements OnInit {
                 const optionsData = this.selectedQuestion.options as IOption[];
                 optionsData.forEach((item) => {
                     const option = new FormGroup({
-                        selected: new FormControl(null),
-                        answer: new FormControl(item.answer, [
-                            Validators.required,
-                        ]),
+                        selected: new FormControl(null)
                     });
                     options.push(option);
                 });
@@ -139,8 +136,7 @@ export class TakeSurveyComponent implements OnInit {
     addOption(isInit = false) {
         const options = this.form.get('options') as FormArray;
         const option = new FormGroup({
-            selected: new FormControl(),
-            answer: new FormControl('', [Validators.required]),
+            selected: new FormControl()
         });
         if (isInit && options.length > 0) {
             return;
@@ -184,6 +180,23 @@ export class TakeSurveyComponent implements OnInit {
                 this._cd.markForCheck();
             }
         );
+    }
+
+    get optionsFormArray(): FormArray {
+        if (!this.form) {
+            return null;
+        }
+        return this.form.get('options') as FormArray;
+    }
+
+    getOptionsFormGroup(index: number): FormGroup {
+        const options = this.form.get('options') as FormArray;
+        return options.get('' + index) as FormGroup;
+    }
+
+    optionClicked(index: number) {
+        this.selectedOption = index;
+        this.isOptionSelected = true;
     }
 
     cancel() {

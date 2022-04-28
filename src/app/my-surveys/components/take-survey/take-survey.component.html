@@ -11,6 +11,90 @@
     <h6>Pass score <p-badge value="{{ _survey?.passScore }}%"></p-badge></h6>
     <h4>Question</h4>
     <p>{{ selectedQuestion?.question }}</p>
+    <div
+        class="row mb-3 options-heading ms-0 me-0"
+        *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
+    >
+        <div class="col-md-3">
+            <h6 class="fw-bold">Options</h6>
+        </div>
+    </div>
+    <form [formGroup]="form" class="p-fluid" *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0">
+        <div
+            class="row mb-3 ms-0 me-0"
+            formArrayName="options"
+            *ngFor="let option of optionsFormArray?.controls; let i = index"
+        >
+            <ng-container [formGroupName]="i">
+                <div class="col-md-12 ps-0 pe-0">
+                    <div class="row radio-row ms-0 me-0">
+                        <div
+                            class="text-center"
+                            *ngIf="
+                                selectedQuestion?.type ===
+                                    QUESTION_TYPES.RADIO ||
+                                selectedQuestion?.type ===
+                                    QUESTION_TYPES.YES_AND_NO
+                            "
+                            [class.col-md-1]="
+                                selectedQuestion?.type === QUESTION_TYPES.RADIO
+                            "
+                            [class.col-md-12]="
+                                selectedQuestion?.type ===
+                                QUESTION_TYPES.YES_AND_NO
+                            "
+                            [class.field-radiobutton]="
+                                selectedQuestion?.type ===
+                                QUESTION_TYPES.YES_AND_NO
+                            "
+                        >
+                            <p-radioButton
+                                id="selected{{ i }}"
+                                name="selected"
+                                value="selected{{ i }}"
+                                formControlName="selected"
+                                (onClick)="optionClicked(i)"
+                                inputId="selected{{ i }}"
+                            ></p-radioButton>
+                            <label
+                                for="selected{{ i }}"
+                                *ngIf="
+                                    selectedQuestion?.type ===
+                                    QUESTION_TYPES.YES_AND_NO
+                                "
+                            >
+                                {{ i === 0 ? 'Yes' : 'No' }}
+                            </label>
+                        </div>
+                        <div
+                            class="col-md-1 text-center"
+                            *ngIf="
+                                selectedQuestion?.type ===
+                                QUESTION_TYPES.MULTI_SELECT
+                            "
+                        >
+                            <p-checkbox
+                                [binary]="true"
+                                formControlName="selected"
+                                (onClick)="optionClicked(i)"
+                            ></p-checkbox>
+                        </div>
+                        <div
+                            class="col-md-10"
+                            *ngIf="
+                                selectedQuestion?.type ===
+                                    QUESTION_TYPES.RADIO ||
+                                selectedQuestion?.type ===
+                                    QUESTION_TYPES.MULTI_SELECT
+                            "
+                        >
+                            <p> {{ selectedQuestion?.options[i]['answer'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </form>
     <ng-template pTemplate="footer">
         <button
             pButton
