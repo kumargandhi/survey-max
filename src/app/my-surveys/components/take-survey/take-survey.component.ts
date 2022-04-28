@@ -47,11 +47,7 @@ export class TakeSurveyComponent implements OnInit {
       private _questionService: QuestionService,
     ) {}
 
-    ngOnInit(): void {
-        this.formCreate();
-        this.formSubscribe();
-        this._cd.markForCheck();
-    }
+    ngOnInit(): void {}
 
     @Input() set survey(val: ISurvey) {
         if (val) {
@@ -70,18 +66,13 @@ export class TakeSurveyComponent implements OnInit {
         this.form.valueChanges
           .pipe(takeUntil(this._destroy$))
           .subscribe((data) => this.onValueChanged(data));
-        this.form.controls.type.valueChanges
-          .pipe(takeUntil(this._destroy$))
-          .subscribe(() => {
-              this.initFormForOptions();
-          });
     }
 
     initFormForOptions() {
         this.cleanTheOptionsForm();
         if (
-            this.form.controls.type.value === QUESTION_TYPES.RADIO ||
-          this.form.controls.type.value === QUESTION_TYPES.MULTI_SELECT
+            this.selectedQuestion.type === QUESTION_TYPES.RADIO ||
+          this.selectedQuestion.type === QUESTION_TYPES.MULTI_SELECT
         ) {
             this.form.addControl('options', this._fb.array([]));
             if (this.selectedQuestion) {
@@ -102,7 +93,7 @@ export class TakeSurveyComponent implements OnInit {
                 this.addOption(true);
             }
             this._cd.markForCheck();
-        } else if (this.form.controls.type.value === QUESTION_TYPES.YES_AND_NO) {
+        } else if (this.selectedQuestion.type === QUESTION_TYPES.YES_AND_NO) {
             this.form.addControl('options', this._fb.array([]));
             if (this.selectedQuestion) {
                 // Add options to UI form for update
@@ -183,6 +174,8 @@ export class TakeSurveyComponent implements OnInit {
                 );
                 this.loading = false;
                 this.selectedQuestion = head(this.questions);
+                this.formCreate();
+                this.formSubscribe();
                 this._cd.markForCheck();
             },
             (error) => {
