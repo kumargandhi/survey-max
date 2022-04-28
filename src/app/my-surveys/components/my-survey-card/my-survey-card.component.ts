@@ -33,6 +33,7 @@ export class MySurveyCardComponent implements OnInit {
             this._surveyService.getSurveyFromId(val.id).then((doc) => {
                 if (doc.exists) {
                     this._survey = doc.data() as ISurvey;
+                    this._survey.id = val.id;
                 }
                 this._cd.markForCheck();
             });
