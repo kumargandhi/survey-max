@@ -20,6 +20,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SidebarModule } from 'primeng/sidebar';
 import { TabViewModule } from 'primeng/tabview';
+import { DividerModule } from 'primeng/divider';
 
 export const CORE_PRIME_NG_MODULES = [
     InputTextModule,
@@ -52,5 +53,6 @@ export const MAIN_PRIME_NG_MODULES = [
     RadioButtonModule,
     CheckboxModule,
     SidebarModule,
-    TabViewModule
+    TabViewModule,
+    DividerModule
 ];

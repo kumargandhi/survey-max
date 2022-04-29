@@ -33,6 +33,8 @@ export class TakeSurveyComponent implements OnInit {
 
     selectedQuestion: IQuestion;
 
+    questionIndex = 1;
+
     form: FormGroup;
 
     selectedOption = 0;
@@ -201,5 +203,17 @@ export class TakeSurveyComponent implements OnInit {
 
     cancel() {
         this.cancelClicked.emit();
+    }
+
+    next() {
+        this.selectedQuestion = this.questions[this.questionIndex];
+        this.questionIndex++;
+        this.initFormForOptions();
+    }
+
+    previous() {
+        this.selectedQuestion = this.questions[this.questionIndex - 1];
+        this.questionIndex--;
+        this.initFormForOptions();
     }
 }

@@ -8,18 +8,24 @@
     styleClass="p-card-shadow"
 >
     <p>{{ _survey?.desc }}</p>
-    <h6>Pass score <p-badge value="{{ _survey?.passScore }}%"></p-badge></h6>
-    <h4>Question</h4>
-    <p>{{ selectedQuestion?.question }}</p>
+    <h6 class="mb-3">
+        Pass score <p-badge value="{{ _survey?.passScore }}%"></p-badge>
+    </h6>
+    <p-divider align="left" type="dashed">
+        <h4>Question</h4>
+    </p-divider>
+    <p>{{ questionIndex }}) {{ selectedQuestion?.question }}</p>
     <div
-        class="row mb-3 options-heading ms-0 me-0"
+        class="row mb-3 ms-0 me-0"
         *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
     >
-        <div class="col-md-3">
-            <h6 class="fw-bold">Options</h6>
-        </div>
+        <h6 class="fw-bold">Options</h6>
     </div>
-    <form [formGroup]="form" class="p-fluid" *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0">
+    <form
+        [formGroup]="form"
+        class="p-fluid"
+        *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
+    >
         <div
             class="row mb-3 ms-0 me-0"
             formArrayName="options"
@@ -88,7 +94,9 @@
                                     QUESTION_TYPES.MULTI_SELECT
                             "
                         >
-                            <p> {{ selectedQuestion?.options[i]['answer'] }}</p>
+                            <p class="mb-0">
+                                {{ selectedQuestion?.options[i]['answer'] }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -100,9 +108,29 @@
             pButton
             pRipple
             label="Cancel"
-            icon="pi pi-check"
-            class="p-button-primary"
+            icon="pi pi-times"
+            class="p-button-secondary"
             (click)="cancel()"
+        ></button>
+        <button
+            pButton
+            pRipple
+            label="Next"
+            icon="pi pi-angle-right"
+            class="p-button-success float-end"
+            [style]="{ 'margin-left': '.5em' }"
+            [disabled]="questionIndex >= questions?.length"
+            (click)="next()"
+        ></button>
+        <button
+            pButton
+            pRipple
+            label="Previous"
+            icon="pi pi-angle-left"
+            class="p-button-primary float-end"
+            [style]="{ 'margin-left': '.5em' }"
+            [disabled]="questionIndex <= 1"
+            (click)="previous()"
         ></button>
     </ng-template>
 </p-card>
