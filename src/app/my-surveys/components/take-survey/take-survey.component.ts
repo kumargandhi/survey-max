@@ -9,17 +9,27 @@ import { QuestionService } from '../../../common/services/question.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QUESTION_TYPES } from '../../../main/constants';
+import { ConfirmationService } from 'primeng/api';
+
+enum TakeSurveyActions {
+    CANCEL_SURVEY,
+    COMPLETE_SURVEY,
+    NEXT_QUESTION,
+    PREVIOUS_QUESTION
+}
 
 @Component({
     selector: 'app-take-survey',
     templateUrl: './take-survey.component.html',
     styleUrls: ['./take-survey.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [DestroyService],
+    providers: [DestroyService, ConfirmationService],
 })
 export class TakeSurveyComponent implements OnInit {
 
     readonly QUESTION_TYPES = QUESTION_TYPES;
+
+    readonly TakeSurveyActions = TakeSurveyActions;
 
     @Output() cancelClicked = new EventEmitter();
 
@@ -41,12 +51,15 @@ export class TakeSurveyComponent implements OnInit {
 
     isOptionSelected = false;
 
+    confirmationMessage = '';
+
     constructor(
       private _fb: FormBuilder,
       private _cd: ChangeDetectorRef,
       private _destroy$: DestroyService,
       private _surveyService: SurveyService,
       private _questionService: QuestionService,
+      private _confirmationService: ConfirmationService
     ) {}
 
     ngOnInit(): void {}
@@ -201,19 +214,36 @@ export class TakeSurveyComponent implements OnInit {
         this.isOptionSelected = true;
     }
 
-    cancel() {
-        this.cancelClicked.emit();
-    }
-
-    next() {
-        this.selectedQuestion = this.questions[this.questionIndex];
-        this.questionIndex++;
-        this.initFormForOptions();
-    }
-
-    previous() {
-        this.selectedQuestion = this.questions[this.questionIndex - 1];
-        this.questionIndex--;
-        this.initFormForOptions();
+    actionHandler(action: TakeSurveyActions) {
+        switch (action) {
+            case TakeSurveyActions.CANCEL_SURVEY: {
+                this.cancelClicked.emit();
+                break;
+            }
+            case TakeSurveyActions.NEXT_QUESTION: {
+                this.selectedQuestion = this.questions[this.questionIndex];
+                this.questionIndex++;
+                this.initFormForOptions();
+                break;
+            }
+            case TakeSurveyActions.PREVIOUS_QUESTION: {
+                this.questionIndex--;
+                this.selectedQuestion = this.questions[this.questionIndex - 1];
+                this.initFormForOptions();
+                break;
+            }
+            case TakeSurveyActions.COMPLETE_SURVEY: {
+                this.confirmationMessage = `Are you sure that you want to complete the Survey?`;
+                this._confirmationService.confirm({
+                    message: this.confirmationMessage,
+                    accept: () => {
+                        // TODO : Survey completed take action
+                    },
+                });
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

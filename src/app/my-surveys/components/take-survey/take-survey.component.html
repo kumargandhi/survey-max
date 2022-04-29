@@ -14,12 +14,12 @@
     <p-divider align="left" type="dashed">
         <h4>Question</h4>
     </p-divider>
-    <p>{{ questionIndex }}) {{ selectedQuestion?.question }}</p>
+    <p class="text-wrap text-primary fs-5">{{ questionIndex }}) {{ selectedQuestion?.question }}</p>
     <div
         class="row mb-3 ms-0 me-0"
         *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
     >
-        <h6 class="fw-bold">Options</h6>
+        <h5 class="fw-bold">Options</h5>
     </div>
     <form
         [formGroup]="form"
@@ -94,7 +94,7 @@
                                     QUESTION_TYPES.MULTI_SELECT
                             "
                         >
-                            <p class="mb-0">
+                            <p class="mb-0 text-wrap text-secondary fs-6">
                                 {{ selectedQuestion?.options[i]['answer'] }}
                             </p>
                         </div>
@@ -110,7 +110,16 @@
             label="Cancel"
             icon="pi pi-times"
             class="p-button-secondary"
-            (click)="cancel()"
+            (click)="actionHandler(TakeSurveyActions.CANCEL_SURVEY)"
+        ></button>
+        <button
+            pButton
+            pRipple
+            label="Complete"
+            icon="bi bi-circle-fill pe-1"
+            class="p-button-help float-end"
+            [style]="{ 'margin-left': '2.5em' }"
+            (click)="actionHandler(TakeSurveyActions.COMPLETE_SURVEY)"
         ></button>
         <button
             pButton
@@ -120,7 +129,7 @@
             class="p-button-success float-end"
             [style]="{ 'margin-left': '.5em' }"
             [disabled]="questionIndex >= questions?.length"
-            (click)="next()"
+            (click)="actionHandler(TakeSurveyActions.NEXT_QUESTION)"
         ></button>
         <button
             pButton
@@ -130,7 +139,29 @@
             class="p-button-primary float-end"
             [style]="{ 'margin-left': '.5em' }"
             [disabled]="questionIndex <= 1"
-            (click)="previous()"
+            (click)="actionHandler(TakeSurveyActions.PREVIOUS_QUESTION)"
         ></button>
     </ng-template>
 </p-card>
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="message">
+        <h5 [innerHTML]="confirmationMessage"></h5>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button
+            type="button"
+            pButton
+            icon="pi pi-times"
+            label="No"
+            (click)="cd.reject()"
+        ></button>
+        <button
+            type="button"
+            pButton
+            icon="pi pi-check"
+            label="Yes"
+            class="p-button-danger"
+            (click)="cd.accept()"
+        ></button>
+    </ng-template>
+</p-confirmDialog>
