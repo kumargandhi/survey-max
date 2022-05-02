@@ -1,21 +1,33 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { cloneDeep, head } from 'lodash';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+} from '@angular/core';
+import { cloneDeep, head, filter } from 'lodash';
 
 import { DestroyService } from '../../../common/services/destroy.service';
 import { ISurvey } from '../../../common/interfaces/survey.interface';
 import { SurveyService } from '../../../common/services/survey.service';
-import { IOption, IQuestion } from '../../../common/interfaces/question.interface';
+import {
+    IOption,
+    IQuestion,
+} from '../../../common/interfaces/question.interface';
 import { QuestionService } from '../../../common/services/question.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QUESTION_TYPES } from '../../../main/constants';
 import { ConfirmationService } from 'primeng/api';
+import { ITakeSurvey } from '../../../common/interfaces/take-survey.interface';
 
 enum TakeSurveyActions {
     CANCEL_SURVEY,
     COMPLETE_SURVEY,
     NEXT_QUESTION,
-    PREVIOUS_QUESTION
+    PREVIOUS_QUESTION,
 }
 
 @Component({
@@ -26,7 +38,6 @@ enum TakeSurveyActions {
     providers: [DestroyService, ConfirmationService],
 })
 export class TakeSurveyComponent implements OnInit {
-
     readonly QUESTION_TYPES = QUESTION_TYPES;
 
     readonly TakeSurveyActions = TakeSurveyActions;
@@ -53,13 +64,15 @@ export class TakeSurveyComponent implements OnInit {
 
     confirmationMessage = '';
 
+    takeSurvey: ITakeSurvey[];
+
     constructor(
-      private _fb: FormBuilder,
-      private _cd: ChangeDetectorRef,
-      private _destroy$: DestroyService,
-      private _surveyService: SurveyService,
-      private _questionService: QuestionService,
-      private _confirmationService: ConfirmationService
+        private _fb: FormBuilder,
+        private _cd: ChangeDetectorRef,
+        private _destroy$: DestroyService,
+        private _surveyService: SurveyService,
+        private _questionService: QuestionService,
+        private _confirmationService: ConfirmationService
     ) {}
 
     ngOnInit(): void {}
@@ -73,21 +86,22 @@ export class TakeSurveyComponent implements OnInit {
     }
 
     formCreate() {
+        this.takeSurvey = [];
         this.form = this._fb.group({});
         this.initFormForOptions();
     }
 
     formSubscribe() {
         this.form.valueChanges
-          .pipe(takeUntil(this._destroy$))
-          .subscribe((data) => this.onValueChanged(data));
+            .pipe(takeUntil(this._destroy$))
+            .subscribe((data) => this.onValueChanged(data));
     }
 
     initFormForOptions() {
         this.cleanTheOptionsForm();
         if (
             this.selectedQuestion.type === QUESTION_TYPES.RADIO ||
-          this.selectedQuestion.type === QUESTION_TYPES.MULTI_SELECT
+            this.selectedQuestion.type === QUESTION_TYPES.MULTI_SELECT
         ) {
             this.form.addControl('options', this._fb.array([]));
             if (this.selectedQuestion) {
@@ -97,7 +111,7 @@ export class TakeSurveyComponent implements OnInit {
                 const optionsData = this.selectedQuestion.options as IOption[];
                 optionsData.forEach((item) => {
                     const option = new FormGroup({
-                        selected: new FormControl(null)
+                        selected: new FormControl(null),
                     });
                     options.push(option);
                 });
@@ -114,7 +128,7 @@ export class TakeSurveyComponent implements OnInit {
                 const optionsData = this.selectedQuestion.options as IOption[];
                 optionsData.forEach((item) => {
                     const option = new FormGroup({
-                        selected: new FormControl(null)
+                        selected: new FormControl(null),
                     });
                     options.push(option);
                 });
@@ -151,7 +165,7 @@ export class TakeSurveyComponent implements OnInit {
     addOption(isInit = false) {
         const options = this.form.get('options') as FormArray;
         const option = new FormGroup({
-            selected: new FormControl()
+            selected: new FormControl(),
         });
         if (isInit && options.length > 0) {
             return;
@@ -162,11 +176,11 @@ export class TakeSurveyComponent implements OnInit {
     addOptionsForYesAndNo() {
         const options = this.form.get('options') as FormArray;
         const optionYes = new FormGroup({
-            selected: new FormControl()
+            selected: new FormControl(),
         });
         options.push(optionYes);
         const optionNo = new FormGroup({
-            selected: new FormControl()
+            selected: new FormControl(),
         });
         options.push(optionNo);
     }
@@ -221,8 +235,17 @@ export class TakeSurveyComponent implements OnInit {
                 break;
             }
             case TakeSurveyActions.NEXT_QUESTION: {
+                if (!this.getOptions()) {
+                    this.errorText = 'Select options';
+                    return;
+                }
                 this.selectedQuestion = this.questions[this.questionIndex];
                 this.questionIndex++;
+                const takeSurvey: ITakeSurvey = {
+                    surveyId: this.selectedQuestion.surveyId,
+                    questionId: this.selectedQuestion.id,
+                    options: this.getOptions(),
+                };
                 this.initFormForOptions();
                 break;
             }
@@ -244,6 +267,31 @@ export class TakeSurveyComponent implements OnInit {
             }
             default:
                 break;
+        }
+    }
+
+    getOptions() {
+        if (
+            this.selectedQuestion.type === QUESTION_TYPES.RADIO ||
+            this.selectedQuestion.type === QUESTION_TYPES.MULTI_SELECT ||
+            this.selectedQuestion.type === QUESTION_TYPES.YES_AND_NO
+        ) {
+            const options = this.form.get('options') as FormArray;
+            const optionsData = options.getRawValue();
+            optionsData.forEach((item, index) => {
+                if (
+                    this.selectedQuestion.type === QUESTION_TYPES.MULTI_SELECT
+                ) {
+                    item.selected = !!item.selected;
+                } else {
+                    item.selected = index === this.selectedOption;
+                }
+            });
+            return filter(optionsData, 'selected').length === 0
+                ? null
+                : filter(optionsData, 'selected');
+        } else {
+            return null;
         }
     }
 }

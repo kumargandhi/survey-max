@@ -16,11 +16,12 @@
     </p-divider>
     <p class="text-wrap text-primary fs-5">{{ questionIndex }}) {{ selectedQuestion?.question }}</p>
     <div
-        class="row mb-3 ms-0 me-0"
+        class="row mb-2 ms-0 me-0"
         *ngIf="optionsFormArray && optionsFormArray?.controls.length > 0"
     >
         <h5 class="fw-bold">Options</h5>
     </div>
+    <p-message severity="error" [text]="errorText" *ngIf="errorText" styleClass="mb-2"></p-message>
     <form
         [formGroup]="form"
         class="p-fluid"

@@ -1,7 +1,7 @@
 import { DocumentReference } from '@angular/fire/compat/firestore/interfaces';
 
 export interface IQuestion {
-    id?: string | number;
+    id?: string;
     type: number;
     question: string;
     options?: string | number | IOption | IOption[];
