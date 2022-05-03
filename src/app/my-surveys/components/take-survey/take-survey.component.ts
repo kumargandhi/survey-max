@@ -7,7 +7,7 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { cloneDeep, head, filter } from 'lodash';
+import { cloneDeep, head, isEmpty } from 'lodash';
 
 import { DestroyService } from '../../../common/services/destroy.service';
 import { ISurvey } from '../../../common/interfaces/survey.interface';
@@ -235,7 +235,8 @@ export class TakeSurveyComponent implements OnInit {
                 break;
             }
             case TakeSurveyActions.NEXT_QUESTION: {
-                if (!this.getOptions()) {
+                const selectedIndexs = this.getOptions();
+                if (!selectedIndexs) {
                     this.errorText = 'Select options';
                     return;
                 }
@@ -244,12 +245,16 @@ export class TakeSurveyComponent implements OnInit {
                 const takeSurvey: ITakeSurvey = {
                     surveyId: this.selectedQuestion.surveyId,
                     questionId: this.selectedQuestion.id,
-                    options: this.getOptions(),
+                    options: selectedIndexs,
                 };
+                this.takeSurvey.push(takeSurvey);
                 this.initFormForOptions();
                 break;
             }
             case TakeSurveyActions.PREVIOUS_QUESTION: {
+                if (!isEmpty(this.takeSurvey)) {
+                    this.takeSurvey.pop();
+                }
                 this.questionIndex--;
                 this.selectedQuestion = this.questions[this.questionIndex - 1];
                 this.initFormForOptions();
@@ -287,9 +292,13 @@ export class TakeSurveyComponent implements OnInit {
                     item.selected = index === this.selectedOption;
                 }
             });
-            return filter(optionsData, 'selected').length === 0
-                ? null
-                : filter(optionsData, 'selected');
+            const selectedIndexs: number[] = [];
+            optionsData.forEach((value, index) => {
+                if (value.selected) {
+                    selectedIndexs.push(index);
+                }
+            });
+            return isEmpty(selectedIndexs) ? null : selectedIndexs;
         } else {
             return null;
         }
