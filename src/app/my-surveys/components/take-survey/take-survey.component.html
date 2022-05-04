@@ -1,13 +1,13 @@
 <p-card
     header="Take Survey"
-    subheader="{{ _survey?.name }}"
     [style]="{
         width: '100%',
         height: '100%'
     }"
     styleClass="p-card-shadow"
 >
-    <p>{{ _survey?.desc }}</p>
+    <h4 class="text-primary-app">{{ _survey?.name }}</h4>
+    <p class="text-wrap text-break">{{ _survey?.desc }}</p>
     <h6 class="mb-3">
         Pass score <p-badge value="{{ _survey?.passScore }}%"></p-badge>
     </h6>

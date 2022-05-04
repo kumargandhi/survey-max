@@ -21,7 +21,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QUESTION_TYPES } from '../../../main/constants';
 import { ConfirmationService } from 'primeng/api';
-import { ITakeSurvey } from '../../../common/interfaces/take-survey.interface';
+import { IAnswer, ITakeSurvey } from '../../../common/interfaces/take-survey.interface';
 
 enum TakeSurveyActions {
     CANCEL_SURVEY,
@@ -64,7 +64,7 @@ export class TakeSurveyComponent implements OnInit {
 
     confirmationMessage = '';
 
-    takeSurvey: ITakeSurvey[];
+    takeSurvey: ITakeSurvey;
 
     constructor(
         private _fb: FormBuilder,
@@ -86,7 +86,11 @@ export class TakeSurveyComponent implements OnInit {
     }
 
     formCreate() {
-        this.takeSurvey = [];
+        this.takeSurvey = {
+            surveyId: this.selectedQuestion.surveyId,
+            answers: [],
+            creationDate: new Date()
+        };
         this.form = this._fb.group({});
         this.initFormForOptions();
     }
@@ -242,18 +246,17 @@ export class TakeSurveyComponent implements OnInit {
                 }
                 this.selectedQuestion = this.questions[this.questionIndex];
                 this.questionIndex++;
-                const takeSurvey: ITakeSurvey = {
-                    surveyId: this.selectedQuestion.surveyId,
+                const answer: IAnswer = {
                     questionId: this.selectedQuestion.id,
                     options: selectedIndexs,
                 };
-                this.takeSurvey.push(takeSurvey);
+                this.takeSurvey.answers.push(answer);
                 this.initFormForOptions();
                 break;
             }
             case TakeSurveyActions.PREVIOUS_QUESTION: {
-                if (!isEmpty(this.takeSurvey)) {
-                    this.takeSurvey.pop();
+                if (!isEmpty(this.takeSurvey.answers)) {
+                    this.takeSurvey.answers.pop();
                 }
                 this.questionIndex--;
                 this.selectedQuestion = this.questions[this.questionIndex - 1];
