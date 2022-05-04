@@ -4,9 +4,11 @@ export interface ITakeSurvey {
   surveyId?: DocumentReference;
   answers: IAnswer[];
   creationDate?: Date;
+  score: number;
 }
 
 export interface IAnswer {
   questionId?: DocumentReference | string;
   options?: string | number | number[];
+  isCorrect: boolean;
 }

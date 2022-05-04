@@ -7,7 +7,7 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { cloneDeep, head, isEmpty } from 'lodash';
+import { cloneDeep, head, isEmpty, difference } from 'lodash';
 
 import { DestroyService } from '../../../common/services/destroy.service';
 import { ISurvey } from '../../../common/interfaces/survey.interface';
@@ -89,7 +89,8 @@ export class TakeSurveyComponent implements OnInit {
         this.takeSurvey = {
             surveyId: this.selectedQuestion.surveyId,
             answers: [],
-            creationDate: new Date()
+            creationDate: new Date(),
+            score: 0
         };
         this.form = this._fb.group({});
         this.initFormForOptions();
@@ -241,16 +242,18 @@ export class TakeSurveyComponent implements OnInit {
             case TakeSurveyActions.NEXT_QUESTION: {
                 const selectedIndexs = this.getOptions();
                 if (!selectedIndexs) {
-                    this.errorText = 'Select options';
+                    this.errorText = 'Select options for the question';
                     return;
                 }
-                this.selectedQuestion = this.questions[this.questionIndex];
-                this.questionIndex++;
                 const answer: IAnswer = {
                     questionId: this.selectedQuestion.id,
                     options: selectedIndexs,
+                    isCorrect: this.isSelectedOptionsCorrect()
                 };
                 this.takeSurvey.answers.push(answer);
+                // Captured the data for the question, moving to next question.
+                this.selectedQuestion = this.questions[this.questionIndex];
+                this.questionIndex++;
                 this.initFormForOptions();
                 break;
             }
@@ -264,11 +267,16 @@ export class TakeSurveyComponent implements OnInit {
                 break;
             }
             case TakeSurveyActions.COMPLETE_SURVEY: {
-                this.confirmationMessage = `Are you sure that you want to complete the Survey?`;
+                // TODO : For last question next button is disabled, we need to capture the answer for it...
+                if (this.takeSurvey.answers.length === this.questions.length) {
+                    this.confirmationMessage = `Are you sure that you want to complete the Survey?`;
+                } else {
+                    this.confirmationMessage = `All the questions are not answered, Are you sure that you want to complete the Survey?`;
+                }
                 this._confirmationService.confirm({
                     message: this.confirmationMessage,
                     accept: () => {
-                        // TODO : Survey completed take action
+                        this.completeSurvey();
                     },
                 });
                 break;
@@ -305,5 +313,22 @@ export class TakeSurveyComponent implements OnInit {
         } else {
             return null;
         }
+    }
+
+    isSelectedOptionsCorrect(): boolean {
+        const selectedIndexs = this.getOptions();
+        const correctIndexs: number[] = [];
+        const options: IOption[] = this.selectedQuestion.options as IOption[];
+        options.forEach((value, index) => {
+            if (value.selected) {
+                correctIndexs.push(index);
+            }
+        });
+        return isEmpty(difference(selectedIndexs, correctIndexs));
+    }
+
+    // Survey is completed, calculate the results and show correct answers.
+    completeSurvey() {
+        this.takeSurvey.score = (this.takeSurvey.answers.map(item => item.isCorrect).length / this.questions.length) * 100;
     }
 }
