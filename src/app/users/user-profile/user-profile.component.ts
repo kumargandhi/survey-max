@@ -64,6 +64,7 @@ export class UserProfileComponent implements OnInit {
                 validateEmail(),
             ],
             displayName: [this._user?.displayName, Validators.required],
+            // TODO : For student login roles cannot be changed. So we need to just display roles label.
             roles: [this._user?.roles[0], Validators.required],
         });
         this.passwordForm = this._fb.group({
