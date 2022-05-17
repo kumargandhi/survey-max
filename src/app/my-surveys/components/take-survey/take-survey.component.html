@@ -120,6 +120,7 @@
             icon="bi bi-circle-fill pe-1"
             class="p-button-help float-end"
             [style]="{ 'margin-left': '2.5em' }"
+            [disabled]="questionIndex < questions?.length"
             (click)="actionHandler(TakeSurveyActions.COMPLETE_SURVEY)"
         ></button>
         <button

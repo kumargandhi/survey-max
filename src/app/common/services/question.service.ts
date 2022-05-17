@@ -83,4 +83,8 @@ export class QuestionService {
         console.log(docs);
         // docs.forEach(doc => doc.ref.delete());
     }
+
+    getQuestionFromId(questionId) {
+        return this.firestore.collection(COLLECTION_QUESTION).doc(questionId).ref;
+    }
 }

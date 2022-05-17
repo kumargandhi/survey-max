@@ -8,7 +8,7 @@ export interface ITakeSurvey {
 }
 
 export interface IAnswer {
-  questionId?: DocumentReference | string;
+  questionId?: DocumentReference;
   options?: string | number | number[];
   isCorrect: boolean;
 }

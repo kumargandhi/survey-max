@@ -4,6 +4,9 @@ import {
 } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { COLLECTION_SURVEY_USER, COLLECTION_USERS } from './user.service';
+import { ITakeSurvey } from '../interfaces/take-survey.interface';
+
+const COLLECTION_MY_SURVEYS = 'my_surveys';
 
 @Injectable({
     providedIn: 'root',
@@ -21,5 +24,9 @@ export class MySurveyService {
                 ref.where('userId', '==', userDoc.ref)
             )
             .snapshotChanges();
+    }
+
+    saveMySurvey(takeSurvey: ITakeSurvey) {
+        return this.firestore.collection(COLLECTION_MY_SURVEYS).add(takeSurvey);
     }
 }

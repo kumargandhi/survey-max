@@ -22,6 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 import { QUESTION_TYPES } from '../../../main/constants';
 import { ConfirmationService } from 'primeng/api';
 import { IAnswer, ITakeSurvey } from '../../../common/interfaces/take-survey.interface';
+import { MySurveyService } from '../../../common/services/my-survey.service';
 
 enum TakeSurveyActions {
     CANCEL_SURVEY,
@@ -72,7 +73,8 @@ export class TakeSurveyComponent implements OnInit {
         private _destroy$: DestroyService,
         private _surveyService: SurveyService,
         private _questionService: QuestionService,
-        private _confirmationService: ConfirmationService
+        private _confirmationService: ConfirmationService,
+        private _mySurveyService: MySurveyService
     ) {}
 
     ngOnInit(): void {}
@@ -245,12 +247,7 @@ export class TakeSurveyComponent implements OnInit {
                     this.errorText = 'Select options for the question';
                     return;
                 }
-                const answer: IAnswer = {
-                    questionId: this.selectedQuestion.id,
-                    options: selectedIndexs,
-                    isCorrect: this.isSelectedOptionsCorrect()
-                };
-                this.takeSurvey.answers.push(answer);
+                this.captureAnswer(selectedIndexs);
                 // Captured the data for the question, moving to next question.
                 this.selectedQuestion = this.questions[this.questionIndex];
                 this.questionIndex++;
@@ -267,7 +264,13 @@ export class TakeSurveyComponent implements OnInit {
                 break;
             }
             case TakeSurveyActions.COMPLETE_SURVEY: {
-                // TODO : For last question next button is disabled, we need to capture the answer for it...
+                const selectedIndexs = this.getOptions();
+                if (!selectedIndexs) {
+                    this.errorText = 'Select options for the question';
+                    return;
+                }
+                this.captureAnswer(selectedIndexs);
+                this.takeSurvey.score = (this.takeSurvey.answers.map(item => item.isCorrect).length / this.questions.length) * 100;
                 if (this.takeSurvey.answers.length === this.questions.length) {
                     this.confirmationMessage = `Are you sure that you want to complete the Survey?`;
                 } else {
@@ -284,6 +287,15 @@ export class TakeSurveyComponent implements OnInit {
             default:
                 break;
         }
+    }
+
+    captureAnswer(selectedIndexs: number[]) {
+        const answer: IAnswer = {
+            questionId: this._questionService.getQuestionFromId(this.selectedQuestion.id),
+            options: selectedIndexs,
+            isCorrect: this.isSelectedOptionsCorrect()
+        };
+        this.takeSurvey.answers.push(answer);
     }
 
     getOptions() {
@@ -329,6 +341,18 @@ export class TakeSurveyComponent implements OnInit {
 
     // Survey is completed, calculate the results and show correct answers.
     completeSurvey() {
-        this.takeSurvey.score = (this.takeSurvey.answers.map(item => item.isCorrect).length / this.questions.length) * 100;
+        this.loading = true;
+        return;
+        this._mySurveyService.saveMySurvey(this.takeSurvey)
+          .then(() => {
+              this.loading = false;
+              this.actionHandler(TakeSurveyActions.CANCEL_SURVEY);
+              this._cd.markForCheck();
+          })
+          .catch((error) => {
+              this.errorText = error;
+              this.loading = false;
+              this._cd.markForCheck();
+          });
     }
 }
