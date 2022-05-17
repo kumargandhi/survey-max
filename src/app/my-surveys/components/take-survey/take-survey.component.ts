@@ -20,7 +20,7 @@ import { QuestionService } from '../../../common/services/question.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { QUESTION_TYPES } from '../../../main/constants';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { IAnswer, ITakeSurvey } from '../../../common/interfaces/take-survey.interface';
 import { MySurveyService } from '../../../common/services/my-survey.service';
 
@@ -281,6 +281,15 @@ export class TakeSurveyComponent implements OnInit {
                     accept: () => {
                         this.completeSurvey();
                     },
+                    reject: (type) => {
+                        switch (type) {
+                            case ConfirmEventType.REJECT:
+                            case ConfirmEventType.CANCEL: {
+                                this.takeSurvey.answers.pop();
+                                break;
+                            }
+                        }
+                    }
                 });
                 break;
             }

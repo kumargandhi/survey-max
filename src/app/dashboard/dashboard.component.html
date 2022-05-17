@@ -1,6 +1,7 @@
 <div id="page-container">
     <div class="grid mb-3">
-        <div class="col-4">
+        <div class="col-2"></div>
+        <div class="col-4" *userAccess="[ROLES.SUPER_ADMIN]">
             <p-card
                 header="Totals"
                 [style]="{
@@ -22,7 +23,7 @@
                 </div>
             </p-card>
         </div>
-        <div class="col-4">
+        <div class="col-4" *userAccess="[ROLES.STUDENT]">
             <p-card
                 header="Totals"
                 [style]="{
@@ -30,7 +31,12 @@
                     height: '300px'
                 }"
             >
-                <p>Totals card</p>
+                <div class="total-container mb-5">
+                    <div class="total">
+                        {{ surveys?.length }}
+                    </div>
+                    <div class="label">Surveys</div>
+                </div>
             </p-card>
         </div>
         <div class="col-4">
@@ -44,6 +50,7 @@
                 <p>Totals card</p>
             </p-card>
         </div>
+        <div class="col-2"></div>
     </div>
     <div class="grid">
         <div class="col-12">

@@ -8,6 +8,7 @@ import { cloneDeep } from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { SurveyService } from '../common/services/survey.service';
 import { ISurvey } from '../common/interfaces/survey.interface';
+import { ROLES } from '../main/constants';
 
 @Component({
     selector: 'app-dashboard',
@@ -17,6 +18,7 @@ import { ISurvey } from '../common/interfaces/survey.interface';
     providers: [DestroyService],
 })
 export class DashboardComponent implements OnInit {
+    readonly ROLES = ROLES;
     loading = false;
     surveys: ISurvey[];
 

@@ -21,6 +21,7 @@ import { UserProfileComponent } from '../users/user-profile/user-profile.compone
 import { MySurveysComponent } from '../my-surveys/my-surveys.component';
 import { MySurveyCardComponent } from '../my-surveys/components/my-survey-card/my-survey-card.component';
 import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-survey.component';
+import { UserAccessDirective } from '../common/directives/user-access.directive';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-s
         UserProfileComponent,
         MySurveysComponent,
         MySurveyCardComponent,
-        TakeSurveyComponent
+        TakeSurveyComponent,
+        UserAccessDirective
     ],
     imports: [
         CommonModule,
@@ -49,5 +51,8 @@ import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-s
         ...MAIN_PRIME_NG_MODULES,
         MainRoutingModule,
     ],
+    exports: [
+        UserAccessDirective
+    ]
 })
 export class MainModule {}
