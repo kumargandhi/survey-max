@@ -9,6 +9,10 @@ import { DestroyService } from '../common/services/destroy.service';
 import { SurveyService } from '../common/services/survey.service';
 import { ISurvey } from '../common/interfaces/survey.interface';
 import { ROLES } from '../main/constants';
+import { MySurveyService } from '../common/services/my-survey.service';
+import { takeUntil } from 'rxjs/operators';
+import { ISurveyUser } from '../common/interfaces/survey-user.interface';
+import { UserService } from "../common/services/user.service";
 
 @Component({
     selector: 'app-dashboard',
@@ -21,15 +25,29 @@ export class DashboardComponent implements OnInit {
     readonly ROLES = ROLES;
     loading = false;
     surveys: ISurvey[];
+    surveyUser: ISurveyUser;
 
     constructor(
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
-        private _surveyService: SurveyService
-    ) {}
+        private _surveyService: SurveyService,
+        private _userService: UserService,
+        private _mySurveyService: MySurveyService
+    ) {
+        this._mySurveyService.surveyUser$
+        .pipe(takeUntil(this._destroy$))
+        .subscribe((data) => {
+            this.surveyUser = data;
+            this._cd.markForCheck();
+        });
+    }
 
     ngOnInit(): void {
         this.getSurveys();
+        if (this._userService.getCurrentUser()) {
+            this._mySurveyService.getSurveysForCurrentUser();
+            this._cd.markForCheck();
+        }
     }
 
     getSurveys() {

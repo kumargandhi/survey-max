@@ -4,7 +4,6 @@ import {
     Component,
     OnInit,
 } from '@angular/core';
-import { cloneDeep, head } from 'lodash';
 import { DestroyService } from '../common/services/destroy.service';
 import { UserService } from '../common/services/user.service';
 import { ISurveyUser } from '../common/interfaces/survey-user.interface';
@@ -33,39 +32,19 @@ export class MySurveysComponent implements OnInit {
                 private _destroy$: DestroyService,
                 private _userService: UserService,
                 private _mySurveyService: MySurveyService) {
-        this._userService.currentUser$
+        this._mySurveyService.surveyUser$
           .pipe(takeUntil(this._destroy$))
-          .subscribe(() => {
-              this.getSurveysForUser();
+          .subscribe((data) => {
+              this.surveyUser = data;
+              this._cd.markForCheck();
           });
     }
 
     ngOnInit(): void {
         if (this._userService.getCurrentUser()) {
-            this.getSurveysForUser();
+            this._mySurveyService.getSurveysForCurrentUser();
+            this._cd.markForCheck();
         }
-    }
-
-    getSurveysForUser() {
-        this.loading = true;
-        this.errorText = '';
-        this._mySurveyService.getSurveysForUser(this._userService.getCurrentUser().uid).subscribe(
-            (data) => {
-                this.surveyUser = head(cloneDeep(
-                    data.map((e) => {
-                        const s: ISurveyUser = e.payload.doc.data() as ISurveyUser;
-                        return s;
-                    }))
-                );
-                this.loading = false;
-                this._cd.markForCheck();
-            },
-            (error) => {
-                this.errorText = error;
-                this.loading = false;
-                this._cd.markForCheck();
-            }
-        );
     }
 
     takeSurveyClicked($event: ISurvey) {

@@ -38,6 +38,7 @@ export class UserAccessDirective implements OnInit, OnDestroy, AfterViewInit {
     ) {}
 
     ngOnInit() {
+        this._user = this._userService.getCurrentUser();
         this._userService.currentUser$
             .pipe(takeUntil(this._destroy$))
             .subscribe(() => {
