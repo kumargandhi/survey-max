@@ -1,13 +1,42 @@
-# pushpaka-vimana
+# SurveyMax
 
-Angular application with all the necessary dependencies for the UI.
+Create surveys and assign to users. Simple UI/UX.
 
-We are using the following:
-1) PrimeNG Angular UI component library.
+`Simple Angular application to create surveys`
 
-We have following modules:
-1) Login
-2) Dashboard
+Application is integrated with Firebase for Database.
+Read more about Firebase [here](https://developers.google.com/codelabs/building-a-web-app-with-angular-and-firebase#0)
+
+## Features:
+### Survey
+* Create an easy survey online.
+* Add multiple questions and different types of questions to survey.
+
+### Users
+* Create three types of users, `Super-Admin`, `Teacher`, `Student`.
+* Login as `Super-Admin` to create other types of users and surveys.
+* Attach survey to students.
+
+### Student
+* Login as student and view your attached surveys.
+* Student can take the survey and complete.
+* View the results for your surveys.
+
+### Teacher
+-TODO-
+
+## Technologies:
+* Angular v12.x
+* PrimeNG v12.x
+* Bootstrap v5.x
+* Firebase v9.x
+* RxJs v6.6.x
+
+### Scripts:
+* $npm start - Start the angular application instance.
+* $npm run lint-src - Lint the project.
+* $npm run prettier - Code format.
+* $npm run stylelint:fix - Fix style lint issues.
 
 *This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
 
