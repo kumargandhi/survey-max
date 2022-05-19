@@ -104,6 +104,9 @@
             </ng-container>
         </div>
     </form>
+    <div class="badge bg-primary text-wrap">
+        Remaining - <strong>{{ (questions?.length - 1)- takeSurvey?.answers.length }}</strong> questions
+    </div>
     <ng-template pTemplate="footer">
         <button
             pButton

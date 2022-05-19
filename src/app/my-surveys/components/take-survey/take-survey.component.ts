@@ -269,23 +269,20 @@ export class TakeSurveyComponent implements OnInit {
                     this.errorText = 'Select options for the question';
                     return;
                 }
-                this.captureAnswer(selectedIndexs);
-                this.takeSurvey.score = (this.takeSurvey.answers.map(item => item.isCorrect).length / this.questions.length) * 100;
-                if (this.takeSurvey.answers.length === this.questions.length) {
-                    this.confirmationMessage = `Are you sure that you want to complete the Survey?`;
-                } else {
-                    this.confirmationMessage = `All the questions are not answered, Are you sure that you want to complete the Survey?`;
-                }
+                this.confirmationMessage = `Are you sure that you want to complete the Survey?`;
                 this._confirmationService.confirm({
                     message: this.confirmationMessage,
                     accept: () => {
+                        this.captureAnswer(selectedIndexs);
+                        this.takeSurvey.score = (this.takeSurvey.answers.filter(item => item.isCorrect).length /
+                          this.questions.length) * 100;
                         this.completeSurvey();
                     },
                     reject: (type) => {
                         switch (type) {
                             case ConfirmEventType.REJECT:
                             case ConfirmEventType.CANCEL: {
-                                this.takeSurvey.answers.pop();
+                                // this.takeSurvey.answers.pop();
                                 break;
                             }
                         }
