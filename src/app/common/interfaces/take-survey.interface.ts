@@ -5,6 +5,7 @@ export interface ITakeSurvey {
   answers: IAnswer[];
   creationDate?: Date;
   score: number;
+  userId?: DocumentReference;
 }
 
 export interface IAnswer {

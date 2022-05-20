@@ -8,7 +8,7 @@
 >
     <h4 class="text-primary-app mb-2">{{ _survey?.name }}</h4>
     <!-- TODO : We need to display the survey image too -->
-    <img src="./assets/images/survey-pic-mock.png" class="mb-2"/>
+    <img src="./assets/images/survey-pic-mock.png" class="mb-2" />
     <p class="text-wrap text-break">{{ _survey?.desc }}</p>
     <h6>Pass score <p-badge value="{{ _survey?.passScore }}%"></p-badge></h6>
     <ng-template pTemplate="footer">
@@ -17,8 +17,13 @@
             pRipple
             label="Start"
             icon="pi pi-check"
-            class="p-button-success"
+            class="p-button-primary"
             (click)="takeSurvey()"
         ></button>
+        <p-button
+            label="Taken"
+            badge="{{ _mySurveys?.length }}"
+            styleClass="mr-2 p-button-success float-end"
+        ></p-button>
     </ng-template>
 </p-card>

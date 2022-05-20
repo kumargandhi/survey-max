@@ -19,6 +19,10 @@ export class MySurveyService {
 
     surveyUser$ = new Subject<ISurveyUser>();
 
+    _mySurveys: ITakeSurvey[];
+
+    mySurveys$ = new Subject<ITakeSurvey[]>();
+
     constructor(
         public firestore: AngularFirestore,
         public fireAuth: AngularFireAuth,
@@ -57,6 +61,35 @@ export class MySurveyService {
     }
 
     saveMySurvey(takeSurvey: ITakeSurvey) {
+        takeSurvey.userId = this._userService.getUserDocumentFrommId(this._userService.getCurrentUser().uid);
         return this.firestore.collection(COLLECTION_MY_SURVEYS).add(takeSurvey);
+    }
+
+    getMySurveys(userId: string) {
+        const userDoc = this.firestore.collection(COLLECTION_USERS).doc(userId);
+        // const surveyDoc = this.firestore.collection(COLLECTION_SURVEY).doc(surveyId);
+        return this.firestore
+          .collection(COLLECTION_MY_SURVEYS, (ref) =>
+              ref.where('userId', '==', userDoc.ref)
+              // .where('surveyId', '==', surveyDoc.ref)
+          )
+          .snapshotChanges();
+    }
+
+    getMySurveysForCurrentUser() {
+        this.getMySurveys(this._userService.getCurrentUser().uid).subscribe(
+            (data) => {
+                this._mySurveys = cloneDeep(
+                    data.map((e) => {
+                        const s: ITakeSurvey = e.payload.doc.data() as ITakeSurvey;
+                        return s;
+                    })
+                );
+                this.mySurveys$.next(this._mySurveys);
+            },
+            (error) => {
+                console.log('getMySurveysForCurrentUser-error-' + error);
+            }
+        );
     }
 }

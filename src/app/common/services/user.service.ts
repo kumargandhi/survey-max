@@ -51,6 +51,10 @@ export class UserService {
         return this.firestore.collection(COLLECTION_USERS).doc(user.uid).ref.get();
     }
 
+    getUserDocumentFrommId(userId: string) {
+        return this.firestore.collection(COLLECTION_USERS).doc(userId).ref;
+    }
+
     saveUser(user: IUser) {
         return this.fireAuth
             .createUserWithEmailAndPassword(user.email, user.password)

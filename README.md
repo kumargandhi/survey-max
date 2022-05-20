@@ -2,7 +2,7 @@
 
 Create surveys and assign to users. Simple UI/UX.
 
-`Simple Angular application to create surveys`
+`A simple Angular application to create surveys!!`
 
 Application is integrated with Firebase for Database.
 Read more about Firebase [here](https://developers.google.com/codelabs/building-a-web-app-with-angular-and-firebase#0)

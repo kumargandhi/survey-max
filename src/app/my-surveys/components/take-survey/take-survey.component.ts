@@ -348,7 +348,6 @@ export class TakeSurveyComponent implements OnInit {
     // Survey is completed, calculate the results and show correct answers.
     completeSurvey() {
         this.loading = true;
-        return;
         this._mySurveyService.saveMySurvey(this.takeSurvey)
           .then(() => {
               this.loading = false;
