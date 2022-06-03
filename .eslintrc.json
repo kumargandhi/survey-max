@@ -149,7 +149,12 @@
         "no-bitwise": "error",
         "no-caller": "error",
         "no-cond-assign": "error",
-        "no-console": ["error", { "allow": ["warn", "error", "log"] }],
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error", "log"]
+            }
+        ],
         "no-debugger": "error",
         "no-empty": "off",
         "no-eval": "error",
@@ -202,5 +207,11 @@
         "jasmine/missing-expect": "error",
         "jasmine/expect-matcher": "error",
         "jasmine/expect-single-argument": "error"
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "extends": ["plugin:ngrx/recommended"]
+        }
+    ]
 }

@@ -16,6 +16,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthService } from './common/services/auth.service';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent],
@@ -29,7 +30,8 @@ import { AuthService } from './common/services/auth.service';
         ...CORE_PRIME_NG_MODULES,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        StoreModule.forRoot({}, {})
     ],
     providers: [
         [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
