@@ -9,12 +9,16 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { ConfirmationService } from 'primeng/api';
 import { DestroyService } from '../../services/destroy.service';
+import { Store } from '@ngrx/store';
+import { selectUserMgmt } from '../../state/selectors/app.selectors';
+import { takeUntil } from 'rxjs/operators';
+import { getUser } from '../../state/actions/user.action';
 
 enum UserActions {
     Profile = 'Profile',
     Delete_Account = 'Delete_Account',
     Logout = 'Logout',
-    Info = 'Info'
+    Info = 'Info',
 }
 
 @Component({
@@ -34,21 +38,24 @@ export class HeaderComponent implements OnInit {
 
     showProfilePanel = false;
 
+    readonly userMgmtUser$ = this.store.select(selectUserMgmt);
+
     constructor(
         private _storageService: StorageService,
         private _authService: AuthService,
         private _userService: UserService,
-        private _confirmationService: ConfirmationService
+        private _confirmationService: ConfirmationService,
+        private _destroy$: DestroyService,
+        public store: Store
     ) {}
 
     ngOnInit(): void {
-        const currentUser = this._storageService.get<IUser>(
-            StorageKeys.User,
-            StorageType.Local
-        );
-        this._userService.getUser(currentUser).then((doc) => {
-            if (doc.exists) {
-                this.user = this._userService.currentUser = doc.data() as IUser;
+        // Dispatch action to get the user
+        this.store.dispatch(getUser());
+
+        this.userMgmtUser$.pipe(takeUntil(this._destroy$)).subscribe((data) => {
+            if (data) {
+                this.user = this._userService.currentUser = data.user;
             }
         });
     }

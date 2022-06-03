@@ -16,7 +16,12 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthService } from './common/services/auth.service';
+
 import { StoreModule } from '@ngrx/store';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { userMgmtReducer } from './common/state/reducers/user.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './common/state/effects/user.effects';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent],
@@ -31,7 +36,12 @@ import { StoreModule } from '@ngrx/store';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAnalyticsModule,
         AngularFirestoreModule,
-        StoreModule.forRoot({}, {})
+        StoreModule.forRoot({
+            router: routerReducer,
+            userMgmt: userMgmtReducer
+        }, {}),
+        StoreRouterConnectingModule.forRoot(),
+        EffectsModule.forRoot([UserEffects])
     ],
     providers: [
         [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
