@@ -5,7 +5,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: var(--theme-color-primary);
+    background: linear-gradient(var(--theme-color-primary) 80%, var(--theme-color-primary-lighter));
     overflow-x: hidden;
     padding-top: 20px;
 }

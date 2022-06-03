@@ -85,6 +85,7 @@ body {
     height: 100vh;
     overflow-y: scroll;
     background: var(--theme-gray);
+    // box-shadow: -3px 0 3px hsl(0deg 0% 40% / 10%);
 
     & > #page-title {
         background-color: inherit;
