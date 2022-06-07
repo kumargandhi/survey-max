@@ -7,6 +7,9 @@ import { SurveyComponent } from '../survey/survey.component';
 import { SurveyListComponent } from '../survey/survey-list/survey-list.component';
 import { QuestionListComponent } from '../survey/question-list/question-list.component';
 import { MySurveysComponent } from '../my-surveys/my-surveys.component';
+import { MySurveysListComponent } from '../my-surveys/components/my-surveys-list/my-surveys-list.component';
+import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-survey.component';
+import { SurveyResultsComponent } from '../my-surveys/components/survey-results/survey-results.component';
 
 const routes: Routes = [
     {
@@ -36,6 +39,18 @@ const routes: Routes = [
             {
                 path: 'my-surveys',
                 component: MySurveysComponent,
+                children: [
+                    { path: 'my-surveys-list', component: MySurveysListComponent },
+                    {
+                        path: ':surveyId/take-survey',
+                        component: TakeSurveyComponent,
+                    },
+                    {
+                        path: ':surveyId/survey-results',
+                        component: SurveyResultsComponent,
+                    },
+                    { path: '', redirectTo: 'my-surveys-list', pathMatch: 'full' },
+                ],
             },
         ],
     },

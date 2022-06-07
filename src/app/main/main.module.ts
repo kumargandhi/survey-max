@@ -23,6 +23,7 @@ import { MySurveyCardComponent } from '../my-surveys/components/my-survey-card/m
 import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-survey.component';
 import { UserAccessDirective } from '../common/directives/user-access.directive';
 import { SurveyResultsComponent } from '../my-surveys/components/survey-results/survey-results.component';
+import { MySurveysListComponent } from '../my-surveys/components/my-surveys-list/my-surveys-list.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { SurveyResultsComponent } from '../my-surveys/components/survey-results/
         MySurveyCardComponent,
         TakeSurveyComponent,
         UserAccessDirective,
-        SurveyResultsComponent
+        SurveyResultsComponent,
+        MySurveysListComponent
     ],
     imports: [
         CommonModule,

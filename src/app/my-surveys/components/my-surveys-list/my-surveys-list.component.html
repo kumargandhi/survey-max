@@ -1,0 +1,9 @@
+<div class="grid mb-3">
+  <div class="col-4" *ngFor="let item of surveyUser?.surveys">
+    <app-my-survey-card
+        [survey]="item"
+        (takeSurveyClicked)="takeSurveyClicked($event)"
+        (showResultsClicked)="showResultsClicked($event)"
+    ></app-my-survey-card>
+  </div>
+</div>

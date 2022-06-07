@@ -43,6 +43,23 @@ export const SURVEY_BREAD_CRUMBS = [
     },
 ];
 
+export const MY_SURVEY_BREAD_CRUMBS = [
+    {
+        label: 'Surveys',
+        routerLink: ['my-surveys-list'],
+    },
+    {
+        label: 'Take Survey',
+        disabled: true,
+        routerLink: [':surveyId/take-survey'],
+    },
+    {
+        label: 'Results',
+        disabled: true,
+        routerLink: [':surveyId/survey-results'],
+    },
+];
+
 export enum QUESTION_TYPES {
     TEXT = 1,
     RADIO = 2,
