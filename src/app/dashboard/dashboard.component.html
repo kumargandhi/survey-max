@@ -31,11 +31,17 @@
                     height: '300px'
                 }"
             >
-                <div class="total-container mb-5">
+                <div class="total-container mb-5 mt-3">
                     <div class="total">
                         {{ surveyUser?.surveys?.length }}
                     </div>
                     <div class="label">My surveys</div>
+                </div>
+                <div class="total-container mb-3 mt-3">
+                    <div class="total">
+                        {{ _mySurveys?.length }}
+                    </div>
+                    <div class="label">Taken surveys</div>
                 </div>
             </p-card>
         </div>
