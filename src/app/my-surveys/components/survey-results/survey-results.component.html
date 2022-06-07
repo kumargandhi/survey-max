@@ -1,0 +1,46 @@
+<p-table
+    #dt
+    [value]="surveyResults"
+    [rows]="10"
+    [paginator]="true"
+    responsiveLayout="scroll"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    [loading]="loading"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem"></th>
+            <th pSortableColumn="name" style="width: 22%">
+                Name <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="desc" style="width: 36%">
+                Description <p-sortIcon field="desc"></p-sortIcon>
+            </th>
+            <th pSortableColumn="passScore" style="width: 12%">
+                Score <p-sortIcon field="score"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-survey let-expanded="expanded">
+        <tr>
+            <td>
+                <button
+                    type="button"
+                    pButton
+                    pRipple
+                    [pRowToggler]="survey"
+                    class="p-button-text p-button-rounded p-button-plain"
+                    [icon]="
+                        expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
+                    "
+                ></button>
+            </td>
+            <td>{{ survey.name }}</td>
+            <td>{{ survey.desc }}</td>
+            <td>{{ survey.score }}</td>
+        </tr>
+    </ng-template>
+</p-table>

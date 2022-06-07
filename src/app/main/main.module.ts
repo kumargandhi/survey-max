@@ -22,6 +22,7 @@ import { MySurveysComponent } from '../my-surveys/my-surveys.component';
 import { MySurveyCardComponent } from '../my-surveys/components/my-survey-card/my-survey-card.component';
 import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-survey.component';
 import { UserAccessDirective } from '../common/directives/user-access.directive';
+import { SurveyResultsComponent } from '../my-surveys/components/survey-results/survey-results.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { UserAccessDirective } from '../common/directives/user-access.directive'
         MySurveysComponent,
         MySurveyCardComponent,
         TakeSurveyComponent,
-        UserAccessDirective
+        UserAccessDirective,
+        SurveyResultsComponent
     ],
     imports: [
         CommonModule,

@@ -28,6 +28,8 @@ export class MySurveysComponent implements OnInit {
 
     takeSurvey: ISurvey;
 
+    resultSurvey: ISurvey;
+
     constructor(private _cd: ChangeDetectorRef,
                 private _destroy$: DestroyService,
                 private _userService: UserService,
@@ -52,6 +54,14 @@ export class MySurveysComponent implements OnInit {
             return;
         }
         this.takeSurvey = $event as ISurvey;
+    }
+
+    showResultsClicked($event: ISurvey) {
+        if (!$event) {
+            return;
+        }
+        this.takeSurvey = null;
+        this.resultSurvey = $event as ISurvey;
     }
 
     takeSurveyCancelled($event) {

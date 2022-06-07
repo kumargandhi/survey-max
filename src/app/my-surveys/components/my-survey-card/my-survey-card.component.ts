@@ -27,6 +27,8 @@ export class MySurveyCardComponent implements OnInit {
 
     @Output() takeSurveyClicked = new EventEmitter<ISurvey>();
 
+    @Output() showResultsClicked = new EventEmitter<ISurvey>();
+
     constructor(
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
@@ -59,5 +61,9 @@ export class MySurveyCardComponent implements OnInit {
 
     takeSurvey() {
         this.takeSurveyClicked.emit(this._survey);
+    }
+
+    showResults() {
+        this.showResultsClicked.emit(this._survey);
     }
 }

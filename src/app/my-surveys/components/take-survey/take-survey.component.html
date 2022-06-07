@@ -113,7 +113,7 @@
             pRipple
             label="Cancel"
             icon="pi pi-times"
-            class="p-button-secondary"
+            class="p-button-secondary p-button-sm"
             (click)="actionHandler(TakeSurveyActions.CANCEL_SURVEY)"
         ></button>
         <button
@@ -121,7 +121,7 @@
             pRipple
             label="Complete"
             icon="bi bi-circle-fill pe-1"
-            class="p-button-help float-end"
+            class="p-button-help float-end p-button-sm"
             [style]="{ 'margin-left': '2.5em' }"
             [disabled]="questionIndex < questions?.length"
             (click)="actionHandler(TakeSurveyActions.COMPLETE_SURVEY)"
@@ -131,7 +131,7 @@
             pRipple
             label="Next"
             icon="pi pi-angle-right"
-            class="p-button-success float-end"
+            class="p-button-success float-end p-button-sm"
             [style]="{ 'margin-left': '.5em' }"
             [disabled]="questionIndex >= questions?.length"
             (click)="actionHandler(TakeSurveyActions.NEXT_QUESTION)"
@@ -141,7 +141,7 @@
             pRipple
             label="Previous"
             icon="pi pi-angle-left"
-            class="p-button-primary float-end"
+            class="p-button-primary float-end p-button-sm"
             [style]="{ 'margin-left': '.5em' }"
             [disabled]="questionIndex <= 1"
             (click)="actionHandler(TakeSurveyActions.PREVIOUS_QUESTION)"
