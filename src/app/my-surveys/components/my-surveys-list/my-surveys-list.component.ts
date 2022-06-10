@@ -11,6 +11,7 @@ import { ISurveyUser } from '../../../common/interfaces/survey-user.interface';
 import { UserService } from '../../../common/services/user.service';
 import { MySurveyService } from '../../../common/services/my-survey.service';
 import { ISurvey } from '../../../common/interfaces/survey.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-my-surveys-list',
@@ -30,7 +31,9 @@ export class MySurveysListComponent implements OnInit {
         private _cd: ChangeDetectorRef,
         private _destroy$: DestroyService,
         private _userService: UserService,
-        private _mySurveyService: MySurveyService
+        private _mySurveyService: MySurveyService,
+        private _route: ActivatedRoute,
+        private _router: Router,
     ) {
         this._mySurveyService.surveyUser$
             .pipe(takeUntil(this._destroy$))
@@ -46,14 +49,17 @@ export class MySurveysListComponent implements OnInit {
         if (!$event) {
             return;
         }
-        // this.takeSurvey = $event as ISurvey;
+        this._router.navigate([($event as ISurvey).id + '/take-survey'], {
+            relativeTo: this._route.parent,
+        });
     }
 
     showResultsClicked($event: ISurvey) {
         if (!$event) {
             return;
         }
-        // this.takeSurvey = null;
-        // this.resultSurvey = $event as ISurvey;
+        this._router.navigate([($event as ISurvey).id + '/survey-results'], {
+            relativeTo: this._route.parent,
+        });
     }
 }

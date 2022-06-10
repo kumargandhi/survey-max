@@ -43,8 +43,10 @@ export class MySurveysComponent implements OnInit {
           .subscribe((data: RouterEvent) => {
               if (data.url && data.url.indexOf('my-surveys-list') > -1) {
                   this.menu[1].disabled = true;
-              } else if (data.url && data.url.indexOf('take-survey') > -1) {
-                  this.updateMenuWithSurveyId();
+                  this.menu[2].disabled = true;
+                  this.getData();
+              } else if (data.url && (data.url.indexOf('take-survey') > -1 || data.url.indexOf('survey-results') > -1)) {
+                  this.updateMenuWithSurveyId(data.url);
               }
           });
 
@@ -57,16 +59,28 @@ export class MySurveysComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getData();
+    }
+
+    getData() {
         if (this._userService.getCurrentUser()) {
             this._mySurveyService.getSurveysForCurrentUser();
             this._cd.markForCheck();
         }
     }
 
-    updateMenuWithSurveyId() {
+    updateMenuWithSurveyId(url: string) {
         this.surveyId = this._route.snapshot.firstChild.params.surveyId;
-        this.menu[1].routerLink = [`${this.surveyId}/take-survey`];
-        this.menu[1].disabled = false;
+        let menuIndex;
+        if (url.indexOf('take-survey') > -1) {
+            menuIndex = 1;
+            this.menu[2].disabled = true;
+        } else if (url.indexOf('survey-results') > -1) {
+            menuIndex = 2;
+            this.menu[1].disabled = true;
+        }
+        this.menu[menuIndex].routerLink = [`${this.surveyId}/${url}`];
+        this.menu[menuIndex].disabled = false;
         this._cd.markForCheck();
     }
 }

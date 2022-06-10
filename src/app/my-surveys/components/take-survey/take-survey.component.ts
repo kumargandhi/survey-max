@@ -23,6 +23,7 @@ import { QUESTION_TYPES } from '../../../main/constants';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { IAnswer, ITakeSurvey } from '../../../common/interfaces/take-survey.interface';
 import { MySurveyService } from '../../../common/services/my-survey.service';
+import { ActivatedRoute } from '@angular/router';
 
 enum TakeSurveyActions {
     CANCEL_SURVEY,
@@ -74,10 +75,21 @@ export class TakeSurveyComponent implements OnInit {
         private _surveyService: SurveyService,
         private _questionService: QuestionService,
         private _confirmationService: ConfirmationService,
-        private _mySurveyService: MySurveyService
+        private _mySurveyService: MySurveyService,
+        private _route: ActivatedRoute,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this._surveyService.getSurveyFromId(this._route.snapshot.params.surveyId).then((doc) => {
+            if (doc.exists) {
+                this._survey = doc.data() as ISurvey;
+                this._survey.id = this._route.snapshot.params.surveyId;
+                this._mySurveyService.getMySurveysForCurrentUser();
+            }
+            this.getQuestions();
+            this._cd.markForCheck();
+        });
+    }
 
     @Input() set survey(val: ISurvey) {
         if (val) {
