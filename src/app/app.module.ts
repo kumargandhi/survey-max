@@ -22,6 +22,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { userMgmtReducer } from './common/state/reducers/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './common/state/effects/user.effects';
+import { MySurveysEffects } from './common/state/effects/my-surveys.effects';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent],
@@ -41,7 +42,7 @@ import { UserEffects } from './common/state/effects/user.effects';
             userMgmt: userMgmtReducer
         }, {}),
         StoreRouterConnectingModule.forRoot(),
-        EffectsModule.forRoot([UserEffects])
+        EffectsModule.forRoot([UserEffects, MySurveysEffects])
     ],
     providers: [
         [{ provide: LocationStrategy, useClass: HashLocationStrategy }],

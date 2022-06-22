@@ -8,6 +8,8 @@ import { COLLECTION_SURVEY_USER, COLLECTION_USERS, UserService } from './user.se
 import { ITakeSurvey } from '../interfaces/take-survey.interface';
 import { ISurveyUser } from '../interfaces/survey-user.interface';
 import { Subject } from 'rxjs';
+import { ISurvey } from '../interfaces/survey.interface';
+import { COLLECTION_SURVEY } from './survey.service';
 
 const COLLECTION_MY_SURVEYS = 'my_surveys';
 
@@ -91,5 +93,15 @@ export class MySurveyService {
                 console.log('getMySurveysForCurrentUser-error-' + error);
             }
         );
+    }
+
+    getMySurveysFromSurvey(surveyId: string) {
+        // const userDoc = this.firestore.collection(COLLECTION_USERS).doc(userId);
+        const surveyDoc = this.firestore.collection(COLLECTION_SURVEY).doc(surveyId);
+        return this.firestore
+          .collection(COLLECTION_MY_SURVEYS, (ref) =>
+              ref.where('surveyId', '==', surveyDoc.ref)
+          )
+          .snapshotChanges();
     }
 }
