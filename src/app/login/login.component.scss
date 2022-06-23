@@ -12,18 +12,17 @@
     flex-flow: row;
     justify-content: center;
     align-items: center;
-    width: 960px;
-    // height: 450px;
+    width: 800px;
 }
 
 p-panel,
 .p-panel {
-    width: 50%;
+    width: 40%;
     height: 100%;
 }
 
 .info-container {
-    width: 50%;
+    width: 60%;
     height: 100%;
     padding: 15px;
     background: var(--theme-gray-darker);

@@ -23,6 +23,7 @@ import { userMgmtReducer } from './common/state/reducers/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './common/state/effects/user.effects';
 import { MySurveysEffects } from './common/state/effects/my-surveys.effects';
+import { mySurveysReducer } from './common/state/reducers/my-surveys.reducer';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent],
@@ -39,7 +40,8 @@ import { MySurveysEffects } from './common/state/effects/my-surveys.effects';
         AngularFirestoreModule,
         StoreModule.forRoot({
             router: routerReducer,
-            userMgmt: userMgmtReducer
+            userMgmt: userMgmtReducer,
+            mySurveys: mySurveysReducer
         }, {}),
         StoreRouterConnectingModule.forRoot(),
         EffectsModule.forRoot([UserEffects, MySurveysEffects])

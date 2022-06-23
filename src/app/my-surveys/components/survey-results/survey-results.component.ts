@@ -5,6 +5,10 @@ import { ConfirmationService } from 'primeng/api';
 import { SurveyService } from '../../../common/services/survey.service';
 import { ActivatedRoute } from '@angular/router';
 import { MySurveyService } from '../../../common/services/my-survey.service';
+import { Store } from '@ngrx/store';
+import { selectMySurveys } from 'src/app/common/state/selectors/app.selectors';
+import { getMySurveys } from 'src/app/common/state/actions/my-surveys.action';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-survey-results',
@@ -25,11 +29,20 @@ export class SurveyResultsComponent implements OnInit {
 
     surveyResults = [];
 
+    readonly mySurveys$ = this.store.select(selectMySurveys);
+
     constructor(private _cd: ChangeDetectorRef,
                 private _destroy$: DestroyService,
                 private _surveyService: SurveyService,
                 private _mySurveyService: MySurveyService,
-                private _route: ActivatedRoute, ) {}
+                private _route: ActivatedRoute, 
+                public store: Store) {
+        this.mySurveys$.pipe(takeUntil(this._destroy$)).subscribe((data) => {
+            if (data) {
+                this.surveyResults = data.mySurveys;
+            }
+        });
+    }
 
     ngOnInit(): void {
         this._surveyService.getSurveyFromId(this._route.snapshot.params.surveyId).then((doc) => {
@@ -43,6 +56,6 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     getSurveyResults() {
-
+        this.store.dispatch(getMySurveys({val: this._survey}));
     }
 }
