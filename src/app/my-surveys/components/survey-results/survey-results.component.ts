@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MySurveyService } from '../../../common/services/my-survey.service';
 import { Store } from '@ngrx/store';
 import { selectMySurveys } from 'src/app/common/state/selectors/app.selectors';
-import { getMySurveys } from 'src/app/common/state/actions/my-surveys.action';
+import { getMySurveys, mySurveysLoading } from 'src/app/common/state/actions/my-surveys.action';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -37,9 +37,12 @@ export class SurveyResultsComponent implements OnInit {
                 private _mySurveyService: MySurveyService,
                 private _route: ActivatedRoute, 
                 public store: Store) {
+        this.store.dispatch(mySurveysLoading({val: true}));
         this.mySurveys$.pipe(takeUntil(this._destroy$)).subscribe((data) => {
             if (data) {
+                this.loading = data.loading;
                 this.surveyResults = data.mySurveys;
+                this._cd.markForCheck();
             }
         });
     }

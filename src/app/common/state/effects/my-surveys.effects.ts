@@ -5,7 +5,8 @@ import { mergeMap, map, tap, catchError } from 'rxjs/operators';
 import { getMySurveys, mySurveysFetched,mySurveysLoading } from '../actions/my-surveys.action';
 import { ITakeSurvey } from '../../interfaces/take-survey.interface';
 import { MySurveyService } from '../../services/my-survey.service';
-import { EMPTY } from 'rxjs';
+import { EMPTY, forkJoin } from 'rxjs';
+import { SurveyService } from '../../services/survey.service';
 
 @Injectable()
 export class MySurveysEffects {
@@ -31,6 +32,7 @@ export class MySurveysEffects {
     constructor(
         private actions$: Actions,
         private store: Store,
-        private _mySurveys: MySurveyService
+        private _mySurveys: MySurveyService,
+        private _surveyService: SurveyService
     ) {}
 }
