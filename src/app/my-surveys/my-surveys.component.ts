@@ -75,11 +75,12 @@ export class MySurveysComponent implements OnInit {
         if (url.indexOf('take-survey') > -1) {
             menuIndex = 1;
             this.menu[2].disabled = true;
+            this.menu[menuIndex].routerLink = [`${this.surveyId}/take-survey`];
         } else if (url.indexOf('survey-results') > -1) {
             menuIndex = 2;
             this.menu[1].disabled = true;
+            this.menu[menuIndex].routerLink = [`${this.surveyId}/survey-results`];
         }
-        this.menu[menuIndex].routerLink = [`${this.surveyId}/${url}`];
         this.menu[menuIndex].disabled = false;
         this._cd.markForCheck();
     }

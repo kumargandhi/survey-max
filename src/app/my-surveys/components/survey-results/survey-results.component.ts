@@ -61,4 +61,8 @@ export class SurveyResultsComponent implements OnInit {
     getSurveyResults() {
         this.store.dispatch(getMySurveys({val: this._survey}));
     }
+
+    isSurveyPassed(score: number) {
+        return score >= this._survey.passScore;
+    }
 }

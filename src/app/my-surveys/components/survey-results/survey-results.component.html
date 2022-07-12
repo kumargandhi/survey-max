@@ -13,13 +13,10 @@
     <ng-template pTemplate="header">
         <tr>
             <th style="width: 3rem"></th>
-            <th pSortableColumn="name" style="width: 22%">
-                Name <p-sortIcon field="name"></p-sortIcon>
+            <th pSortableColumn="creationDate" style="width: 50%">
+                Taken on <p-sortIcon field="creationDate"></p-sortIcon>
             </th>
-            <th pSortableColumn="desc" style="width: 36%">
-                Description <p-sortIcon field="desc"></p-sortIcon>
-            </th>
-            <th pSortableColumn="passScore" style="width: 12%">
+            <th pSortableColumn="score" style="width: 20%">
                 Score <p-sortIcon field="score"></p-sortIcon>
             </th>
         </tr>
@@ -38,9 +35,75 @@
                     "
                 ></button>
             </td>
-            <td>{{ survey.name }}</td>
-            <td>{{ survey.desc }}</td>
-            <td>{{ survey.score }}</td>
+            <td>
+                {{ survey.creationDate?.seconds * 1000 | date: 'dd/M/yyyy' }}
+            </td>
+            <td>
+                <p-tag
+                    *ngIf="isSurveyPassed(survey.score)"
+                    styleClass="mr-2"
+                    icon="pi pi-check"
+                    severity="success"
+                    [value]="'Passed {{survey.score}}%'"
+                ></p-tag>
+                <p-tag
+                    *ngIf="!isSurveyPassed(survey.score)"
+                    styleClass="mr-2"
+                    icon="pi pi-exclamation-triangle"
+                    severity="danger"
+                    [value]="'Fail {{survey.score}}%'"
+                ></p-tag>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-survey>
+        <tr>
+            <td colspan="3">
+                <div class="p-3">
+                    <p-table [value]="survey.answers" dataKey="id">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="questionId">
+                                    Question
+                                    <p-sortIcon field="questionId"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="isCorrect">
+                                    Correct
+                                    <p-sortIcon field="isCorrect"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-answer>
+                            <tr>
+                                <td>{{ answer.questionId }}</td>
+                                <td>
+                                    <p-tag
+                                        *ngIf="answer.isCorrect"
+                                        styleClass="mr-2"
+                                        icon="pi pi-check"
+                                        severity="success"
+                                        value="Correct"
+                                    ></p-tag>
+                                    <p-tag
+                                        *ngIf="!answer.isCorrect"
+                                        styleClass="mr-2"
+                                        icon="pi pi-exclamation-triangle"
+                                        severity="danger"
+                                        value="Wrong"
+                                    ></p-tag>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6">
+                                    There are no answers for this survey yet.
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </td>
         </tr>
     </ng-template>
 </p-table>
