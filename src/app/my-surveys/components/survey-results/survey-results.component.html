@@ -12,11 +12,11 @@
 >
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 3rem"></th>
-            <th pSortableColumn="creationDate" style="width: 50%">
+            <th style="width: 5%"></th>
+            <th pSortableColumn="creationDate" style="width: 15%">
                 Taken on <p-sortIcon field="creationDate"></p-sortIcon>
             </th>
-            <th pSortableColumn="score" style="width: 20%">
+            <th pSortableColumn="score" style="width: 60%">
                 Score <p-sortIcon field="score"></p-sortIcon>
             </th>
         </tr>
@@ -44,14 +44,14 @@
                     styleClass="mr-2"
                     icon="pi pi-check"
                     severity="success"
-                    [value]="'Passed {{survey.score}}%'"
+                    [value]="'Passed ' + survey.score + '%'"
                 ></p-tag>
                 <p-tag
                     *ngIf="!isSurveyPassed(survey.score)"
                     styleClass="mr-2"
                     icon="pi pi-exclamation-triangle"
                     severity="danger"
-                    [value]="'Fail {{survey.score}}%'"
+                    [value]="'Fail ' + survey.score + '%'"
                 ></p-tag>
             </td>
         </tr>
@@ -75,7 +75,9 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-answer>
                             <tr>
-                                <td>{{ answer.questionId }}</td>
+                                <td>
+                                    <app-question-result [answer]="answer"></app-question-result>
+                                </td>
                                 <td>
                                     <p-tag
                                         *ngIf="answer.isCorrect"

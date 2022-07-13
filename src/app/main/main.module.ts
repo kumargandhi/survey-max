@@ -24,6 +24,7 @@ import { TakeSurveyComponent } from '../my-surveys/components/take-survey/take-s
 import { UserAccessDirective } from '../common/directives/user-access.directive';
 import { SurveyResultsComponent } from '../my-surveys/components/survey-results/survey-results.component';
 import { MySurveysListComponent } from '../my-surveys/components/my-surveys-list/my-surveys-list.component';
+import { QuestionResultComponent } from '../my-surveys/components/survey-results/question-result/question-result.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { MySurveysListComponent } from '../my-surveys/components/my-surveys-list
         TakeSurveyComponent,
         UserAccessDirective,
         SurveyResultsComponent,
-        MySurveysListComponent
+        MySurveysListComponent,
+        QuestionResultComponent
     ],
     imports: [
         CommonModule,

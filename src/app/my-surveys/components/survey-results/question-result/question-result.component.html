@@ -1,0 +1,14 @@
+<div class="question-result">
+    {{ _question?.question }}
+    <div
+        class="options"
+        *ngFor="let option of _question?.options; let i = index"
+    >
+        <div
+            class="option"
+            [class.text-success]="option.selected"
+        >
+            {{ i + 1 }}) {{ option.answer }}
+        </div>
+    </div>
+</div>

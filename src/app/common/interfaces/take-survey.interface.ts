@@ -18,6 +18,4 @@ export interface IAnswer {
   questionId?: DocumentReference;
   options?: string | number | number[];
   isCorrect: boolean;
-
-  question?: IQuestion;
 }

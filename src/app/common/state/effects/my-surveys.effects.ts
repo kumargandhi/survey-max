@@ -19,7 +19,8 @@ export class MySurveysEffects {
                     tap((data) => {
                         const items = data.map(e => e.payload.doc.data() as ITakeSurvey);
                         this.store.dispatch(
-                            mySurveysFetched({ val: JSON.parse(JSON.stringify(items))})
+                            // mySurveysFetched({ val: JSON.parse(JSON.stringify(items))})
+                            mySurveysFetched({ val: Object.freeze(items) as ITakeSurvey[]})
                         );
                     }),
                     catchError(() => EMPTY),

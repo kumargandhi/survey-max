@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+} from '@angular/core';
 import { ISurvey } from '../../../common/interfaces/survey.interface';
 import { DestroyService } from '../../../common/services/destroy.service';
 import { ConfirmationService } from 'primeng/api';
@@ -7,7 +14,10 @@ import { ActivatedRoute } from '@angular/router';
 import { MySurveyService } from '../../../common/services/my-survey.service';
 import { Store } from '@ngrx/store';
 import { selectMySurveys } from 'src/app/common/state/selectors/app.selectors';
-import { getMySurveys, mySurveysLoading } from 'src/app/common/state/actions/my-surveys.action';
+import {
+    getMySurveys,
+    mySurveysLoading,
+} from 'src/app/common/state/actions/my-surveys.action';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -18,7 +28,6 @@ import { takeUntil } from 'rxjs/operators';
     providers: [DestroyService, ConfirmationService],
 })
 export class SurveyResultsComponent implements OnInit {
-
     @Output() cancelClicked = new EventEmitter();
 
     _survey: ISurvey;
@@ -31,13 +40,15 @@ export class SurveyResultsComponent implements OnInit {
 
     readonly mySurveys$ = this.store.select(selectMySurveys);
 
-    constructor(private _cd: ChangeDetectorRef,
-                private _destroy$: DestroyService,
-                private _surveyService: SurveyService,
-                private _mySurveyService: MySurveyService,
-                private _route: ActivatedRoute, 
-                public store: Store) {
-        this.store.dispatch(mySurveysLoading({val: true}));
+    constructor(
+        private _cd: ChangeDetectorRef,
+        private _destroy$: DestroyService,
+        private _surveyService: SurveyService,
+        private _mySurveyService: MySurveyService,
+        private _route: ActivatedRoute,
+        public store: Store
+    ) {
+        this.store.dispatch(mySurveysLoading({ val: true }));
         this.mySurveys$.pipe(takeUntil(this._destroy$)).subscribe((data) => {
             if (data) {
                 this.loading = data.loading;
@@ -48,18 +59,20 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._surveyService.getSurveyFromId(this._route.snapshot.params.surveyId).then((doc) => {
-            if (doc.exists) {
-                this._survey = doc.data() as ISurvey;
-                this._survey.id = this._route.snapshot.params.surveyId;
-                this.getSurveyResults();
-            }
-            this._cd.markForCheck();
-        });
+        this._surveyService
+            .getSurveyFromId(this._route.snapshot.params.surveyId)
+            .then((doc) => {
+                if (doc.exists) {
+                    this._survey = doc.data() as ISurvey;
+                    this._survey.id = this._route.snapshot.params.surveyId;
+                    this.getSurveyResults();
+                }
+                this._cd.markForCheck();
+            });
     }
 
     getSurveyResults() {
-        this.store.dispatch(getMySurveys({val: this._survey}));
+        this.store.dispatch(getMySurveys({ val: this._survey }));
     }
 
     isSurveyPassed(score: number) {
