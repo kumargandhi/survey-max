@@ -46,7 +46,7 @@ export class QuestionResultComponent implements OnInit {
                     console.log('No such document question!');
                 }
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 console.log('Error getting document question:', error);
             });
     }

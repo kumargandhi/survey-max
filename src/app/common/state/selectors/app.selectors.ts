@@ -4,7 +4,7 @@ import { MySurveysState } from '../reducers/my-surveys.reducer';
 
 export interface AppState {
     userMgmt: UserMgmtState;
-    mySurveys: MySurveysState
+    mySurveys: MySurveysState;
 }
 
 export const selectUserMgmt = (state: AppState) => state.userMgmt;

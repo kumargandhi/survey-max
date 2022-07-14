@@ -6,7 +6,7 @@ import { getMySurveys, mySurveysFetched, mySurveysLoading } from '../actions/my-
 export interface MySurveysState {
   mySurveys: ITakeSurvey[];
   survey: ISurvey;
-  loading: boolean
+  loading: boolean;
 }
 
 export const initialState: MySurveysState = {

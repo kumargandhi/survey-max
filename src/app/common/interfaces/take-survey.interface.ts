@@ -1,5 +1,4 @@
 import { DocumentReference } from '@angular/fire/compat/firestore/interfaces';
-import { IQuestion } from './question.interface';
 import { ISurvey } from './survey.interface';
 import { IUser } from './user.interface';
 

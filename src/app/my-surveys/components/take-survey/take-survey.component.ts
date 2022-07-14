@@ -128,7 +128,7 @@ export class TakeSurveyComponent implements OnInit {
                 const options = this.form.get('options') as FormArray;
                 options.clear();
                 const optionsData = this.selectedQuestion.options as IOption[];
-                optionsData.forEach((item) => {
+                optionsData.forEach(() => {
                     const option = new FormGroup({
                         selected: new FormControl(null),
                     });
@@ -145,7 +145,7 @@ export class TakeSurveyComponent implements OnInit {
                 const options = this.form.get('options') as FormArray;
                 options.clear();
                 const optionsData = this.selectedQuestion.options as IOption[];
-                optionsData.forEach((item) => {
+                optionsData.forEach(() => {
                     const option = new FormGroup({
                         selected: new FormControl(null),
                     });

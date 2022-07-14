@@ -2,30 +2,30 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map, tap, catchError } from 'rxjs/operators';
-import { getMySurveys, mySurveysFetched,mySurveysLoading } from '../actions/my-surveys.action';
+import { getMySurveys, mySurveysFetched, mySurveysLoading } from '../actions/my-surveys.action';
 import { ITakeSurvey } from '../../interfaces/take-survey.interface';
 import { MySurveyService } from '../../services/my-survey.service';
-import { EMPTY, forkJoin } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { SurveyService } from '../../services/survey.service';
 
 @Injectable()
 export class MySurveysEffects {
 
-    getMySurveys$ = createEffect(() => 
+    getMySurveys$ = createEffect(() =>
         this.actions$.pipe(
             ofType(getMySurveys),
-            mergeMap(({val}) => {
+            mergeMap(({ val }) => {
                 return this._mySurveys.getMySurveysFromSurvey(val.id).pipe(
                     tap((data) => {
                         const items = data.map(e => e.payload.doc.data() as ITakeSurvey);
                         this.store.dispatch(
                             // mySurveysFetched({ val: JSON.parse(JSON.stringify(items))})
-                            mySurveysFetched({ val: Object.freeze(items) as ITakeSurvey[]})
+                            mySurveysFetched({ val: Object.freeze(items) as ITakeSurvey[] })
                         );
                     }),
                     catchError(() => EMPTY),
-                    map((data) => mySurveysLoading({ val: false}))
-                )
+                    map(() => mySurveysLoading({ val: false }))
+                );
             })
         )
     );
