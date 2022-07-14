@@ -76,6 +76,9 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     isSurveyPassed(score: number) {
+        if (!this._survey) {
+            return 0;
+        }
         return score >= this._survey.passScore;
     }
 }
